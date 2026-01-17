@@ -1,439 +1,535 @@
+/* Default Light Theme (Bootstrap overrides) */
 :root {
-  /* Default Light Theme (Bootstrap overrides) */
-  --bs-body-bg: #f8f9fa;
-  --bs-body-color: #212529;
-  --primary-color: #f97316; /* Orange 500 */
-  --primary-hover: #ea580c; /* Orange 600 */
-  --navbar-bg: rgba(255, 255, 255, 0.95);
-  --card-bg: #ffffff;
-  --border-color: #dee2e6;
-  --text-muted: #6c757d;
-  --header-height: 70px;
+    --bs-body-bg: #f8f9fa;
+    --bs-body-color: #212529;
+    --primary-color: #f97316; /* Orange 500 */
+    --primary-hover: #ea580c; /* Orange 600 */
+    --navbar-bg: rgba(255, 255, 255, 0.95);
+    --card-bg: #ffffff;
+    --border-color: #dee2e6;
+    --text-muted: #6c757d;
+    --header-height: 70px;
 }
 
 [data-theme="dark"] {
-  --bs-body-bg: #121212;
-  --bs-body-color: #e0e0e0;
-  --navbar-bg: rgba(30, 30, 30, 0.95);
-  --card-bg: #1e1e1e;
-  --border-color: #333333;
-  --text-muted: #b0b0b0; /* Lighter for better contrast */
+    --bs-body-bg: #121212;
+    --bs-body-color: #e0e0e0;
+    --navbar-bg: rgba(30, 30, 30, 0.95);
+    --card-bg: #1e1e1e;
+    --border-color: #333333;
+    --text-muted: #b0b0b0; /* Lighter for better contrast */
 }
 
 /* Force Dark Mode Text Overrides */
-[data-theme="dark"] h1,
-[data-theme="dark"] h2,
-[data-theme="dark"] h3,
-[data-theme="dark"] h4,
-[data-theme="dark"] h5,
-[data-theme="dark"] h6,
-[data-theme="dark"] label,
-[data-theme="dark"] span {
-  color: var(--bs-body-color);
+[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3,
+[data-theme="dark"] h4, [data-theme="dark"] h5, [data-theme="dark"] h6,
+[data-theme="dark"] label, [data-theme="dark"] span {
+    color: var(--bs-body-color);
 }
-[data-theme="dark"] .text-muted,
-[data-theme="dark"] .small,
-[data-theme="dark"] .form-text {
-  color: var(--text-muted) !important;
+[data-theme="dark"] .text-muted, [data-theme="dark"] .small, [data-theme="dark"] .form-text {
+    color: var(--text-muted) !important;
 }
 
 /* Global Styles */
 body {
-  padding-top: var(--header-height);
-  background-color: var(--bs-body-bg);
-  color: var(--bs-body-color);
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+    padding-top: var(--header-height);
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    transition: background-color 0.3s, color 0.3s;
 }
 
 /* Navbar */
 .navbar {
-  height: var(--header-height);
-  backdrop-filter: blur(10px);
-  background-color: var(--navbar-bg) !important;
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    height: var(--header-height);
+    backdrop-filter: blur(10px);
+    background-color: var(--navbar-bg) !important;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .navbar-brand {
-  font-weight: 700;
-  color: var(--bs-body-color) !important;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+    font-weight: 700;
+    color: var(--bs-body-color) !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .navbar-brand img {
-  height: 40px;
-  width: auto;
+    height: 40px;
+    width: auto;
 }
 
 .nav-link {
-  color: var(--bs-body-color) !important;
-  font-weight: 500;
+    color: var(--bs-body-color) !important;
+    font-weight: 500;
 }
 
-.nav-link:hover,
-.nav-link.active {
-  color: var(--primary-color) !important;
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-color) !important;
 }
 
 /* Cards */
 .card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s,
-    background-color 0.3s;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08); /* Highlight shadow could be orange hue */
-  border-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.08); /* Highlight shadow could be orange hue */
+    border-color: var(--primary-color);
 }
 
 .card.no-hover:hover {
-  transform: none;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
-  border-color: var(--border-color);
+    transform: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    border-color: var(--border-color);
 }
 
 .card-title {
-  color: var(--bs-body-color);
+    color: var(--bs-body-color);
 }
 
 .card-text {
-  color: var(--text-muted);
+    color: var(--text-muted);
 }
 
 .card-icon-large {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: var(--primary-color);
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
 }
 
 /* Buttons */
 .btn-primary {
-  background-color: var(--primary-color) !important;
-  border-color: var(--primary-color) !important;
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-hover) !important;
-  border-color: var(--primary-hover) !important;
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
 }
 
 .btn-outline-primary {
-  color: var(--primary-color) !important;
-  border-color: var(--primary-color) !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
 }
 
 .btn-outline-primary:hover {
-  background-color: var(--primary-color) !important;
-  color: white !important;
+    background-color: var(--primary-color) !important;
+    color: white !important;
 }
 
 /* Hero Section */
 .hero-section {
-  padding: 5rem 0;
-  text-align: center;
-  /* Gradient from Deep Black/Gray to Orange */
-  background: linear-gradient(135deg, #18181b 0%, #2d2d30 50%, #f97316 100%);
-  color: white;
-  margin-bottom: 3rem;
-  border-radius: 0 0 24px 24px;
-  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+    padding: 5rem 0;
+    text-align: center;
+    /* Gradient from Deep Black/Gray to Orange */
+    background: linear-gradient(135deg, #18181b 0%, #2d2d30 50%, #f97316 100%);
+    color: white;
+    margin-bottom: 3rem;
+    border-radius: 0 0 24px 24px;
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
 }
 
 /* Sidebar for Tools Page - Responsive */
 .sidebar {
-  height: auto;
-  width: 100%;
-  position: relative;
-  top: 0;
-  left: 0;
-  padding: 10px;
-  background: var(--card-bg);
-  border-right: none;
-  border-bottom: 1px solid var(--border-color);
-  overflow-y: visible;
-  z-index: 1000;
+    height: auto;
+    width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    background: var(--card-bg);
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    overflow-y: visible;
+    z-index: 1000;
 }
 
 .sidebar .nav {
-  flex-direction: row !important; /* Horizontal on mobile */
-  overflow-x: auto;
-  flex-wrap: nowrap;
-  gap: 10px;
-  padding-bottom: 5px;
+    flex-direction: row !important; /* Horizontal on mobile */
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding-bottom: 5px;
 }
 
 .sidebar .nav-link {
-  color: var(--bs-body-color);
-  border-radius: 8px;
-  margin: 0;
-  padding: 0.5rem 1rem;
-  white-space: nowrap;
-  flex-shrink: 0;
+    color: var(--bs-body-color);
+    border-radius: 8px;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
-.sidebar .nav-link:hover,
-.sidebar .nav-link.active {
-  background-color: rgba(249, 115, 22, 0.1);
-  color: var(--primary-color) !important;
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+    background-color: rgba(249, 115, 22, 0.1);
+    color: var(--primary-color) !important;
 }
 
 .main-content {
-  margin-left: 0;
-  padding: 1rem;
-  transition: margin-left 0.3s;
-  background-color: var(--bs-body-bg);
-  min-height: calc(
-    100vh - var(--header-height) - 60px
-  ); /* Adjust for mobile header/nav */
-  color: var(--bs-body-color);
+    margin-left: 0;
+    padding: 1rem;
+    transition: margin-left 0.3s;
+    background-color: var(--bs-body-bg);
+    min-height: calc(100vh - var(--header-height) - 60px); /* Adjust for mobile header/nav */
+    color: var(--bs-body-color);
 }
 
 @media (min-width: 992px) {
-  .sidebar {
-    height: calc(100vh - var(--header-height));
-    position: fixed;
-    top: var(--header-height);
-    left: 0;
-    width: 280px;
-    border-right: 1px solid var(--border-color);
-    border-bottom: none;
-    overflow-y: auto;
-    padding: 20px;
-  }
+    .sidebar {
+        height: calc(100vh - var(--header-height));
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        width: 280px;
+        border-right: 1px solid var(--border-color);
+        border-bottom: none;
+        overflow-y: auto;
+        padding: 20px;
+    }
+    
+    .sidebar .nav {
+        flex-direction: column !important;
+        overflow-x: hidden;
+        flex-wrap: wrap;
+        gap: 0;
+    }
+    
+    .sidebar .nav-link {
+        margin-bottom: 0.5rem;
+    }
 
-  .sidebar .nav {
-    flex-direction: column !important;
-    overflow-x: hidden;
-    flex-wrap: wrap;
-    gap: 0;
-  }
-
-  .sidebar .nav-link {
-    margin-bottom: 0.5rem;
-  }
-
-  .has-sidebar .main-content {
-    margin-left: 280px;
-    padding: 2rem;
-  }
+    .has-sidebar .main-content {
+        margin-left: 280px;
+        padding: 2rem;
+    }
 }
 
 /* Custom Light Orange Button */
 .btn-light-orange {
-  color: #fb923c !important; /* Orange 400 */
-  border-color: #fb923c !important;
-  background-color: transparent;
+    color: #fb923c !important; /* Orange 400 */
+    border-color: #fb923c !important;
+    background-color: transparent;
 }
-.btn-light-orange:hover,
-.btn-light-orange.active {
-  background-color: #fb923c !important;
-  color: #fff !important;
+.btn-light-orange:hover, .btn-light-orange.active {
+    background-color: #fb923c !important;
+    color: #fff !important;
 }
 
 /* Theme Toggle Button */
 .theme-toggle {
-  cursor: pointer;
-  font-size: 1.2rem;
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-  color: var(--bs-body-color);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+    color: var(--bs-body-color);
 }
 .theme-toggle:hover {
-  background-color: rgba(128, 128, 128, 0.2);
+    background-color: rgba(128,128,128,0.2);
 }
 
 /* BPMN & Canvas Customizations */
 .canvas-container {
-  height: 100%;
-  min-height: calc(100vh - var(--header-height));
-  position: relative;
-  /* Dot Grid Background for Visibility */
-  background-color: #f8f9fa;
-  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-  background-size: 20px 20px;
-  border-top: 1px solid var(--border-color);
-  overflow: auto; /* Allow native scrolling if content expands */
+    height: 100%;
+    min-height: calc(100vh - var(--header-height));
+    position: relative;
+    /* Dot Grid Background for Visibility */
+    background-color: #f8f9fa;
+    background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+    background-size: 20px 20px;
+    border-top: 1px solid var(--border-color);
+    overflow: auto; /* Allow native scrolling if content expands */
 }
 
 .bjs-container {
-  height: 100%;
+    height: 100%;
 }
 
 /* Remove Watermark */
 .bjs-powered-by {
-  display: none !important;
+    display: none !important;
 }
 
 /* Modernized Horizontal Palette (Bottom Center) */
 .djs-palette {
-  position: absolute;
-  bottom: 20px;
-  top: auto;
-  left: 50%;
-  transform: translateX(-50%);
-  width: auto !important;
-  height: 50px !important;
-  background: var(--card-bg) !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: 50px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  padding: 0 16px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  z-index: 500;
+    position: absolute;
+    bottom: 20px;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto !important; 
+    height: 50px !important;
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 50px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 0 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    z-index: 500;
 }
 
 .djs-palette .bg-icon {
-  display: none !important; /* Hide background icons */
+    display: none !important; /* Hide background icons */
 }
 
 /* Override bpmn-js column layouts for entries */
 .djs-palette .djs-palette-entries {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 0;
-  width: auto !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0;
+    width: auto !important;
 }
 
 .djs-palette .group {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border: none !important; /* Remove group borders */
-  margin: 0 4px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: none !important; /* Remove group borders */
+    margin: 0 4px;
 }
 
 .djs-palette .entry {
-  width: 40px;
-  height: 40px;
-  margin: 0 2px;
-  float: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--text-muted);
-  border-radius: 8px; /* Softer square looks better for tools than circle */
-  cursor: pointer;
-  position: relative;
+    width: 40px;
+    height: 40px;
+    margin: 0 2px;
+    float: none; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-muted); /* Restored color */
+    border-radius: 8px; /* Softer square looks better for tools than circle */
+    cursor: pointer;
+    position: relative;
 }
 
 .djs-palette .entry::before {
-  /* Ensure icon centering if using sprites */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    /* Ensure icon centering if using sprites */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .djs-palette .entry:hover {
-  color: var(--primary-color) !important;
-  background-color: rgba(249, 115, 22, 0.1) !important;
+    color: var(--primary-color) !important; /* Restored hover color */
+    background-color: rgba(249, 115, 22, 0.1) !important;
 }
 
 .djs-palette .separator {
-  width: 1px;
-  height: 24px;
-  margin: 0 8px;
-  border-left: 1px solid var(--border-color);
-  border-top: none;
+    width: 1px;
+    height: 24px;
+    margin: 0 8px;
+    border-left: 1px solid var(--border-color);
+    border-top: none;
 }
 
 /* Context Pad & Popup Menu (Dark Mode Fixes) */
-.djs-context-pad,
-.djs-popup {
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.djs-context-pad, .djs-popup {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 /* BPMN Dark Mode Support & Canvas */
 [data-theme="dark"] .canvas-container {
-  background-color: #121212;
-  background-image: radial-gradient(#333 1px, transparent 1px);
-  border-color: #333;
+    background-color: #121212;
+    background-image: radial-gradient(#333 1px, transparent 1px);
+    border-color: #333;
 }
 
 /* Dark Mode: Palette, Context Pad, Popups */
-[data-theme="dark"] .djs-palette,
+[data-theme="dark"] .djs-palette, 
 [data-theme="dark"] .djs-context-pad,
 [data-theme="dark"] .djs-popup {
-  background: #1e1e1e !important;
-  border-color: #444 !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    background: #1e1e1e !important;
 }
 
-/* Dark Mode: Icons */
-[data-theme="dark"] .djs-palette .entry {
-  color: #000000 !important;
-  background-color: #9e9e9e; /* Grey background */
-}
-
+[data-theme="dark"] .djs-palette .entry, 
 [data-theme="dark"] .djs-context-pad .entry,
 [data-theme="dark"] .djs-popup .entry {
-  color: #e0e0e0 !important;
+  color: #e0e0e0 !important; /* Restored text color for font icons */
 }
 
 [data-theme="dark"] .djs-palette .entry:hover,
 [data-theme="dark"] .djs-context-pad .entry:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  color: var(--primary-color) !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--primary-color) !important; /* Restored hover text color */
 }
 
-/* Fix SVG Icon Fills in Context Pad */
+/* Fix SVG Icon Fills in Context Pad & Popup headers */
 [data-theme="dark"] .djs-context-pad .entry svg path,
 [data-theme="dark"] .djs-popup .entry svg path {
-  fill: #e0e0e0 !important;
+    fill: #e0e0e0 !important;
 }
 
-[data-theme="dark"] .djs-context-pad .entry:hover svg path {
-  fill: var(--primary-color) !important;
+[data-theme="dark"] .djs-context-pad .entry:hover svg path,
+[data-theme="dark"] .djs-popup .entry:hover svg path {
+    fill: var(--primary-color) !important;
+}
+
+/* Ensure Popup Headers (the bar with icons) are Dark */
+[data-theme="dark"] .djs-popup-header {
+    background-color: #1e1e1e !important;
+    border-bottom: 1px solid #444;
+}
+
+[data-theme="dark"] .djs-popup-header .entry {
+    background-color: transparent !important; /* Keep transparent bg, but color is inherited from above rules or set explicitly if needed */
+}
+
+[data-theme="dark"] .djs-popup-header .entry:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Popup Body (Search results or list items) */
+[data-theme="dark"] .djs-popup-body {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .djs-popup-body .entry:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--primary-color) !important;
 }
 
 /* Scrollbars for Dark Mode */
 [data-theme="dark"] ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+    width: 10px;
+    height: 10px;
 }
 [data-theme="dark"] ::-webkit-scrollbar-track {
-  background: #121212;
+    background: #121212;
 }
 [data-theme="dark"] ::-webkit-scrollbar-thumb {
-  background: #444;
-  border-radius: 5px;
+    background: #444;
+    border-radius: 5px;
 }
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+    background: #555;
 }
 
 /* Inputs in Dark Mode */
-[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-control, 
 [data-theme="dark"] .form-select {
-  background-color: #2a2a2a;
-  border-color: #444;
-  color: #e0e0e0;
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: #e0e0e0;
 }
 
 [data-theme="dark"] .form-control::placeholder {
-  color: #a0a0a0;
-  opacity: 1;
+    color: #a0a0a0;
+    opacity: 1;
 }
 
 [data-theme="dark"] .badge.bg-light {
-  background-color: #333 !important;
-  color: #eee !important;
-  border-color: #444 !important;
+    background-color: #333 !important;
+    color: #eee !important;
+    border-color: #444 !important;
 }
+
+/* ==========================================================================
+   BPMN.io Dark Theme Implementation
+   Based on bpmn-js theming guide
+   ========================================================================== */
+
+/* 1. Canvas Background */
+[data-theme="dark"] .canvas-container {
+    background-color: #121212;
+    background-image: radial-gradient(#333 1px, transparent 1px);
+    border-color: #333;
+}
+
+/* 2. Main Shape Outlines (Tasks, Events, Gateways) */
+/* 2. Main Shape Outlines (Tasks, Events, Gateways) */
+[data-theme="dark"] .djs-visual > rect,
+[data-theme="dark"] .djs-visual > circle,
+[data-theme="dark"] .djs-visual > polygon,
+[data-theme="dark"] .djs-visual > path,
+[data-theme="dark"] .djs-visual > polyline {
+    stroke: #e0e0e0 !important; /* Grey details */
+    stroke-width: 2px !important;
+}
+
+/* 3. Shape Fills (Body Background) - Black Bodies */
+[data-theme="dark"] .djs-visual > rect,
+[data-theme="dark"] .djs-visual > circle,
+[data-theme="dark"] .djs-visual > polygon {
+    fill: #000000 !important; /* Black Body */
+}
+
+/* 4. Inner Icons/Symbols (e.g., Task Types, Gateway 'X', Event Lines) 
+   These are usually paths inside the visual group but NOT the first child (body)
+*/
+[data-theme="dark"] .djs-visual > path:not(:first-child) {
+    fill: #ffffff !important; /* Fill for solid icons */
+    stroke: #ffffff !important; /* Stroke for line icons */
+}
+
+/* 5. Connections (Sequence Flows, Associations) */
+[data-theme="dark"] .djs-connection .djs-visual > path {
+    fill: none !important;
+    stroke: #ffffff !important;
+}
+
+/* 6. Labels/Text */
+[data-theme="dark"] .djs-visual text,
+[data-theme="dark"] .djs-label {
+    fill: #ffffff !important;
+    font-weight: 400;
+}
+
+/* 7. Markers / Arrowheads 
+   Note: CSS styling of markers linked via 'url(#id)' is limited. 
+   bpmn-js creates markers dynamically. We attempt to style their definition content if accessible/inline, 
+   but strictly speaking, complete marker recoloring usually requires a custom renderer. 
+   However, we can force path colors inside specific marker classes if they are rendered as part of the SVG DOM.
+*/
+
+/* 8. Dragging Visuals (Ghost Elements) */
+/* 8. Dragging Visuals (Ghost Elements) */
+[data-theme="dark"] .djs-drag-group .djs-visual rect,
+[data-theme="dark"] .djs-drag-group .djs-visual circle,
+[data-theme="dark"] .djs-drag-group .djs-visual polygon {
+    stroke: #e0e0e0 !important;
+    fill: #000000 !important;
+}
+[data-theme="dark"] .djs-drag-group .djs-visual path, 
+[data-theme="dark"] .djs-drag-group .djs-visual polyline {
+    stroke: #e0e0e0 !important;
+}
+
+/* 9. Selection Outline (Primary Selection) */
+[data-theme="dark"] .djs-outline {
+    stroke: var(--primary-color) !important; /* Keep orange for selection highlight */
+    stroke-width: 2px !important;
+}
+
+/* 10. Hide Hit Box (Interaction Layer) */
+[data-theme="dark"] .djs-hit {
+    stroke: none !important;
+    fill: none !important;
+    opacity: 0;
+}
+
+/* 11. Custom Markers hack for dark mode (Attempt to override defs if possible via generic SVG fill)
+   This sets a global fill rule for paths inside markers if they don't have specific styles overriding them.
+*/
+[data-theme="dark"] svg marker path {
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+}
+
+
+

@@ -51,9 +51,9 @@
                             <li><a class="dropdown-item" href="#" @click.prevent="$refs.fileInput.click()"><i class="fas fa-folder-open me-2"></i> Abrir</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><h6 class="dropdown-header">Exportar</h6></li>
-                            <li><a class="dropdown-item" href="#" @click.prevent="saveSVG"><i class="fas fa-image me-2"></i> Salvar SVG</a></li>
-                            <li><a class="dropdown-item" href="#" @click.prevent="saveXML"><i class="fas fa-code me-2"></i> Salvar XML</a></li>
-                            <li><a class="dropdown-item" href="#" @click.prevent="savePDF"><i class="fas fa-file-pdf me-2"></i> Salvar PDF</a></li>
+                            <li><a class="dropdown-item" href="#" @click.prevent="openSaveModal('SVG')"><i class="fas fa-image me-2"></i> Salvar SVG</a></li>
+                            <li><a class="dropdown-item" href="#" @click.prevent="openSaveModal('XML')"><i class="fas fa-code me-2"></i> Salvar XML</a></li>
+                            <li><a class="dropdown-item" href="#" @click.prevent="openSaveModal('PDF')"><i class="fas fa-file-pdf me-2"></i> Salvar PDF</a></li>
                         </ul>
                     </div>
 
@@ -81,6 +81,35 @@
            
            <div id="canvas" class="bjs-container"></div>
        </div>
+
+        <!-- Save File Modal -->
+        <div class="modal fade" id="saveFileModal" tabindex="-1" aria-hidden="true" ref="saveModalElement">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" :class="{'bg-dark text-white': isDark}">
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title">Salvar Diagrama</h5>
+                        <button type="button" class="btn-close" :class="{'btn-close-white': isDark}" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="fileNameInput" class="form-label">Nome do Arquivo</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" 
+                                   :class="{'bg-secondary text-white border-secondary': isDark}"
+                                   id="fileNameInput" 
+                                   v-model="fileName" 
+                                   @keyup.enter="confirmSave" 
+                                   placeholder="Digite o nome do arquivo"
+                                   autofocus>
+                            <span class="input-group-text" :class="{'bg-secondary text-white border-secondary': isDark}">.{{ saveType.toLowerCase() }}</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top-0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" @click="confirmSave">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Notification -->
         <div v-if="notification" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">

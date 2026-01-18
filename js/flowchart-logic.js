@@ -26,6 +26,12 @@ createApp({
         const notification = ref('');
         const isDark = ref(false);
         const autoSaveTimer = ref(null);
+        
+        // Modal logic
+        const fileName = ref('diagrama');
+        const saveType = ref('XML');
+        const saveModalElement = ref(null);
+        let modalInstance = null;
 
         onMounted(() => {
             modeler.value = new BpmnJS({
@@ -91,6 +97,9 @@ createApp({
             } else {
                 openDiagram(initialDiagram);
             }
+
+            // Modal initialization moved to openSaveModal for robustness
+
         });
 
         const toggleTheme = () => {
@@ -117,39 +126,86 @@ createApp({
 
         const createNewDiagram = () => {
             openDiagram(initialDiagram);
+            fileName.value = 'diagrama';
         };
 
         const loadDiagram = (event) => {
             const file = event.target.files[0];
             if (!file) return;
+            
+            // Set filename from loaded file (remove extension)
+            fileName.value = file.name.replace(/\.[^/.]+$/, "");
+            
             const reader = new FileReader();
             reader.onload = (e) => openDiagram(e.target.result);
             reader.readAsText(file);
         };
 
-        const saveXML = async () => {
+        const openSaveModal = (type) => {
+            saveType.value = type;
+            
+            // Lazy initialization to prevent 'modalInstance is null' error
+            if (!modalInstance) {
+                const el = saveModalElement.value || document.getElementById('saveFileModal');
+                if (el) {
+                    modalInstance = new bootstrap.Modal(el);
+                    el.addEventListener('shown.bs.modal', () => {
+                        const input = document.getElementById('fileNameInput');
+                        if (input) {
+                            input.focus();
+                            input.select();
+                        }
+                    });
+                } else {
+                    console.error('Save modal element not found');
+                    showNotify('Erro: Modal não encontrado.');
+                    return;
+                }
+            }
+            
+            modalInstance.show();
+        };
+
+        const confirmSave = () => {
+            const name = fileName.value.trim() || 'diagrama';
+            
+            switch (saveType.value) {
+                case 'XML':
+                    saveXML(name);
+                    break;
+                case 'SVG':
+                    saveSVG(name);
+                    break;
+                case 'PDF':
+                    savePDF(name);
+                    break;
+            }
+            modalInstance.hide();
+        };
+
+        const saveXML = async (name = 'diagrama') => {
             try {
                 const { xml } = await modeler.value.saveXML({ format: true });
                 const blob = new Blob([xml], { type: 'application/xml' });
-                saveAs(blob, 'diagrama.bpmn');
+                saveAs(blob, `${name}.bpmn`);
                 showNotify('Salvo em XML!');
             } catch (err) {
                 showNotify('Erro ao salvar XML.');
             }
         };
 
-        const saveSVG = async () => {
+        const saveSVG = async (name = 'diagrama') => {
             try {
                 const { svg } = await modeler.value.saveSVG();
                 const blob = new Blob([svg], { type: 'image/svg+xml' });
-                saveAs(blob, 'diagrama.svg');
+                saveAs(blob, `${name}.svg`);
                 showNotify('Salvo em SVG!');
             } catch (err) {
                 showNotify('Erro ao salvar SVG.');
             }
         };
 
-        const savePDF = async () => {
+        const savePDF = async (name = 'diagrama') => {
             try {
                 const { svg } = await modeler.value.saveSVG();
                 
@@ -188,7 +244,7 @@ createApp({
                 // Add the high-res image into the PDF at the original size
                 // This compresses pixels, creating high DPI output
                 pdf.addImage(imgData, 'PNG', 20, 20, originalWidth, originalHeight);
-                pdf.save("diagrama.pdf");
+                pdf.save(`${name}.pdf`);
                 showNotify('Salvo em PDF (Alta Qualidade)!');
             } catch (e) {
                 console.error(e);
@@ -222,6 +278,11 @@ createApp({
             notification,
             createNewDiagram,
             loadDiagram,
+            openSaveModal,
+            confirmSave,
+            saveModalElement,
+            fileName,
+            saveType,
             saveXML,
             saveSVG,
             savePDF,

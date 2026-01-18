@@ -176,6 +176,9 @@ createApp({
                 case 'SVG':
                     saveSVG(name);
                     break;
+                case 'PNG':
+                    savePNG(name);
+                    break;
                 case 'PDF':
                     savePDF(name);
                     break;
@@ -252,6 +255,43 @@ createApp({
             }
         };
 
+        const savePNG = async (name = 'diagrama') => {
+            try {
+                const { svg } = await modeler.value.saveSVG();
+                
+                // Parse SVG to get dimensions
+                const parser = new DOMParser();
+                const svgElem = parser.parseFromString(svg, "image/svg+xml").documentElement;
+                const originalWidth = parseInt(svgElem.getAttribute("width")) || 800;
+                const originalHeight = parseInt(svgElem.getAttribute("height")) || 600;
+
+                // High Quality Scale Factor (4x for PNG to ensure crisp text)
+                const scale = 4; 
+                const scaledWidth = originalWidth * scale;
+                const scaledHeight = originalHeight * scale;
+
+                const canvas = document.createElement('canvas');
+                canvas.width = scaledWidth;
+                canvas.height = scaledHeight;
+                const ctx = canvas.getContext('2d');
+                
+                // Scale the context
+                ctx.scale(scale, scale);
+
+                const v = await canvg.Canvg.fromString(ctx, svg);
+                await v.render();
+                
+                canvas.toBlob((blob) => {
+                    saveAs(blob, `${name}.png`);
+                    showNotify('Salvo em PNG!');
+                }, 'image/png');
+
+            } catch (e) {
+                console.error(e);
+                showNotify('Erro ao salvar PNG: ' + e.message);
+            }
+        };
+
         const showNotify = (msg) => {
             notification.value = msg;
             setTimeout(() => notification.value = '', 3000);
@@ -284,7 +324,9 @@ createApp({
             fileName,
             saveType,
             saveXML,
+            saveXML,
             saveSVG,
+            savePNG,
             savePDF,
             isDark,
             toggleTheme,

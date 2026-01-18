@@ -52,9 +52,11 @@ createApp({
                 const element = e.element;
                 const canvas = modeler.value.get('canvas');
 
-                // 1. DataObject and DataStore (White body override)
+
+
+                // 1. DataObject and DataStore (Fix for Dark Mode fills)
                 if (['bpmn:DataObjectReference', 'bpmn:DataStoreReference'].includes(element.type)) {
-                    canvas.addMarker(element, 'light-theme-forced');
+                    canvas.addMarker(element, 'dark-fill-fix');
                 }
 
                 // 2. Message Intermediate Throw Event (Specific styling)

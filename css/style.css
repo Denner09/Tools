@@ -565,14 +565,12 @@ body {
     stroke: #ffffff !important;
 }
 
-/* 12. Exception: DataObject and DataStore should keep standard colors (White/Black) in Dark Mode */
-[data-theme="dark"] .djs-element.light-theme-forced .djs-visual > rect,
-[data-theme="dark"] .djs-element.light-theme-forced .djs-visual > circle,
-[data-theme="dark"] .djs-element.light-theme-forced .djs-visual > polygon,
-[data-theme="dark"] .djs-element.light-theme-forced .djs-visual > path,
-[data-theme="dark"] .djs-element.light-theme-forced .djs-visual > polyline {
-    stroke: #000000 !important;
-    fill: #ffffff !important;
+
+
+
+/* 12. Exception: Force DataObject and DataStore paths to be Black in Dark Mode */
+[data-theme="dark"] .djs-element.dark-fill-fix .djs-visual > path {
+    fill: #000000 !important;
 }
 
 

@@ -492,7 +492,6 @@ body {
 [data-theme="dark"] .djs-visual > path,
 [data-theme="dark"] .djs-visual > polyline {
     stroke: #e0e0e0 !important; /* Grey details */
-    stroke-width: 2px !important;
 }
 
 /* 3. Shape Fills (Body Background) - Black Bodies */

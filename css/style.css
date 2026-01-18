@@ -362,6 +362,11 @@ body {
   color: #e0e0e0 !important; /* Restored text color for font icons */
 }
 
+[data-theme="dark"] .djs-context-pad .entry {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
 [data-theme="dark"] .djs-palette .entry:hover,
 [data-theme="dark"] .djs-context-pad .entry:hover {
     background-color: rgba(255, 255, 255, 0.1) !important;
@@ -445,8 +450,13 @@ body {
    ========================================================================== */
 
 /* 1. Canvas Background */
+[data-theme="dark"] .canvas-container,
+[data-theme="dark"] .djs-container,
+[data-theme="dark"] .djs-container svg {
+    background-color: #121212 !important;
+}
+
 [data-theme="dark"] .canvas-container {
-    background-color: #121212;
     background-image: radial-gradient(#333 1px, transparent 1px);
     border-color: #333;
 }
@@ -471,10 +481,11 @@ body {
 
 /* 4. Inner Icons/Symbols (e.g., Task Types, Gateway 'X', Event Lines) 
    These are usually paths inside the visual group but NOT the first child (body)
+   Changed to fill:none to prevent "blobs" on outlined icons (like message envelope).
 */
 [data-theme="dark"] .djs-visual > path:not(:first-child) {
-    fill: #ffffff !important; /* Fill for solid icons */
-    stroke: #ffffff !important; /* Stroke for line icons */
+    fill: none !important; /* Default to outline */
+    stroke: #e0e0e0 !important; /* Visible stroke */
 }
 
 /* 5. Connections (Sequence Flows, Associations) */
@@ -523,6 +534,7 @@ body {
     opacity: 0;
 }
 
+
 /* 11. Custom Markers hack for dark mode (Attempt to override defs if possible via generic SVG fill)
    This sets a global fill rule for paths inside markers if they don't have specific styles overriding them.
 */
@@ -530,6 +542,28 @@ body {
     fill: #ffffff !important;
     stroke: #ffffff !important;
 }
+
+/* 12. Exception: DataObject and DataStore should keep standard colors (White/Black) in Dark Mode */
+[data-theme="dark"] .djs-element.light-theme-forced .djs-visual > rect,
+[data-theme="dark"] .djs-element.light-theme-forced .djs-visual > circle,
+[data-theme="dark"] .djs-element.light-theme-forced .djs-visual > polygon,
+[data-theme="dark"] .djs-element.light-theme-forced .djs-visual > path,
+[data-theme="dark"] .djs-element.light-theme-forced .djs-visual > polyline {
+    stroke: #000000 !important;
+    fill: #ffffff !important;
+}
+
+
+/* 13. Fix Message Intermediate Throw Event Icon (The Envelope) 
+   The default renderer draws a filled envelope. Our global rule (fill+stroke white) makes it a blob.
+   We force it to be Fill White, Stroke Black/None depending on preference.
+   Here we use Fill White and Stroke None to match a clean "Icon" look on dark background.
+*/
+[data-theme="dark"] .djs-element.message-event-styled .djs-visual > path:not(:first-child) {
+    fill: none !important; /* Was #ffffff, causing blob. Changed to none/black */
+    stroke: #e0e0e0 !important; /* Enable stroke to see the lines */
+}
+
 
 
 

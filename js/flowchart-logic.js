@@ -45,6 +45,25 @@ createApp({
                 }]
             });
 
+            // Hook for applying custom CSS classes to specific elements
+            modeler.value.on('shape.added', (e) => {
+                const element = e.element;
+                const canvas = modeler.value.get('canvas');
+
+                // 1. DataObject and DataStore (White body override)
+                if (['bpmn:DataObjectReference', 'bpmn:DataStoreReference'].includes(element.type)) {
+                    canvas.addMarker(element, 'light-theme-forced');
+                }
+
+                // 2. Message Intermediate Throw Event (Specific styling)
+                if (element.type === 'bpmn:IntermediateThrowEvent') {
+                    const bo = element.businessObject;
+                    if (bo.eventDefinitions && bo.eventDefinitions.some(ed => ed.$type === 'bpmn:MessageEventDefinition')) {
+                         canvas.addMarker(element, 'message-event-styled');
+                    }
+                }
+            });
+
             // We actually need to re-enable scroll for vertical scrolling if native overflow is invalid,
             // BUT prompt asked for "scroll do mouse não consiga mover ele".
             // Standard bpmn-js moves/zooms on scroll. We disabled that module above.

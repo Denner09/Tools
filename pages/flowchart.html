@@ -65,6 +65,20 @@
 
         <!-- Main Content (Full Screen Canvas) -->
        <div class="canvas-container">
+           <!-- Floating Controls -->
+           <div class="canvas-controls">
+               <button class="btn btn-control" @click="undo" title="Desfazer (Ctrl+Z)">
+                   <i class="fas fa-undo"></i>
+               </button>
+               <button class="btn btn-control" @click="redo" title="Refazer (Ctrl+Y)">
+                   <i class="fas fa-redo"></i>
+               </button>
+               <div class="vr mx-2"></div>
+               <button class="btn btn-control text-danger" @click="clearCanvas" title="Limpar Tudo">
+                   <i class="fas fa-trash"></i>
+               </button>
+           </div>
+           
            <div id="canvas" class="bjs-container"></div>
        </div>
 

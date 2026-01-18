@@ -13,13 +13,9 @@ const { jsPDF } = window.jspdf;
 const initialDiagram = `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
     <bpmn:process id="Process_1" isExecutable="false">
-    <bpmn:startEvent id="StartEvent_1" />
     </bpmn:process>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
-        <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="173" y="102" width="36" height="36" />
-        </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>
 </bpmn:definitions>`;
@@ -29,6 +25,7 @@ createApp({
         const modeler = ref(null);
         const notification = ref('');
         const isDark = ref(false);
+        const autoSaveTimer = ref(null);
 
         onMounted(() => {
             modeler.value = new BpmnJS({
@@ -36,11 +33,10 @@ createApp({
                 keyboard: {
                     bindTo: window
                 },
-                // Disable zoom on scroll
                 additionalModules: [{
                     zoomScroll: ['value', {
-                        toggle: function() {}, // No-op
-                        scroll: function() {}  // No-op
+                        toggle: function() {}, 
+                        scroll: function() {}  
                     }]
                 }]
             });
@@ -64,10 +60,20 @@ createApp({
                 }
             });
 
-            // We actually need to re-enable scroll for vertical scrolling if native overflow is invalid,
-            // BUT prompt asked for "scroll do mouse não consiga mover ele".
-            // Standard bpmn-js moves/zooms on scroll. We disabled that module above.
-            // Now only Dragging (Hand Tool) moves the canvas.
+            // Auto-Save Logic
+            modeler.value.on('commandStack.changed', () => {
+                if (autoSaveTimer.value) clearTimeout(autoSaveTimer.value);
+                autoSaveTimer.value = setTimeout(async () => {
+                    try {
+                        const { xml } = await modeler.value.saveXML({ format: true });
+                        localStorage.setItem('cachedDiagram', xml);
+                        console.log('Auto-saved to cache');
+                        showNotify('Rascunho salvo.');
+                    } catch (err) {
+                        console.error('Auto-save failed', err);
+                    }
+                }, 1000); // Wait 1 second after last change
+            });
 
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme) {
@@ -77,7 +83,14 @@ createApp({
             }
             applyTheme();
 
-            openDiagram(initialDiagram);
+            // Restore from Cache or Load Empty
+            const cachedDiagram = localStorage.getItem('cachedDiagram');
+            if (cachedDiagram) {
+                openDiagram(cachedDiagram);
+                showNotify('Diagrama restaurado do cache.');
+            } else {
+                openDiagram(initialDiagram);
+            }
         });
 
         const toggleTheme = () => {
@@ -95,7 +108,7 @@ createApp({
                 await modeler.value.importXML(xml);
                 const canvas = modeler.value.get('canvas');
                 canvas.zoom('fit-viewport');
-                showNotify('Diagrama carregado.');
+                // No notification for initial load to keep it clean, unless restored
             } catch (err) {
                 console.error(err);
                 showNotify('Erro ao carregar.');
@@ -188,6 +201,23 @@ createApp({
             setTimeout(() => notification.value = '', 3000);
         };
 
+        const undo = () => {
+            const commandStack = modeler.value.get('commandStack');
+            commandStack.undo();
+        };
+
+        const redo = () => {
+            const commandStack = modeler.value.get('commandStack');
+            commandStack.redo();
+        };
+
+        const clearCanvas = () => {
+             // Create a new empty diagram effectively clearing it
+             if(confirm('Tem certeza que deseja limpar tudo?')) {
+                 createNewDiagram();
+             }
+        };
+
         return {
             notification,
             createNewDiagram,
@@ -196,7 +226,10 @@ createApp({
             saveSVG,
             savePDF,
             isDark,
-            toggleTheme
+            toggleTheme,
+            undo,
+            redo,
+            clearCanvas
         };
     }
 }).mount('#app');

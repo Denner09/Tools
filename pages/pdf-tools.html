@@ -100,8 +100,16 @@
                             <option value="medium">Média Compressão (Boa Qualidade)</option>
                             <option value="high">Alta Compressão (Qualidade Reduzida - Rasterização)</option>
                             <option value="very_high">Muito Alta (Baixa Qualidade - Grayscale)</option>
+                            <option value="custom">Tamanho Personalizado (Alvo)</option>
                         </select>
-                        <div class="form-text mt-2"><i class="fas fa-info-circle"></i> Nota: Compressões 'Alta' e 'Muito Alta' converterão páginas em imagens para reduzir tamanho.</div>
+                        <div class="form-text mt-2" v-if="compressionLevel !== 'custom'"><i class="fas fa-info-circle"></i> Nota: Compressões 'Alta' e 'Muito Alta' converterão páginas em imagens para reduzir tamanho.</div>
+                        
+                        <!-- Custom Size Input -->
+                        <div v-if="compressionLevel === 'custom'" class="mt-3">
+                            <label class="form-label">Tamanho Alvo Aproximado (MB)</label>
+                            <input type="number" v-model="customTargetMB" class="form-control" step="0.1" min="0.1" placeholder="Ex: 2.5">
+                            <div class="form-text">Tentaremos ajustar a qualidade para atingir este tamanho. O resultado é aproximado.</div>
+                        </div>
                     </div>
 
                     <!-- Split Options -->
@@ -164,6 +172,30 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </div>
+
+        <!-- Compression Decision Modal -->
+        <div class="modal fade" id="compressionDecisionModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" :class="{'bg-dark text-white': isDark}">
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title">Alvo Não Atingido</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>A compressão atingiu <strong>{{ (lastResultSize / 1024 / 1024).toFixed(2) }} MB</strong>, mas seu alvo era <strong>{{ parseFloat(customTargetMB).toFixed(2) }} MB</strong>.</p>
+                        <p>O que deseja fazer?</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" @click="handleCompressionDecision('keep')">
+                                <i class="fas fa-download me-2"></i> Baixar Assim Mesmo (Máximo Possível)
+                            </button>
+                            <button class="btn btn-secondary" @click="handleCompressionDecision('split')">
+                                <i class="fas fa-cut me-2"></i> Dividir em Partes de {{ parseFloat(customTargetMB).toFixed(2) }} MB
+                            </button>
+                            <button class="btn btn-outline-danger" data-bs-dismiss="modal" @click="cleanupCompression">Cancelar Operação</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

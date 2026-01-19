@@ -7,13 +7,32 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs
 createApp({
     data() {
         return {
-            currentTool: 'compress',
-            file: null,
+            currentTool: 'merge', // Changed default to show new options first? No, keep user flow. 
+            file: null, // Legacy single file support (for most tools)
+            files: [], // Array for multiple files (merge)
+            compareFile: null, // Second file for comparison
+            previewImage: null, // For Rotation/Number/Crop Preview
+            previewPage: 1,
+            totalPages: 0,
+            previewOriginalWidth: 0, // In Points
+            previewOriginalHeight: 0, // In Points
+            isCropping: false,
+            cropStart: { x: 0, y: 0 },
+            cropBox: { x: 0, y: 0, w: 0, h: 0 }, // For UI rendering in pixels
+            pageCrops: {}, // Store crop margins per page { pageNum: {top,bottom...} }
+            cropMode: 'all', // 'all' (entire doc) or 'selection' (cropped pages only)
+            convertDirection: 'to_others', // 'to_others' (PDF->Formats) or 'to_pdf' (Formats->PDF)
+            
+            // Tool Options
             resizeScale: "0.75",
             convertFormat: 'png',
             compressionLevel: 'medium',
             customTargetMB: null,
             splitRange: '',
+            rotateAngle: '90',
+            numberPosition: 'bottom-center',
+            cropMargins: { top: 0, bottom: 0, left: 0, right: 0 },
+            
             ocrLang: 'por',
             processing: false,
             progressPercent: 0,
@@ -41,34 +60,68 @@ createApp({
         this.applyTheme();
     },
     computed: {
-        toolTitle() {
-            const map = {
-                'compress': 'Comprimir PDF',
-                'split': 'Dividir PDF',
-                'resize': 'Redimensionar PDF',
-                'convert': 'Converter PDF',
-                'ocr': 'OCR (Reconhecimento de Texto)'
-            };
-            return map[this.currentTool];
-        },
         toolDescription() {
             const map = {
                 'compress': 'Reduza o tamanho do arquivo com opções avançadas',
                 'split': 'Extraia páginas específicas ou divida o arquivo inteiro',
                 'resize': 'Altere as dimensões físicas das páginas',
                 'convert': 'Transforme seu PDF em outros formatos',
-                'ocr': 'Converta imagens e PDFs digitalizados em texto editável'
+                'ocr': 'Converta imagens e PDFs digitalizados em texto editável',
+                'merge': 'Junte múltiplos arquivos PDF em um único documento',
+                'rotate': 'Gire as páginas do seu documento',
+                'crop': 'Recorte margens ou conteúdo indesejado',
+                'repair': 'Tente recuperar arquivos corrompidos ou normalize a estrutura',
+                'number': 'Adicione numeração de páginas ao documento',
+                'compare': 'Compare o conteúdo de texto entre dois arquivos PDF'
             };
             return map[this.currentTool];
         },
         actionLabel() {
-            if (this.currentTool === 'convert') return `Converter para ${this.convertFormat.toUpperCase()}`;
-            return {
+            if (this.currentTool === 'convert') {
+                return (this.convertDirection === 'to_pdf') ? 'Gerar PDF' : `Converter para ${this.convertFormat.toUpperCase()}`;
+            }
+            const map = {
                 'compress': 'Comprimir PDF',
                 'split': 'Dividir Arquivo',
                 'resize': 'Redimensionar',
-                'ocr': 'Reconhecer Texto'
-            }[this.currentTool];
+                'ocr': 'Reconhecer Texto',
+                'merge': 'Juntar PDFs',
+                'rotate': 'Rotacionar',
+                'crop': 'Recortar',
+                'repair': 'Reparar Arquivo',
+                'number': 'Inserir Números',
+                'compare': 'Comparar Arquivos'
+            };
+            return map[this.currentTool] || 'Processar';
+        },
+        toolTitle() {
+             const map = {
+                'compress': 'Comprimir PDF',
+                'split': 'Dividir PDF',
+                'resize': 'Redimensionar PDF',
+                'convert': 'Converter PDF',
+                'ocr': 'OCR',
+                'merge': 'Juntar PDFs',
+                'rotate': 'Rotacionar PDF',
+                'crop': 'Recortar PDF',
+                'repair': 'Reparar PDF',
+                'number': 'Numeração de Páginas',
+                'compare': 'Comparar PDFs'
+            };
+            return map[this.currentTool];
+        },
+        inputAccept() {
+            if (this.currentTool === 'ocr') return '.pdf,.jpg,.jpeg,.png';
+            if (this.currentTool === 'convert' && this.convertDirection === 'to_pdf') {
+                 // Expanded accept for experimental office support
+                 return '.jpg,.jpeg,.png,.docx,.xlsx';
+            }
+            return '.pdf';
+        },
+        allowMultiple() {
+             if (this.currentTool === 'merge' || this.currentTool === 'compare') return true;
+             if (this.currentTool === 'convert' && this.convertDirection === 'to_pdf') return true;
+             return false;
         }
     },
     methods: {
@@ -85,15 +138,51 @@ createApp({
             this.statusMessage = '';
             this.ocrResult = '';
             this.file = null;
+            this.files = [];
+            this.compareFile = null;
             this.splitRange = '';
+            this.pageCrops = {};
+            this.cropMargins = { top: 0, bottom: 0, left: 0, right: 0 };
         },
         handleFileUpload(event) {
-            this.file = event.target.files[0];
+            this.files = Array.from(event.target.files);
+            
+            // Validation Logic based on tool
+            if (this.currentTool === 'merge' || this.currentTool === 'compare' || (this.currentTool === 'convert' && this.convertDirection === 'to_pdf')) {
+                 this.file = this.files[0];
+                 
+                 if (this.currentTool === 'compare') {
+                    if (this.files.length > 1) this.compareFile = this.files[1];
+                    else this.compareFile = null;
+                 }
+            } else {
+                this.file = event.target.files[0];
+                this.files = [this.file];
+            }
+            
             this.statusMessage = '';
             this.ocrResult = '';
+            
+            if (['rotate', 'number', 'crop'].includes(this.currentTool)) {
+                this.previewPage = 1; // Reset to page 1
+                this.generatePreview();
+            }
         },
         handleDrop(event) {
-            this.file = event.dataTransfer.files[0];
+             this.files = Array.from(event.dataTransfer.files);
+             
+             if (this.currentTool === 'merge' || this.currentTool === 'compare' || (this.currentTool === 'convert' && this.convertDirection === 'to_pdf')) {
+                this.file = this.files[0];
+                if (this.currentTool === 'compare' && this.files.length > 1) this.compareFile = this.files[1];
+            } else {
+                this.file = event.dataTransfer.files[0];
+                this.files = [this.file];
+            }
+            
+            if (['rotate', 'number', 'crop'].includes(this.currentTool)) {
+                this.previewPage = 1;
+                this.generatePreview();
+            }
         },
         async readFile(file) {
             return new Promise((resolve, reject) => {
@@ -141,6 +230,12 @@ createApp({
                 else if (this.currentTool === 'resize') await this.resizePDF();
                 else if (this.currentTool === 'convert') await this.convertPDF();
                 else if (this.currentTool === 'ocr') await this.runOCR();
+                else if (this.currentTool === 'merge') await this.mergePDF();
+                else if (this.currentTool === 'rotate') await this.rotatePDF();
+                else if (this.currentTool === 'repair') await this.repairPDF();
+                else if (this.currentTool === 'number') await this.numberPDF();
+                else if (this.currentTool === 'crop') await this.cropPDF();
+                else if (this.currentTool === 'compare') await this.comparePDF();
                 
                 if (!this.ocrResult) { 
                     this.statusMessage = 'Operação concluída com sucesso!';
@@ -424,59 +519,648 @@ createApp({
             saveAs(blob, `redimensionado_${this.file.name}`);
         },
         
+        // --- CONVERT LOGIC ---
         async convertPDF() {
-                const bytes = await this.readFile(this.file);
-                if (this.convertFormat === 'doc') {
-                    this.progressStats = 'Extraindo texto...';
-                const loadingTask = pdfjsLib.getDocument(bytes);
-                const pdf = await loadingTask.promise;
-                let fullText = "";
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const textContent = await page.getTextContent();
-                    fullText += textContent.items.map(item => item.str).join(" ") + "\n\n";
-                }
-                const blob = new Blob([fullText], { type: 'application/msword' });
-                saveAs(blob, `convertido.doc`);
-                } else if (this.convertFormat === 'pptx') {
-                const loadingTask = pdfjsLib.getDocument(bytes);
-                const pdf = await loadingTask.promise;
-                const pptx = new PptxGenJS();
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    this.progressStats = `Gerando Slide ${i}`;
-                    const page = await pdf.getPage(i);
-                    const viewport = page.getViewport({ scale: 1.0 });
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-                    await page.render({ canvasContext: context, viewport: viewport }).promise;
-                    const imgData = canvas.toDataURL('image/png');
-                    const slide = pptx.addSlide();
-                    slide.addImage({ data: imgData, x: 0, y: 0, w: '100%', h: '100%' });
-                }
-                await pptx.writeFile({ fileName: `convertido.pptx` });
+            if (this.convertDirection === 'to_pdf') {
+                if (this.convertFormat === 'office_to_pdf') {
+                    await this.convertOfficeToPDF();
                 } else {
-                    const loadingTask = pdfjsLib.getDocument(bytes);
-                const pdf = await loadingTask.promise;
-                const zip = new JSZip();
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    this.progressStats = `Rasterizando página ${i}`;
+                    await this.imagesToPDF();
+                }
+                return;
+            }
+
+            this.progressStats = "Iniciando conversão...";
+            const format = this.convertFormat;
+            
+            if (['jpg', 'png', 'svg'].includes(format)) {
+                await this.convertToImages(format);
+            } else {
+                await this.convertToOffice(format);
+            }
+        },
+        
+        async convertToImages(format) {
+            const bytes = await this.readFile(this.file);
+            const loadingTask = pdfjsLib.getDocument(bytes);
+            const pdf = await loadingTask.promise;
+            
+            const zip = new JSZip();
+            
+            for (let i = 1; i <= pdf.numPages; i++) {
+                this.progressStats = `Convertendo página ${i}/${pdf.numPages}`;
+                const page = await pdf.getPage(i);
+                const viewport = page.getViewport({ scale: 1.5 });
+                
+                let blob;
+                if (format === 'svg') {
+                     const opList = await page.getOperatorList();
+                     const svgGfx = new pdfjsLib.SVGGraphics(page.commonObjs, page.objs);
+                     const svg = await svgGfx.getSVG(opList, viewport);
+                     const svgString = new XMLSerializer().serializeToString(svg);
+                     blob = new Blob([svgString], {type: 'image/svg+xml'});
+                } else {
+                     const canvas = document.createElement('canvas');
+                     const context = canvas.getContext('2d');
+                     canvas.height = viewport.height;
+                     canvas.width = viewport.width;
+                     await page.render({ canvasContext: context, viewport: viewport }).promise;
+                     blob = await new Promise(r => canvas.toBlob(r, `image/${format}`));
+                }
+                
+                zip.file(`pagina_${i}.${format}`, blob);
+            }
+            
+            const content = await zip.generateAsync({ type: "blob" });
+            saveAs(content, `imagens_${format}.zip`);
+        },
+        
+        async convertToOffice(format) {
+             // Basic Text Extraction fallback for Doc/Xls
+             if (format === 'pptx') {
+                 // Delegate to existing logic if simple, but let's rewrite slightly for clarity or reuse
+                 // Re-using old logic structure but cleaner
+                 this.progressStats = 'Gerando slides...';
+                 const pres = new PptxGenJS();
+                 const bytes = await this.readFile(this.file);
+                 const pdf = await pdfjsLib.getDocument(bytes).promise;
+                 
+                  for (let i = 1; i <= pdf.numPages; i++) {
+                    this.progressStats = `Processando slide ${i}/${pdf.numPages}`;
                     const page = await pdf.getPage(i);
                     const viewport = page.getViewport({ scale: 1.5 });
                     const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.height = viewport.height;
+                    const ctx = canvas.getContext('2d');
                     canvas.width = viewport.width;
-                    await page.render({ canvasContext: context, viewport: viewport }).promise;
-                    const blob = await new Promise(r => canvas.toBlob(r, `image/${this.convertFormat}`));
-                    zip.file(`pagina_${i}.${this.convertFormat}`, blob);
+                    canvas.height = viewport.height;
+                    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                    const imgData = canvas.toDataURL('image/png');
+                    const slide = pres.addSlide();
+                    slide.addImage({ data: imgData, x: 0, y: 0, w: "100%", h: "100%" });
                 }
-                const content = await zip.generateAsync({ type: "blob" });
-                saveAs(content, `imagens_${this.convertFormat}.zip`);
-                }
+                await pres.writeFile({ fileName: `apresentacao.pptx` });
+                return;
+             }
+             
+             // Doc/Xls -> Text Extraction
+             this.progressStats = 'Extraindo conteúdo...';
+             const bytes = await this.readFile(this.file);
+             const pdf = await pdfjsLib.getDocument(bytes).promise;
+             let fullText = "";
+             
+             for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const textContent = await page.getTextContent();
+                const text = textContent.items.map(s => s.str).join(" ");
+                fullText += `--- Página ${i} ---\n${text}\n\n`;
+             }
+             
+             if (format === 'doc') {
+                  const blob = new Blob([fullText], { type: "application/msword;charset=utf-8" });
+                  saveAs(blob, `documento.doc`);
+             } else if (format === 'xls') {
+                  // CSV approximation
+                  const blob = new Blob([fullText.replace(/ /g, ',')], { type: "text/csv;charset=utf-8" });
+                  saveAs(blob, `planilha.csv`);
+             }
         },
         
+        async imagesToPDF() {
+            if (!this.files.length) return;
+            this.progressStats = 'Gerando PDF...';
+            const pdfDoc = await PDFDocument.create();
+            
+            for (let i = 0; i < this.files.length; i++) {
+                const f = this.files[i];
+                const arrayBuffer = await this.readFile(f);
+                
+                let image;
+                if (f.type.includes('png')) {
+                    image = await pdfDoc.embedPng(arrayBuffer);
+                } else {
+                     image = await pdfDoc.embedJpg(arrayBuffer);
+                }
+                
+                const page = pdfDoc.addPage([image.width, image.height]);
+                page.drawImage(image, {
+                    x: 0,
+                    y: 0,
+                    width: image.width,
+                    height: image.height,
+                });
+            }
+            
+            const pdfBytes = await pdfDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            saveAs(blob, `imagens_combinadas.pdf`);
+        },
+        
+        async convertOfficeToPDF() {
+             if (!this.file) return;
+             this.progressStats = 'Processando documento (Alpha)...';
+             const arrayBuffer = await this.readFile(this.file);
+             const name = this.file.name.toLowerCase();
+             
+             let textContent = "";
+             
+             try {
+                if (name.endsWith('.docx')) {
+                     // Convert Docx -> Raw Text
+                     const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+                     textContent = result.value;
+                } else if (name.endsWith('.xlsx')) {
+                     // Convert Xlsx -> CSV-like Text
+                     const wb = XLSX.read(arrayBuffer, { type: 'array' });
+                     const firstSheet = wb.Sheets[wb.SheetNames[0]];
+                     textContent = XLSX.utils.sheet_to_txt(firstSheet);
+                }
+                
+                if (!textContent) {
+                    alert('Não foi possível extrair texto deste arquivo.');
+                    return;
+                }
+                
+                // Create PDF with text
+                await this.drawTextToNewPDF(textContent);
+                
+             } catch (e) {
+                 console.error(e);
+                 alert('Erro na conversão experimental: ' + e.message);
+             }
+        },
+        
+        async drawTextToNewPDF(text) {
+             const pdfDoc = await PDFDocument.create();
+             let page = pdfDoc.addPage();
+             const { width, height } = page.getSize();
+             const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+             const fontSize = 11;
+             const margin = 50;
+             const lineHeight = fontSize * 1.2;
+             
+             const textWidth = width - (margin * 2);
+             
+             // Wrap lines
+             const paragraphs = text.split('\n');
+             let yPosition = height - margin;
+             
+             for (let p of paragraphs) {
+                 // Simple word wrap
+                 const words = p.split(' ');
+                 let currentLine = "";
+                 
+                 for (let word of words) {
+                     const testLine = currentLine.length > 0 ? currentLine + " " + word : word;
+                     const textLen = font.widthOfTextAtSize(testLine, fontSize);
+                     
+                     if (textLen > textWidth) {
+                         // Print current line
+                         page.drawText(currentLine, { x: margin, y: yPosition, size: fontSize, font: font });
+                         yPosition -= lineHeight;
+                         currentLine = word;
+                         
+                         if (yPosition < margin) {
+                             page = pdfDoc.addPage();
+                             yPosition = height - margin;
+                         }
+                     } else {
+                         currentLine = testLine;
+                     }
+                 }
+                 // Last line of paragraph
+                 if (currentLine.length > 0) {
+                      page.drawText(currentLine, { x: margin, y: yPosition, size: fontSize, font: font });
+                      yPosition -= lineHeight;
+                 }
+                 
+                 // Paragraph gap
+                 yPosition -= lineHeight * 0.5;
+                 
+                 if (yPosition < margin) {
+                      page = pdfDoc.addPage();
+                      yPosition = height - margin;
+                 }
+             }
+             
+             const pdfBytes = await pdfDoc.save();
+             const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+             saveAs(blob, `conversao_experimental.pdf`);
+        },
+        
+        async mergePDF() {
+            this.progressStats = 'Juntando arquivos...';
+            const mergedPdf = await PDFDocument.create();
+            
+            for (let i = 0; i < this.files.length; i++) {
+                this.progressStats = `Processando arquivo ${i + 1}/${this.files.length}`;
+                const fileBytes = await this.readFile(this.files[i]);
+                const pdf = await PDFDocument.load(fileBytes);
+                const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                copiedPages.forEach((page) => mergedPdf.addPage(page));
+            }
+            
+            const pdfBytes = await mergedPdf.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            saveAs(blob, `juntado.pdf`);
+        },
+
+        async rotatePDF() {
+            const bytes = await this.readFile(this.file);
+            const pdfDoc = await PDFDocument.load(bytes);
+            const pages = pdfDoc.getPages();
+            const angle = parseInt(this.rotateAngle);
+            const { degrees } = PDFLib;
+            
+            pages.forEach(page => {
+                const currentRotationData = page.getRotation();
+                const currentAngle = currentRotationData.angle;
+                const newAngle = (currentAngle + angle) % 360;
+                page.setRotation(degrees(newAngle));
+            });
+            
+            const pdfBytes = await pdfDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            saveAs(blob, `rotacionado_${this.file.name}`);
+        },
+
+        async generatePreview(pageNumber = this.previewPage) {
+             if (!this.file || this.file.type !== 'application/pdf') {
+                 this.previewImage = null;
+                 this.totalPages = 0;
+                 return;
+             }
+             
+             try {
+                 const bytes = await this.readFile(this.file);
+                 const loadingTask = pdfjsLib.getDocument(bytes);
+                 const pdf = await loadingTask.promise;
+                 
+                 this.totalPages = pdf.numPages;
+                 if (pageNumber > this.totalPages) pageNumber = this.totalPages;
+                 if (pageNumber < 1) pageNumber = 1;
+                 this.previewPage = pageNumber;
+                 
+                 const page = await pdf.getPage(pageNumber);
+                 
+                 // Get Original Size in Points (1/72 inch)
+                 // view[2] is width, view[3] is height
+                 this.previewOriginalWidth = page.view[2];
+                 this.previewOriginalHeight = page.view[3];
+
+                 const viewport = page.getViewport({ scale: 0.8 }); // Lower scale for preview
+                 const canvas = document.createElement('canvas');
+                 const context = canvas.getContext('2d');
+                 canvas.height = viewport.height;
+                 canvas.width = viewport.width;
+                 
+                 await page.render({ canvasContext: context, viewport: viewport }).promise;
+                 this.previewImage = canvas.toDataURL('image/png');
+                 
+                 // Reset Crop Box to full initially (if crop tool) - handled by onLoad now to sync with pageCrops
+
+             } catch (e) {
+                 console.error("Preview Error", e);
+             }
+        },
+        
+        onPreviewImageLoad() {
+             // Called when preview image loads. Sync UI with current page's crop.
+             if (this.currentTool !== 'crop') return;
+             
+             const savedCrop = this.pageCrops[this.previewPage];
+             
+             if (savedCrop) {
+                 this.cropMargins = { ...savedCrop };
+                 // Reconstruct CropBox from Margins
+                 this.updateCropBoxFromMargins();
+             } else {
+                 this.cropMargins = { top: 0, bottom: 0, left: 0, right: 0 };
+                 this.cropBox = { x: 0, y: 0, w: 0, h: 0 };
+             }
+        },
+
+        updateCropBoxFromMargins() {
+            // Convert current mm margins to pixel box
+            const img = this.$refs.cropImg; // Direct ref better than finding via DOM
+            if (!img) return; // Might happen if not mounted yet
+            
+            // Wait, accessing $refs in method might be risky if multiple? 
+            // In Vue2, refs are okay. In the template we added ref="cropImg".
+            // Since it's inside v-if="previewImage", it should exist when onload fires.
+            
+            // Calculations
+            // mm -> pts -> px
+            const k = 2.835; // mm -> pts
+            
+            const displayWidth = img.width || img.naturalWidth;
+            const displayHeight = img.height || img.naturalHeight;
+            
+            if (!displayWidth || !this.previewOriginalWidth) return;
+            
+            const scaleX = displayWidth / this.previewOriginalWidth;
+            const scaleY = displayHeight / this.previewOriginalHeight;
+            
+            const m = this.cropMargins;
+            const topPts = m.top * k;
+            const leftPts = m.left * k;
+            const bottomPts = m.bottom * k;
+            const rightPts = m.right * k;
+            
+            const x = leftPts * scaleX;
+            const y = topPts * scaleY; // Visual Top depends on PDF coord system?
+            // PDF: 0,0 is bottom-left. Visual: 0,0 is top-left.
+            // Our crop logic in endCrop calculated margins relative to visual edges.
+            // Top Margin = distance from visual top.
+            // So:
+            
+            const w = displayWidth - x - (rightPts * scaleX);
+            const h = displayHeight - y - (bottomPts * scaleY);
+            
+            this.cropBox = { x, y, w, h };
+        },
+        
+        changePreviewPage(delta) {
+            const newPage = this.previewPage + delta;
+            if (newPage >= 1 && newPage <= this.totalPages) {
+                this.generatePreview(newPage);
+            }
+        },
+        
+        // --- Crop Interactions ---
+        startCrop(e) {
+             if (!this.previewImage) return;
+             this.isCropping = true;
+             
+             // Get click position relative to image
+             const rect = e.target.getBoundingClientRect();
+             const x = e.clientX - rect.left;
+             const y = e.clientY - rect.top;
+             
+             this.cropStart = { x, y };
+             this.cropBox = { x, y, w: 0, h: 0 };
+             
+             // Reset margins while drawing new box
+             this.cropMargins = { top: 0, bottom: 0, left: 0, right: 0 };
+        },
+        
+        moveCrop(e) {
+            if (!this.isCropping) return;
+            
+            const img = e.target.parentElement.querySelector('img'); 
+            // Note: e.target might be the overlay if we drag over it, 
+            // but we bind events to the container or overlay?
+            // Better to bind to container.
+            
+            const rect = img.getBoundingClientRect();
+            let clientX = e.clientX;
+            let clientY = e.clientY;
+            
+            // Constrain to image area
+            if (clientX < rect.left) clientX = rect.left;
+            if (clientX > rect.right) clientX = rect.right;
+            if (clientY < rect.top) clientY = rect.top;
+            if (clientY > rect.bottom) clientY = rect.bottom;
+
+            const currentX = clientX - rect.left;
+            const currentY = clientY - rect.top;
+            
+            const width = currentX - this.cropStart.x;
+            const height = currentY - this.cropStart.y;
+            
+            // Allow drawing in any direction (handle negative w/h)
+            this.cropBox = {
+                x: width > 0 ? this.cropStart.x : currentX,
+                y: height > 0 ? this.cropStart.y : currentY,
+                w: Math.abs(width),
+                h: Math.abs(height)
+            };
+        },
+        
+        endCrop(e) {
+            if (!this.isCropping) return;
+            this.isCropping = false;
+            
+            // Calculate Margins in mm
+            // 1. Get Ratio of Displayed Image vs Original PDF Points
+            const img = e.currentTarget.querySelector('img');
+            if (!img) return;
+            
+            const displayWidth = img.width;
+            const displayHeight = img.height;
+            
+            // Avoid division by zero
+            if (displayWidth === 0 || displayHeight === 0) return;
+            
+            const scaleX = this.previewOriginalWidth / displayWidth;
+            const scaleY = this.previewOriginalHeight / displayHeight;
+            
+            // 2. Convert CropBox (Pixels) -> PDF Points
+            const cropLeftPts = this.cropBox.x * scaleX;
+            const cropTopPts = this.cropBox.y * scaleY;
+            const cropWidthPts = this.cropBox.w * scaleX;
+            const cropHeightPts = this.cropBox.h * scaleY;
+            
+            // 3. Calculate Margins (Points)
+            // Left Margin = Crop Left
+            // Top Margin = Crop Top (PDF usually 0,0 is bottom-left, but visual is top-left. 
+            // However, PDFLib page.setCropBox(x, y, w, h) uses bottom-left origin?
+            // Yes. But here we are defining *Margins* to cut off.
+            // My backend logic:
+            // k = 2.835 (mm to pts)
+            // top = margin.top * k
+            // newHeight = height - top - bottom
+            
+            // So "Top Margin" is the distance from the top of the page to the top of the crop box.
+            const marginTopPts = cropTopPts;
+            const marginLeftPts = cropLeftPts;
+            const marginRightPts = this.previewOriginalWidth - (cropLeftPts + cropWidthPts);
+            const marginBottomPts = this.previewOriginalHeight - (cropTopPts + cropHeightPts);
+            
+            // 4. Convert Points -> mm (1 pt = 1/72 inch, 1 inch = 25.4 mm => 1 pt = 0.3527 mm)
+            const ptsToMm = 0.352778;
+            
+            this.cropMargins = {
+                top: Math.round(marginTopPts * ptsToMm),
+                bottom: Math.round(marginBottomPts * ptsToMm),
+                left: Math.round(marginLeftPts * ptsToMm),
+                right: Math.round(marginRightPts * ptsToMm)
+            };
+            
+            // Save to Page Config
+            this.pageCrops[this.previewPage] = { ...this.cropMargins };
+        },
+
+        async repairPDF() {
+            // "Repair" by ignoring encryption/normalization
+            this.progressStats = 'Tentando normalizar estrutura...';
+            const bytes = await this.readFile(this.file);
+            // Ignore encryption is key for some "corrupted" but actually just restricted headers
+            // Also standard load fixes XREF table.
+            try {
+                const pdfDoc = await PDFDocument.load(bytes, { ignoreEncryption: true });
+                const pdfBytes = await pdfDoc.save(); 
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                saveAs(blob, `reparado_${this.file.name}`);
+            } catch(e) {
+                // If PDFLib fails, we can't do much on client.
+                throw new Error("Arquivo muito danificado, não foi possível recuperar a estrutura.");
+            }
+        },
+
+        async numberPDF() {
+            const bytes = await this.readFile(this.file);
+            const pdfDoc = await PDFDocument.load(bytes);
+            const pages = pdfDoc.getPages();
+            const total = pages.length;
+            
+            // Embed font
+            const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+
+            pages.forEach((page, idx) => {
+                const { width, height } = page.getSize();
+                const text = `${idx + 1} / ${total}`;
+                const textSize = 12;
+                const textWidth = font.widthOfTextAtSize(text, textSize);
+                const textHeight = font.heightAtSize(textSize); // approx
+                
+                let x = 0;
+                let y = 30; // 30px from bottom default
+                
+                // Position Logic
+                const [vPos, hPos] = this.numberPosition.split('-');
+                
+                if (vPos === 'top') y = height - 30;
+                else y = 30;
+                
+                if (hPos === 'center') x = (width / 2) - (textWidth / 2);
+                else if (hPos === 'right') x = width - textWidth - 30;
+                else x = 30;
+                
+                page.drawText(text, {
+                    x,
+                    y,
+                    size: textSize,
+                    font: font,
+                    color: rgb(0, 0, 0),
+                });
+            });
+            
+            const pdfBytes = await pdfDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            saveAs(blob, `numerado_${this.file.name}`);
+        },
+
+        async cropPDF() {
+            const bytes = await this.readFile(this.file);
+            const pdfDoc = await PDFDocument.load(bytes);
+            const pages = pdfDoc.getPages();
+            
+            // Convert mm to points (1mm = 2.835 pts)
+            const k = 2.835;
+            
+            // Iterate all pages, check if we have a crop for it
+            pages.forEach((page, idx) => {
+                const pageNum = idx + 1;
+                const crop = this.pageCrops[pageNum];
+                
+                if (crop) {
+                    const top = (crop.top || 0) * k;
+                    const bottom = (crop.bottom || 0) * k;
+                    const left = (crop.left || 0) * k;
+                    const right = (crop.right || 0) * k;
+                    
+                    const { width, height } = page.getSize();
+                    const newWidth = width - left - right;
+                    const newHeight = height - top - bottom;
+                    
+                    if (newWidth > 0 && newHeight > 0) {
+                        page.setCropBox(left, bottom, newWidth, newHeight); 
+                    }
+                }
+            });
+            
+            let finalPdfBytes;
+            let fileNamePrefix = 'recortado';
+            
+            if (this.cropMode === 'selection') {
+                // Create new PDF with ONLY cropped pages
+                const keys = Object.keys(this.pageCrops).map(k => parseInt(k)).sort((a,b) => a-b);
+                
+                if (keys.length === 0) throw new Error("Nenhuma página foi recortada para salvar.");
+                
+                const newPdf = await PDFDocument.create();
+                // copyPages takes indices (0-based)
+                const indices = keys.map(k => k - 1);
+                const copiedPages = await newPdf.copyPages(pdfDoc, indices);
+                copiedPages.forEach(p => newPdf.addPage(p));
+                
+                finalPdfBytes = await newPdf.save();
+                fileNamePrefix = 'recorte_selecao';
+            } else {
+                // Save entire document
+                finalPdfBytes = await pdfDoc.save();
+            }
+            
+            const blob = new Blob([finalPdfBytes], { type: 'application/pdf' });
+            saveAs(blob, `${fileNamePrefix}_${this.file.name}`);
+        },
+
+        async comparePDF() {
+            if (!this.compareFile) throw new Error("Selecione o segundo arquivo para comparar.");
+            
+            this.progressStats = 'Extraindo textos dos arquivos...';
+            
+            const getText = async (f) => {
+                const b = await this.readFile(f);
+                const loadingTask = pdfjsLib.getDocument(b);
+                const pdf = await loadingTask.promise;
+                let full = "";
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const p = await pdf.getPage(i);
+                    const t = await p.getTextContent();
+                    full += t.items.map(item => item.str).join(" ") + "\n";
+                }
+                return { text: full, pages: pdf.numPages };
+            };
+            
+            const [data1, data2] = await Promise.all([getText(this.file), getText(this.compareFile)]);
+            
+            // Simple comparison
+            let report = "RELATÓRIO DE COMPARAÇÃO\n========================\n\n";
+            report += `Arquivo 1: ${this.file.name} (${data1.pages} páginas)\n`;
+            report += `Arquivo 2: ${this.compareFile.name} (${data2.pages} páginas)\n\n`;
+            
+            if (data1.text === data2.text) {
+                report += "RESULTADO: Os textos são IDÊNTICOS.\n";
+            } else {
+                report += "RESULTADO: Existem diferenças no conteúdo de texto.\n\n";
+                // Simple Diff Check (First 500 chars limit)
+                const diffIndex = this.findFirstDiff(data1.text, data2.text);
+                if (diffIndex !== -1) {
+                    report += `Primeira diferença encontrada próximo ao caractere ${diffIndex}:\n`;
+                    report += `\n--- Arquivo 1 (Trecho) ---\n...${data1.text.substring(diffIndex, diffIndex + 100)}...\n`;
+                    report += `\n--- Arquivo 2 (Trecho) ---\n...${data2.text.substring(diffIndex, diffIndex + 100)}...\n`;
+                }
+                
+                const lenDiff = Math.abs(data1.text.length - data2.text.length);
+                report += `\nDiferença de tamanho de texto: ${lenDiff} caracteres.\n`;
+            }
+            
+            this.statusMessage = 'Comparação concluída. Baixe o relatório.';
+            this.statusType = 'success';
+            
+            // Generate Report TXT
+            const blob = new Blob([report], { type: 'text/plain' });
+            saveAs(blob, `relatorio_comparacao.txt`);
+        },
+        
+        findFirstDiff(a, b) {
+            let i = 0;
+            if (a === b) return -1;
+            while (a[i] === b[i]) i++;
+            return i;
+        },
+
         async runOCR() {
                 // Check file type
                 this.progressStats = 'Inicializando OCR...';

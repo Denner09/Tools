@@ -36,6 +36,18 @@ body {
     background-color: var(--bs-body-bg);
     color: var(--bs-body-color);
     transition: background-color 0.3s, color 0.3s;
+    user-select: none; /* Security: Disable text selection */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Restore selection for inputs/textareas */
+input, textarea {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
 }
 
 /* Navbar */
@@ -58,6 +70,7 @@ body {
 .navbar-brand img {
     height: 40px;
     width: auto;
+    pointer-events: none; /* Security: Disable image drag */
 }
 
 .nav-link {
@@ -684,6 +697,7 @@ body {
     display: block;
     max-width: 100%;
     height: auto;
+    pointer-events: none; /* Security: Drag block */
 }
 
 /* Numbering Overlay Positions */
@@ -796,4 +810,3 @@ body {
     background-color: #cff4fc !important; /* Ensure background stays light blue as seen/requested */
     border-color: #b6effb !important;
 }
-

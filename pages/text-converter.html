@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net blob: data:; script-src 'self' 'unsafe-eval' https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://unpkg.com; img-src 'self' data: blob:; font-src 'self' https://cdnjs.cloudflare.com https://unpkg.com data:; worker-src 'self' blob: https://cdnjs.cloudflare.com;">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#f97316">
+    <title>Business tools | Editor de Texto</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">
+                    <img src="../assets/logo.png" alt="Business tools Logo">
+                    Business tools
+                </a>
+                
+                <div class="d-flex align-items-center gap-3">
+                    <!-- Theme Toggle -->
+                    <div class="theme-toggle" @click="toggleTheme" title="Alternar Tema">
+                        <i class="fas" :class="isDark ? 'fa-sun' : 'fa-moon'"></i>
+                    </div>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Início</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="text-converter.html">Editor de Texto</a></li>
+                        <li class="nav-item"><a class="nav-link" href="pdf-tools.html">Ferramentas PDF</a></li>
+                        <li class="nav-item"><a class="nav-link" href="flowchart.html">Fluxograma BPMN</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content container mt-5 pt-4">
+            <h2 class="mb-4"><i class="fas fa-pen-nib text-primary me-2"></i>Editor e Conversor de Texto</h2>
+            
+            <div class="row g-4">
+                <!-- Toolbar -->
+                <div class="col-12">
+                    <div class="card p-3">
+                        <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center">
+                            <!-- Transformations -->
+                            <div class="btn-group flex-wrap" role="group">
+                                <button class="btn btn-outline-secondary" @click="transform('upper')" title="MAIÚSCULAS">
+                                    <i class="fas fa-font"></i> AA
+                                </button>
+                                <button class="btn btn-outline-secondary" @click="transform('lower')" title="minúsculas">
+                                    <i class="fas fa-font" style="font-size: 0.8em;"></i> aa
+                                </button>
+                                <button class="btn btn-outline-secondary" @click="transform('sentence')" title="Formato de frase">
+                                    <i class="fas fa-text-height"></i> Aa
+                                </button>
+                                <button class="btn btn-outline-secondary" @click="transform('nolinebreak')" title="Remover quebras de linha">
+                                    <i class="fas fa-level-up-alt fa-rotate-90"></i> No Break
+                                </button>
+                                <button class="btn btn-outline-secondary" @click="toggleSpellCheck" :class="{ 'active': spellCheckEnabled }" title="Corretor Ortográfico">
+                                    <i class="fas fa-check-double"></i> Corretor
+                                </button>
+                            </div>
+
+                            <!-- Stats -->
+                            <div class="text-muted small">
+                                <span>{{ wordCount }} palavras</span> | 
+                                <span>{{ charCount }} caracteres</span>
+                            </div>
+
+                            <!-- Export Actions -->
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-download me-2"></i>Exportar
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" @click.prevent="copyToClipboard"><i class="fas fa-copy me-2"></i>Copiar</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#" @click.prevent="downloadPDF"><i class="fas fa-file-pdf me-2"></i>PDF</a></li>
+                                    <li><a class="dropdown-item" href="#" @click.prevent="downloadDoc"><i class="fas fa-file-word me-2"></i>DOC</a></li>
+                                    <li><a class="dropdown-item" href="#" @click.prevent="downloadTxt"><i class="fas fa-file-alt me-2"></i>TXT</a></li>
+                                    <li><a class="dropdown-item" href="#" @click.prevent="downloadJson"><i class="fas fa-code me-2"></i>JSON</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Editor Area -->
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">Entrada</span>
+                            <button class="btn btn-sm btn-link text-muted" @click="clearText">Limpar</button>
+                        </div>
+                        <div class="card-body p-0">
+                            <textarea 
+                                class="form-control border-0 h-100 p-3" 
+                                style="min-height: 500px; resize: none; border-radius: 0 0 12px 12px;" 
+                                v-model="inputText" 
+                                placeholder="Digite ou cole seu texto aqui..."
+                                :spellcheck="false"
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview/Result Area -->
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-transparent fw-bold">Resultado / Visualização</div>
+                        <div class="card-body p-0 position-relative">
+                             <div 
+                                ref="outputArea"
+                                class="form-control border-0 h-100 p-3" 
+                                style="min-height: 500px; overflow-y: auto; white-space: pre-wrap; outline: none;"
+                                :contenteditable="true"
+                                :spellcheck="spellCheckEnabled"
+                                lang="pt-BR"
+                            >{{ outputText }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center py-4 mt-5 text-muted border-top">
+            <small>&copy; 2026 Business tools. Excelência em Gestão.</small>
+        </footer>
+    </div>
+
+    <script src="../js/text-converter.js"></script>
+    <script src="../js/security.js"></script>
+    <script src="../js/pwa.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -2,7 +2,14 @@ const { createApp } = Vue;
 const { PDFDocument, rgb } = PDFLib;
 
 // Initialize PDF.js worker
+// Initialize PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+// Configure CMaps and Standard Fonts to fix rendering warnings/errors
+const cdnUrl = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/cmaps/';
+pdfjsLib.GlobalWorkerOptions.cMapUrl = cdnUrl;
+pdfjsLib.GlobalWorkerOptions.cMapPacked = true;
+pdfjsLib.GlobalWorkerOptions.standardFontDataUrl = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/standard_fonts/';
 
 createApp({
     data() {
@@ -122,6 +129,38 @@ createApp({
              if (this.currentTool === 'merge' || this.currentTool === 'compare') return true;
              if (this.currentTool === 'convert' && this.convertDirection === 'to_pdf') return true;
              return false;
+        },
+        reductionAnalysis() {
+            if (!this.customTargetMB || !this.file) return {};
+            const currentMB = this.file.size / (1024 * 1024);
+            const targetMB = parseFloat(this.customTargetMB);
+            const percent = (100 - (targetMB / currentMB * 100));
+            
+            if (percent < 20) {
+                return { 
+                    recommendation: 'Mínima / Baixa (Estrutura ou 300dpi)', 
+                    color: 'bg-info', 
+                    icon: 'fa-feather' 
+                };
+            } else if (percent < 50) {
+                return { 
+                    recommendation: 'Média (eBook / 150dpi)', 
+                    color: 'bg-primary', 
+                    icon: 'fa-book-reader' 
+                };
+            } else if (percent < 80) {
+                return { 
+                    recommendation: 'Alta (Tela / 72dpi)', 
+                    color: 'bg-warning', 
+                    icon: 'fa-mobile-alt'
+                };
+            } else {
+                return { 
+                    recommendation: 'Ultra (Reconstrução Necessária)', 
+                    color: 'bg-danger', 
+                    icon: 'fa-compress-arrows-alt'
+                };
+            }
         }
     },
     methods: {
@@ -145,6 +184,7 @@ createApp({
             this.cropMargins = { top: 0, bottom: 0, left: 0, right: 0 };
         },
         handleFileUpload(event) {
+            if (!event.target.files || event.target.files.length === 0) return;
             this.files = Array.from(event.target.files);
             
             // Validation Logic based on tool
@@ -157,7 +197,11 @@ createApp({
                  }
             } else {
                 this.file = event.target.files[0];
-                this.files = [this.file];
+                if (this.file) {
+                    this.files = [this.file];
+                } else {
+                    this.files = [];
+                }
             }
             
             this.statusMessage = '';
@@ -255,8 +299,8 @@ createApp({
         async compressPDF() {
                 const bytes = await this.readFile(this.file);
                 
-                if (this.compressionLevel === 'low' || this.compressionLevel === 'medium') {
-                    // Standard structure optimization
+                if (this.compressionLevel === 'low') {
+                    // Standard structure optimization (Old 'Low/Medium' logic)
                     this.progressStats = 'Otimizando estrutura...';
                     const pdfDoc = await PDFDocument.load(bytes);
                     const pdfBytes = await pdfDoc.save(); 
@@ -306,8 +350,23 @@ createApp({
                         console.log(`Custom Compression: Target=${targetSizeMB}MB, Ratio=${ratio.toFixed(2)}, CalcQuality=${quality.toFixed(2)}, Scale=${scale}`);
                     }
 
+                    if (this.compressionLevel.startsWith('gs_')) {
+                         await this.compressWithGhostscript(bytes);
+                         return;
+                    }
+                    
+                    if (this.compressionLevel === 'rebuild_ultra') {
+                        await this.compressWithRebuild(bytes);
+                        return;
+                    }
+
                     this.progressStats = 'Rasterizando páginas (pode demorar)...';
-                    const loadingTask = pdfjsLib.getDocument(bytes);
+                    const loadingTask = pdfjsLib.getDocument({
+                        data: bytes,
+                        cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/cmaps/',
+                        cMapPacked: true,
+                        standardFontDataUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/standard_fonts/'
+                    });
                     const pdf = await loadingTask.promise;
                     const total = pdf.numPages;
                     
@@ -348,10 +407,224 @@ createApp({
                 }
         },
 
+        async compressWithGhostscript(fileBytes) {
+            if (typeof Module === 'undefined') {
+                throw new Error("Módulo Ghostscript (Wasm) ainda não carregou. Tente novamente em alguns segundos.");
+            }
+
+            this.progressStats = 'Inicializando Ghostscript...';
+            console.log("Iniciando compressão Ghostscript...");
+
+            // Capture Logs
+            let gsOutput = [];
+            const logFn = (msg) => {
+                console.log("[GS]", msg);
+                gsOutput.push(msg);
+            };
+
+            // Map settings
+            const settingsMap = {
+                'gs_screen': '/screen',
+                'gs_ebook': '/ebook',
+                'gs_printer': '/printer'
+            };
+            const setting = settingsMap[this.compressionLevel] || '/ebook';
+
+            try {
+                // Initialize Module with callbacks
+                const instance = await Module({
+                    print: logFn,
+                    printErr: logFn
+                });
+                
+                this.progressStats = 'Processando PDF (pode demorar)...';
+                
+                // Write input
+                const inputName = 'input.pdf';
+                const outputName = 'output.pdf';
+                
+                instance.FS.writeFile(inputName, new Uint8Array(fileBytes));
+                
+                // Arguments
+                // Arguments Construction
+                const args = [
+                    '-sDEVICE=pdfwrite',
+                    '-dCompatibilityLevel=1.4',
+                    `-dPDFSETTINGS=${setting}`,
+                    '-dNOPAUSE',
+                    '-dQUIET',
+                    '-dBATCH',
+                    '-dSAFER',
+                    '-dDetectDuplicateImages=true',
+                    '-dStripProperties=true', // Remove Metadata
+                    '-dRemoveMetadata=true',  // Remove Metadata
+                    '-dPreserveOPIComments=false',
+                    '-dPreserveEPSInfo=false',
+                    '-dCompressFonts=true',
+                    '-dSubsetFonts=true',
+                    '-dMaxSubsetPct=100',
+                    '-dEmbedAllFonts=true', // Ensure text remains readable but subset
+                    `-sOutputFile=${outputName}`,
+                    inputName
+                ];
+                
+                // Fine-tune by level
+                if (setting === '/screen') {
+                    // Aggressive: 72dpi + Force JPEG (DCT) + Re-compress existing JPEGs
+                    args.splice(args.length - 2, 0,
+                        '-dDownsampleColorImages=true', '-dColorImageResolution=72',
+                        '-dDownsampleGrayImages=true', '-dGrayImageResolution=72',
+                        '-dDownsampleMonoImages=true', '-dMonoImageResolution=72',
+                        '-dAutoFilterColorImages=false', '-dColorImageFilter=/DCTEncode',
+                        '-dAutoFilterGrayImages=false', '-dGrayImageFilter=/DCTEncode',
+                        '-dColorImageDownsampleType=/Bicubic',
+                        // Force JPEG quality low specifically for screen
+                        '-c', '<< /ColorImageDict << /QFactor 0.2 /Blend 1 /HSamples [2 1 1 2] /VSamples [2 1 1 2] >> >> setdistillerparams',
+                        '-dPassThroughJPEGImages=false' 
+                    );
+                } else if (setting === '/ebook') {
+                     // Balanced: 150dpi
+                     args.splice(args.length - 2, 0,
+                        '-dDownsampleColorImages=true', '-dColorImageResolution=150',
+                        '-dColorImageDownsampleType=/Bicubic',
+                        '-dPassThroughJPEGImages=false' 
+                     );
+                }
+
+                console.log("Executando GS com args:", args);
+
+                // Execute
+                try {
+                    instance.callMain(args);
+                } catch (runErr) {
+                     // Check if it's a simulated exit()
+                     if (runErr instanceof instance.ExitStatus) {
+                         if (runErr.status !== 0) throw new Error(`GS Exit Code: ${runErr.status}`);
+                     } else if (runErr.message && runErr.message.includes('status')) {
+                         // Some builds throw generic Error with status
+                     } else {
+                         throw runErr;
+                     }
+                }
+                
+                // Check if output exists
+                let output;
+                try {
+                    output = instance.FS.readFile(outputName);
+                } catch (readErr) {
+                    throw new Error("O arquivo de saída não foi gerado. Logs: " + gsOutput.join('\n'));
+                }
+                
+                if (!output || output.byteLength === 0) {
+                     throw new Error("O arquivo gerado está vazio. Logs: " + gsOutput.join('\n'));
+                }
+
+                console.log(`Sucesso! Entrada: ${fileBytes.byteLength}, Saída: ${output.byteLength}`);
+                
+                // Clean
+                try {
+                    instance.FS.unlink(inputName);
+                    instance.FS.unlink(outputName);
+                } catch(e) {}
+
+                this.finishCompression(output, this.file.name);
+
+            } catch (e) {
+                console.error("Erro Ghostscript:", e);
+                throw new Error(`Falha no Ghostscript: ${e.message}`);
+            }
+        },
+
+        async compressWithRebuild(bytes) {
+             this.progressStats = "Iniciando reconstrução otimizada...";
+             const loadingTask = pdfjsLib.getDocument({
+                data: bytes,
+                cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/cmaps/',
+                cMapPacked: true,
+                standardFontDataUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/standard_fonts/'
+             });
+             const pdf = await loadingTask.promise;
+             const total = pdf.numPages;
+             const newPdf = await PDFDocument.create();
+
+             // Options for browser-image-compression
+             // Dynamic settings based on file size?
+             // If file is really small, we need to be super aggressive or we will increase size (rasterization overhead)
+             const isSmallFile = this.file.size < 2 * 1024 * 1024; // < 2MB
+
+             const options = {
+                maxSizeMB: isSmallFile ? 0.1 : 0.5,          // Tighter target: 100KB or 500KB per page
+                maxWidthOrHeight: isSmallFile ? 800 : 1200, // Limit resolution
+                useWebWorker: true,
+                fileType: 'image/jpeg',
+                initialQuality: isSmallFile ? 0.5 : 0.6
+             };
+
+             for (let i = 1; i <= total; i++) {
+                this.progressStats = `Reconstruindo página ${i}/${total}...`;
+                const page = await pdf.getPage(i);
+                
+                // Render scale: Lower for small files to avoid bloating vectors
+                const scale = isSmallFile ? 1.0 : 1.5;
+                const viewport = page.getViewport({ scale: scale });
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                
+                await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                
+                // Convert to Blob
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.9));
+                const imageFile = new File([blob], "page.jpg", { type: "image/jpeg" });
+
+                // Run smart compression
+                // Note: browser-image-compression is global 'imageCompression'
+                let compressedFile;
+                try {
+                    console.log(`Comprimindo imagem pg ${i}, original: ${(imageFile.size/1024).toFixed(0)}KB`);
+                    compressedFile = await imageCompression(imageFile, options);
+                    console.log(`Resultado pg ${i}: ${(compressedFile.size/1024).toFixed(0)}KB`);
+                } catch (e) {
+                    console.warn("Falha na compressão de imagem, usando original", e);
+                    compressedFile = imageFile;
+                }
+
+                const imgBuffer = await compressedFile.arrayBuffer();
+                const embeddedImage = await newPdf.embedJpg(imgBuffer);
+                
+                // Add page matching the original aspect ratio (but using the embedded image dims might be different scaling)
+                // We use original viewport dims for the page size in PDF
+                const pdfPage = newPdf.addPage([viewport.width, viewport.height]);
+                pdfPage.drawImage(embeddedImage, {
+                    x: 0, 
+                    y: 0,
+                    width: viewport.width,
+                    height: viewport.height
+                });
+             }
+             
+             this.progressStats = "Finalizando PDF...";
+             const pdfBytes = await newPdf.save();
+             this.finishCompression(pdfBytes, this.file.name);
+        },
+
         async finishCompression(pdfBytes, filename) {
             this.pendingPdfBytes = pdfBytes;
             this.lastResultSize = pdfBytes.byteLength;
             
+            // Check if file grew (Assessment)
+            if (this.lastResultSize >= this.file.size) {
+                 const increase = ((this.lastResultSize - this.file.size) / 1024).toFixed(2);
+                 const allow = confirm(`Atenção: O arquivo resultante ficou MAIOR que o original (+${increase} KB).\n\nIsso acontece quando o arquivo original já é muito otimizado ou contém texto vetorial que foi transformado em imagem.\n\nDeseja baixar mesmo assim?`);
+                 if (!allow) {
+                     this.statusMessage = 'Download cancelado pelo usuário (arquivo ficou maior).';
+                     this.statusType = 'warning';
+                     this.processing = false;
+                     return;
+                 }
+            }
+
             // If custom compression and missed target
             if (this.compressionLevel === 'custom' && this.customTargetMB) {
                 const targetBytes = parseFloat(this.customTargetMB) * 1024 * 1024;

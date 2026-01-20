@@ -5,9 +5,6 @@ const { jsPDF } = window.jspdf;
 /*
     We need to disable the 'zoomScroll' feature of bpmn-js to prevent mouse wheel zooming.
     Zooming will only be possible via CTRL + Wheel (standard browser behavior) or toolbar buttons if we add them.
-    Actually, the request says "scroll do mouse não consiga mover ele", meaning PAN on scroll? 
-    Or Zoom on scroll? Usually scroll zooms. 
-    "Apenas arrastando com o mouse" means Panning is allowed via drag.
 */
 
 const initialDiagram = `<?xml version="1.0" encoding="UTF-8"?>
@@ -22,10 +19,13 @@ const initialDiagram = `<?xml version="1.0" encoding="UTF-8"?>
 
 createApp({
     setup() {
-        const modeler = ref(null);
+        // Use a plain variable for the modeler to avoid Vue Proxy/Reactivity issues completely
+        let modeler = null;
+        
         const notification = ref('');
         const isDark = ref(false);
         const autoSaveTimer = ref(null);
+        const fileInput = ref(null);
         
         // Modal logic
         const fileName = ref('diagrama');
@@ -33,8 +33,21 @@ createApp({
         const saveModalElement = ref(null);
         let modalInstance = null;
 
+        const isMenuOpen = ref(false);
+
+        // Click outside listener to close menu
+        const closeMenu = (e) => {
+            // Close if clicking outside the dropdown area
+            if (isMenuOpen.value && !e.target.closest('.dropdown')) {
+                isMenuOpen.value = false;
+            }
+        };
+
         onMounted(() => {
-            modeler.value = new BpmnJS({
+            window.addEventListener('click', closeMenu);
+
+            // Initialize BPMN Modeler without Vue reactivity
+            modeler = new BpmnJS({
                 container: '#canvas',
                 keyboard: {
                     bindTo: window
@@ -48,11 +61,9 @@ createApp({
             });
 
             // Hook for applying custom CSS classes to specific elements
-            modeler.value.on('shape.added', (e) => {
+            modeler.on('shape.added', (e) => {
                 const element = e.element;
-                const canvas = modeler.value.get('canvas');
-
-
+                const canvas = modeler.get('canvas');
 
                 // 1. DataObject and DataStore (Fix for Dark Mode fills)
                 if (['bpmn:DataObjectReference', 'bpmn:DataStoreReference'].includes(element.type)) {
@@ -69,11 +80,11 @@ createApp({
             });
 
             // Auto-Save Logic
-            modeler.value.on('commandStack.changed', () => {
+            modeler.on('commandStack.changed', () => {
                 if (autoSaveTimer.value) clearTimeout(autoSaveTimer.value);
                 autoSaveTimer.value = setTimeout(async () => {
                     try {
-                        const { xml } = await modeler.value.saveXML({ format: true });
+                        const { xml } = await modeler.saveXML({ format: true });
                         localStorage.setItem('cachedDiagram', xml);
                         console.log('Auto-saved to cache');
                         showNotify('Rascunho salvo.');
@@ -99,9 +110,6 @@ createApp({
             } else {
                 openDiagram(initialDiagram);
             }
-
-            // Modal initialization moved to openSaveModal for robustness
-
         });
 
         const toggleTheme = () => {
@@ -112,14 +120,16 @@ createApp({
 
         const applyTheme = () => {
             document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light');
+            
+            // Force redraw/update if needed for specific chart elements that don't react to CSS automatically
+            // usually CSS variables handle it, but sometimes we might need to update the canvas
         };
 
         const openDiagram = async (xml) => {
             try {
-                await modeler.value.importXML(xml);
-                const canvas = modeler.value.get('canvas');
+                await modeler.importXML(xml);
+                const canvas = modeler.get('canvas');
                 canvas.zoom('fit-viewport');
-                // No notification for initial load to keep it clean, unless restored
             } catch (err) {
                 console.error(err);
                 showNotify('Erro ao carregar.');
@@ -190,7 +200,7 @@ createApp({
 
         const saveXML = async (name = 'diagrama') => {
             try {
-                const { xml } = await modeler.value.saveXML({ format: true });
+                const { xml } = await modeler.saveXML({ format: true });
                 const blob = new Blob([xml], { type: 'application/xml' });
                 saveAs(blob, `${name}.bpmn`);
                 showNotify('Salvo em XML!');
@@ -201,7 +211,7 @@ createApp({
 
         const saveSVG = async (name = 'diagrama') => {
             try {
-                const { svg } = await modeler.value.saveSVG();
+                const { svg } = await modeler.saveSVG();
                 const blob = new Blob([svg], { type: 'image/svg+xml' });
                 saveAs(blob, `${name}.svg`);
                 showNotify('Salvo em SVG!');
@@ -212,7 +222,7 @@ createApp({
 
         const savePDF = async (name = 'diagrama') => {
             try {
-                const { svg } = await modeler.value.saveSVG();
+                const { svg } = await modeler.saveSVG();
                 
                 // Parse SVG to get dimensions
                 const parser = new DOMParser();
@@ -259,7 +269,7 @@ createApp({
 
         const savePNG = async (name = 'diagrama') => {
             try {
-                const { svg } = await modeler.value.saveSVG();
+                const { svg } = await modeler.saveSVG();
                 
                 // Parse SVG to get dimensions
                 const parser = new DOMParser();
@@ -300,12 +310,12 @@ createApp({
         };
 
         const undo = () => {
-            const commandStack = modeler.value.get('commandStack');
+            const commandStack = modeler.get('commandStack');
             commandStack.undo();
         };
 
         const redo = () => {
-            const commandStack = modeler.value.get('commandStack');
+            const commandStack = modeler.get('commandStack');
             commandStack.redo();
         };
 
@@ -326,7 +336,6 @@ createApp({
             fileName,
             saveType,
             saveXML,
-            saveXML,
             saveSVG,
             savePNG,
             savePDF,
@@ -334,7 +343,10 @@ createApp({
             toggleTheme,
             undo,
             redo,
-            clearCanvas
+            clearCanvas,
+            fileInput,
+            isMenuOpen,
+            toggleMenu: () => { console.log('Toggled'); isMenuOpen.value = !isMenuOpen.value; }
         };
     }
 }).mount('#app');

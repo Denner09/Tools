@@ -44,11 +44,13 @@
                     </div>
 
                     <!-- Hamburger / Three Bars Menu for Options -->
-                    <div class="dropdown">
-                        <button class="btn btn-outline-secondary border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="dropdown position-relative">
+                        <button class="btn btn-outline-secondary border-0" type="button" @click.stop="toggleMenu">
                             <i class="fas fa-bars fa-lg"></i>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2" :class="{'dropdown-menu-dark': isDark}" style="min-width: 200px;">
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2" 
+                            :class="{'dropdown-menu-dark': isDark, 'show': isMenuOpen}" 
+                            style="min-width: 200px; right: 0; left: auto; position: absolute;">
                             <li><h6 class="dropdown-header">Arquivo</h6></li>
                             <li><a class="dropdown-item" href="#" @click.prevent="createNewDiagram"><i class="fas fa-file me-2"></i> Novo</a></li>
                             <li><a class="dropdown-item" href="#" @click.prevent="$refs.fileInput.click()"><i class="fas fa-folder-open me-2"></i> Abrir</a></li>

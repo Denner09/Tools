@@ -1,0 +1,162 @@
+/* Standardized Buttons */
+.btn {
+    border-radius: var(--radius-md);
+    padding: 0.6rem 1.25rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: all var(--duration-fast) var(--ease-out);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* Primary Button - Premium Gradient Look */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    border: none;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    color: white !important;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 6px 16px rgba(249, 115, 22, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: var(--primary-soft);
+    color: var(--primary-color); /* Keep text orange on soft bg or white on solid? Let's go soft bg */
+    border-color: var(--primary-color);
+}
+/* Exception: If bootstrap outline hover default is solid color, we override: */
+.btn-outline-primary:hover {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+}
+
+/* Navbar - Glassmorphism */
+.navbar {
+    background-color: var(--bg-surface-glass) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+    height: var(--header-height);
+    box-shadow: var(--shadow-sm);
+    z-index: 1030;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: var(--text-main) !important;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.navbar-brand img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 1rem !important;
+    transition: all 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-color) !important;
+    background: var(--primary-soft);
+}
+
+/* Cards - Premium look */
+.card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color); /* Subtle highlight */
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card-title {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.card-icon-large {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    background: -webkit-linear-gradient(45deg, var(--primary-color), var(--primary-hover));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 4px rgba(249, 115, 22, 0.2));
+}
+
+/* Inputs */
+.form-control, .form-select {
+    background-color: var(--bg-body);
+    border: 1px solid var(--border-light);
+    color: var(--text-main);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+    transition: all 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-surface);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px var(--primary-soft);
+}
+
+/* Text Colors */
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+/* Secondary Outline Button - Normalized to Brand Orange as requested */
+.btn-outline-secondary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-color: transparent;
+}
+
+.btn-outline-secondary:hover,
+.btn-check:checked + .btn-outline-secondary {
+    background-color: var(--primary-color);
+    color: white !important;
+    border-color: var(--primary-color);
+}
+
+.btn-check:checked + .btn-outline-secondary {
+    box-shadow: 0 0 0 0.25rem var(--primary-soft);
+}

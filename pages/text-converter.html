@@ -17,12 +17,52 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <!-- jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        html, body { 
+            height: 100%; 
+            margin: 0; 
+            overflow: hidden; 
+        }
+        #app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            /* overflow: hidden; Removed to allow dropdowns to display */
+            padding-top: 30px; /* Increased by ~20px (0.5cm) */
+        }
+        .editor-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0; /* Important for flex child scroll */
+        }
+        .editor-card {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .editor-body {
+            flex: 1;
+            min-height: 0; 
+        }
+        .full-height-editor {
+            height: 100% !important;
+            resize: none;
+            border-radius: 0 0 12px 12px;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg fixed-top">
-            <div class="container">
+            <div class="container-fluid px-4">
                 <a class="navbar-brand" href="../index.html">
                     <img src="../assets/logo.png" alt="Business tools Logo">
                     Business tools
@@ -51,27 +91,36 @@
         </nav>
 
         <!-- Main Content -->
-        <div class="main-content container mt-5 pt-4">
-            <h2 class="mb-4"><i class="fas fa-pen-nib text-primary me-2"></i>Editor e Conversor de Texto</h2>
-            
-            <div class="row g-4">
+        <div class="main-content container-fluid px-4">
+            <div class="editor-container gap-4 pb-3">
+                <h2 class="h4 m-0"><i class="fas fa-pen-nib text-primary me-2"></i>Editor e Conversor de Texto</h2>
+                
                 <!-- Toolbar -->
-                <div class="col-12">
-                    <div class="card p-3">
+                <div style="position: relative; z-index: 100;">
+                    <div class="card p-3 no-hover">
                         <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center">
                             <!-- Transformations -->
                             <div class="btn-group flex-wrap" role="group">
                                 <button class="btn btn-outline-secondary" @click="transform('upper')" title="MAIÚSCULAS">
                                     <i class="fas fa-font"></i> AA
                                 </button>
-                                <button class="btn btn-outline-secondary" @click="transform('lower')" title="minúsculas">
+                                <button class="btn btn-outline-secondary" @click="transform('lower')" title="Todas minúsculas">
                                     <i class="fas fa-font" style="font-size: 0.8em;"></i> aa
+                                </button>
+                                <button class="btn btn-outline-secondary" @click="transform('title')" title="Title Case">
+                                    <i class="fas fa-heading"></i> Title
+                                </button>
+                                <button class="btn btn-outline-secondary" @click="transform('alternating')" title="Alternado">
+                                    <i class="fas fa-random"></i> aLtEr
                                 </button>
                                 <button class="btn btn-outline-secondary" @click="transform('sentence')" title="Formato de frase">
                                     <i class="fas fa-text-height"></i> Aa
                                 </button>
                                 <button class="btn btn-outline-secondary" @click="transform('nolinebreak')" title="Remover quebras de linha">
-                                    <i class="fas fa-level-up-alt fa-rotate-90"></i> No Break
+                                    <i class="fas fa-level-up-alt fa-rotate-90"></i> Sem Quebras
+                                </button>
+                                <button class="btn btn-outline-secondary" @click="transform('cnj')" title="Formatar Processo CNJ (11 dígitos -> 20 dígitos)">
+                                    <i class="fas fa-gavel"></i> Proc. CNJ
                                 </button>
                                 <button class="btn btn-outline-secondary" @click="toggleSpellCheck" :class="{ 'active': spellCheckEnabled }" title="Corretor Ortográfico">
                                     <i class="fas fa-check-double"></i> Corretor
@@ -86,10 +135,10 @@
 
                             <!-- Export Actions -->
                             <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" @click.stop="toggleExportMenu">
                                     <i class="fas fa-download me-2"></i>Exportar
                                 </button>
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu dropdown-menu-end" :class="{ 'show': showExportMenu }" style="position: absolute; right: 0; left: auto;">
                                     <li><a class="dropdown-item" href="#" @click.prevent="copyToClipboard"><i class="fas fa-copy me-2"></i>Copiar</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="#" @click.prevent="downloadPDF"><i class="fas fa-file-pdf me-2"></i>PDF</a></li>
@@ -103,44 +152,29 @@
                 </div>
 
                 <!-- Editor Area -->
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
-                            <span class="fw-bold">Entrada</span>
+                <div class="editor-card">
+                    <div class="card h-100 no-hover">
+                        <div class="card-header bg-transparent d-flex justify-content-between align-items-center py-2">
+                            <span class="fw-bold">Editor</span>
                             <button class="btn btn-sm btn-link text-muted" @click="clearText">Limpar</button>
                         </div>
-                        <div class="card-body p-0">
-                            <textarea 
-                                class="form-control border-0 h-100 p-3" 
-                                style="min-height: 500px; resize: none; border-radius: 0 0 12px 12px;" 
-                                v-model="inputText" 
-                                placeholder="Digite ou cole seu texto aqui..."
-                                :spellcheck="false"
-                            ></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Preview/Result Area -->
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-header bg-transparent fw-bold">Resultado / Visualização</div>
-                        <div class="card-body p-0 position-relative">
-                             <div 
-                                ref="outputArea"
-                                class="form-control border-0 h-100 p-3" 
-                                style="min-height: 500px; overflow-y: auto; white-space: pre-wrap; outline: none;"
-                                :contenteditable="true"
+                        <div class="card-body p-0 editor-body">
+                            <div
+                                ref="editor"
+                                class="form-control border-0 full-height-editor p-3" 
+                                contenteditable="true"
+                                @input="handleInput"
+                                @paste="handlePaste"
                                 :spellcheck="spellCheckEnabled"
-                                lang="pt-BR"
-                            >{{ outputText }}</div>
+                                style="outline: none; overflow-y: auto;"
+                            ></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <footer class="text-center py-4 mt-5 text-muted border-top">
+        <footer class="text-center py-2 text-muted border-top bg-body">
             <small>&copy; 2026 Business tools. Excelência em Gestão.</small>
         </footer>
     </div>

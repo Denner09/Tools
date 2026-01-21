@@ -7,7 +7,14 @@
     }
 
     // 2. Disable Context Menu & Shortcuts
-    document.addEventListener('contextmenu', e => e.preventDefault());
+    // 2. Disable Context Menu & Shortcuts (Allowed on inputs/editable for spellcheck)
+    document.addEventListener('contextmenu', e => {
+        const tag = e.target.tagName;
+        const isEditable = e.target.isContentEditable || tag === 'INPUT' || tag === 'TEXTAREA';
+        if (!isEditable) {
+            e.preventDefault();
+        }
+    });
 
     document.onkeydown = function(e) {
         if (e.key === 'F12' || e.keyCode === 123) return false;

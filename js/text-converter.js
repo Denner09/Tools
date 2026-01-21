@@ -15,13 +15,12 @@ createApp({
             // If user edits output, we should probably update inputText? 
             // Or just treat Input as "Raw" and Output as "Final".
             // Let's treat Input as Source. Transformations apply to Source and update Output.
-            spellCheckEnabled: false
+            spellCheckEnabled: false,
+            showExportMenu: false
         }
     },
     computed: {
-        outputText() {
-            return this.inputText;
-        },
+
         wordCount() {
             const text = this.inputText.trim();
             return text ? text.split(/\s+/).length : 0;
@@ -31,33 +30,7 @@ createApp({
         }
     },
     watch: {
-        inputText(newVal) {
-            // When input changes, update the content of the ref
-            // We use keyup/input binding on the contenteditable to go the other way if needed?
-            // For now, one-way sync Input -> Output is safer for "Tools".
-            // If user fixes spelling in Output, they might want to keep it.
-            // Let's check: if I fix spelling in output, I want it to persist.
-            // But if I type in input, it overwrites output.
-            // To support both, we might just have ONE `text` model and two views?
-            // "Viewer em tempo real" implies watching changes.
-            // Let's make the Output follow Input, but if user edits Output, update Input.
-            
-            // Actually, we'll manually update the innerText of the div to avoid cursor jumping
-            // only if the generic v-html/interpolation isn't enough.
-            // Vue's {{ outputText }} inside the div works for one-way.
-            
-            // To keep it simple: Input is for "Raw Entry". Output is "Result".
-            // Transformations change the INPUT text directly? Or just the Output?
-            // "coloque o texto em um campo... e possa ver as edições numa viewer em tempo real"
-            // Usually means Input -> Process -> Output.
-            
-            // Let's update the DOM of the contenteditable manually if needed to trigger spellcheck re-render
-            this.$nextTick(() => {
-                if (this.$refs.outputArea && this.$refs.outputArea.innerText !== newVal) {
-                    this.$refs.outputArea.innerText = newVal;
-                }
-            });
-        }
+
     },
     mounted() {
         // Theme initialization
@@ -69,12 +42,7 @@ createApp({
         }
         this.applyTheme();
 
-        // Listen for edits in the output area to sync back (optional, but good for "corrector")
-        if (this.$refs.outputArea) {
-            this.$refs.outputArea.addEventListener('input', (e) => {
-                this.inputText = e.target.innerText;
-            });
-        }
+
     },
     methods: {
         toggleTheme() {
@@ -88,26 +56,133 @@ createApp({
         toggleSpellCheck() {
             this.spellCheckEnabled = !this.spellCheckEnabled;
         },
+        toggleExportMenu() {
+            this.showExportMenu = !this.showExportMenu;
+            if (this.showExportMenu) {
+                // Add listener asynchronously to avoid immediate closing
+                setTimeout(() => {
+                    document.addEventListener('click', this.closeExportMenu);
+                }, 0);
+            }
+        },
+        closeExportMenu(e) {
+            // Close menu on any click outside (or inside, acting like a selection)
+            this.showExportMenu = false;
+            document.removeEventListener('click', this.closeExportMenu);
+        },
+        handleInput(e) {
+            this.inputText = e.target.innerText;
+        },
+        handlePaste(e) {
+            e.preventDefault();
+            const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+            document.execCommand('insertText', false, text);
+        },
         clearText() {
             this.inputText = '';
+            if (this.$refs.editor) {
+                this.$refs.editor.innerText = '';
+            }
         },
         transform(type) {
-            let text = this.inputText;
+            const editor = this.$refs.editor;
+            if (!editor) return;
+
+            const selection = window.getSelection();
+            if (!selection.rangeCount || !editor.contains(selection.anchorNode)) {
+                 // No valid selection inside editor check
+                 // If no selection or selection outside, we might assume "Select All" if focused?
+                 // But let's check text length
+            }
+
+            const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+            let textToTransform = "";
+            let replaceAll = false;
+            
+            // Check if there is actual text selected
+            if (range && !selection.isCollapsed && editor.contains(range.commonAncestorContainer)) {
+                 textToTransform = selection.toString();
+            } else {
+                 if (this.inputText.trim().length === 0) return;
+                 
+                 // No selection, ask user
+                 if (confirm("Nenhum texto selecionado. Deseja aplicar a alteração em todo o texto?")) {
+                    textToTransform = editor.innerText;
+                    replaceAll = true;
+                } else {
+                    return; // Cancelled
+                }
+            }
+
+            if (!textToTransform) return;
+
+            let transformedText = "";
             switch (type) {
                 case 'upper':
-                    this.inputText = text.toUpperCase();
+                    transformedText = textToTransform.toUpperCase();
                     break;
                 case 'lower':
-                    this.inputText = text.toLowerCase();
+                    transformedText = textToTransform.toLowerCase();
+                    break;
+                case 'title':
+                    transformedText = textToTransform.toLowerCase().replace(/(^|\s)\S/g, t => t.toUpperCase());
+                    break;
+                case 'alternating':
+                    transformedText = "";
+                    for (let i = 0; i < textToTransform.length; i++) {
+                        if (i % 2 === 0) {
+                            transformedText += textToTransform[i].toLowerCase();
+                        } else {
+                            transformedText += textToTransform[i].toUpperCase();
+                        }
+                    }
                     break;
                 case 'sentence':
-                    // Capitalize first letter of each sentence (. ! ?)
-                    this.inputText = text.toLowerCase().replace(/(^\s*\w|[\.\!\?]\s*\w)/g, c => c.toUpperCase());
+                    transformedText = textToTransform.toLowerCase().replace(/(^\s*\w|[\.\!\?]\s*\w)/g, c => c.toUpperCase());
                     break;
                 case 'nolinebreak':
-                    this.inputText = text.replace(/(\r\n|\n|\r)/gm, " ");
+                    transformedText = textToTransform.replace(/(\r\n|\n|\r)/gm, " ");
+                    break;
+                case 'cnj':
+                    // Transform 18 digits (NNNNNNNAAAAJTROOOO) to NNNNNNN-DD.AAAA.J.TR.OOOO
+                    // Extract parts directly from selection (ignoring non-digits in between)
+                    // Pattern: 7 digits (Seq) + 4 digits (Year) + 7 digits (Suffix: J+TR+OOOO)
+                    const cnjRegex = /\b(\d{7})\D*(\d{4})\D*(\d{1})\D*(\d{2})\D*(\d{4})\b/g;
+                    
+                    let matchFound = false;
+                    transformedText = textToTransform.replace(cnjRegex, (match, seq, year, j, tr, oooo) => {
+                        matchFound = true;
+                        // Suffix is J + TR + OOOO
+                        const suffix = j + tr + oooo;
+                        
+                        // Calculate Mod 97
+                        // Concatenate: NNNNNNN + AAAA + J + TR + OOOO + 00
+                        const numStr = seq + year + suffix + "00";
+                        
+                        let remainder = BigInt(numStr) % 97n;
+                        let dd = 98n - remainder;
+                        let ddStr = dd.toString().padStart(2, '0');
+                        
+                        // Format: NNNNNNN-DD.AAAA.J.TR.OOOO
+                        return `${seq}-${ddStr}.${year}.${j}.${tr}.${oooo}`;
+                    });
+
+                    if (!matchFound) {
+                        // Fallback: Check if it looks like they selected just 11 digits? 
+                        // User specifically asked to "Get suffix from number", so assume 18 is required.
+                        alert("Nenhuma sequência válida de 18 dígitos (NNNNNNN...AAAA...J.TR.OOOO) encontrada para cálculo do dígito verificador.");
+                        return;
+                    }
                     break;
             }
+
+            // Apply change
+            editor.focus();
+            if (replaceAll) {
+                document.execCommand('selectAll', false, null);
+            }
+            // insertText simply replaces the current selection (or all if selected)
+            document.execCommand('insertText', false, transformedText);
         },
         copyToClipboard() {
             navigator.clipboard.writeText(this.inputText).then(() => {
@@ -128,7 +203,7 @@ createApp({
             const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
                 "xmlns:w='urn:schemas-microsoft-com:office:word' " +
                 "xmlns='http://www.w3.org/TR/REC-html40'>. " +
-                "<head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
+                "<head><meta charset='utf-8'><title>Exportar HTML para Documento Word</title></head><body>";
             const footer = "</body></html>";
             // Replace newlines with <br> for HTML rendering in Word
             const htmlContent = this.inputText.replace(/\n/g, "<br>");

@@ -131,6 +131,11 @@ textarea {
   color: var(--primary-color);
 }
 
+/* Text Colors */
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
 /* Buttons */
 .btn-primary {
   background-color: var(--primary-color) !important;

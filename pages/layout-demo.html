@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Tools | Style Guide</title>
+    <meta name="theme-color" content="#f97316">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <!-- Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body class="has-sidebar">
+    <div id="app">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand ms-3" href="#">
+                    <img src="../assets/logo.png" alt="Business tools">
+                    Business tools
+                </a>
+                
+                <div class="d-flex align-items-center gap-3 me-3">
+                    <div class="theme-toggle" @click="toggleTheme">
+                        <i class="fas" :class="isDark ? 'fa-sun' : 'fa-moon'"></i>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="main-content container mt-4">
+            <h1 class="mb-4">Style Guide & Design System</h1>
+            
+            <!-- Cards Section -->
+            <section class="mb-5">
+                <h2 class="mb-3">Cards</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card h-100 no-hover p-4">
+                            <div class="card-body">
+                                <h3 class="card-title">Card Simple (No Hover)</h3>
+                                <p class="card-text">Standard card for content containers without interaction.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 p-4">
+                            <div class="card-body">
+                                <i class="fas fa-magic card-icon-large"></i>
+                                <h3 class="card-title">Interactive Card</h3>
+                                <p class="card-text">Hover to see the elevation effect and border highlight.</p>
+                                <button class="btn btn-primary mt-3">Action</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Buttons Section -->
+            <section class="mb-5">
+                <h2 class="mb-3">Buttons</h2>
+                
+                <h4 class="mb-2">Primary</h4>
+                <div class="d-flex gap-2 mb-3">
+                    <button class="btn btn-primary">Primary Button</button>
+                    <button class="btn btn-primary"><i class="fas fa-check me-2"></i> With Icon</button>
+                    <button class="btn btn-outline-primary">Outline Primary</button>
+                </div>
+
+                <h4 class="mb-2">Secondary / Formats (Requested Orange Style)</h4>
+                <div class="d-flex gap-2 mb-3">
+                    <button class="btn btn-outline-secondary">Option A</button>
+                    <button class="btn btn-outline-secondary">
+                        <i class="fas fa-font"></i> Format
+                    </button>
+                    <!-- Active State -->
+                    <button class="btn btn-outline-secondary active">Active Option</button>
+                </div>
+                
+                <h4 class="mb-2">Button Groups (Radio behavior)</h4>
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                    <label class="btn btn-outline-secondary" for="btnradio1">Radio 1</label>
+                  
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btnradio2">Radio 2</label>
+                  
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btnradio3">Radio 3</label>
+                </div>
+            </section>
+
+            <!-- Typography & Colors -->
+            <section class="mb-5">
+                <h2 class="mb-3">Typography & Colors</h2>
+                <div class="card p-4">
+                    <h1 class="text-primary">Heading 1 (Primary Color)</h1>
+                    <h2>Heading 2</h2>
+                    <h3>Heading 3</h3>
+                    <p class="lead">Lead Paragraph text.</p>
+                    <p>Standard paragraph text with <span class="text-muted">muted text</span> and <small>small text</small>.</p>
+                </div>
+            </section>
+
+            <!-- Inputs -->
+            <section class="mb-5">
+                <h2 class="mb-3">Form Elements</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">Input Label</label>
+                        <input type="text" class="form-control mb-3" placeholder="Placeholder text">
+                        
+                        <label class="form-label">Select Label</label>
+                        <select class="form-select">
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/security.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    isDark: localStorage.getItem('theme') === 'dark'
+                }
+            },
+            mounted() {
+                // Initial Theme Load
+                const savedTheme = localStorage.getItem('theme') || 'light';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                this.isDark = savedTheme === 'dark';
+            },
+            methods: {
+                toggleTheme() {
+                    this.isDark = !this.isDark;
+                    const newTheme = this.isDark ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+/* Import Inter Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color var(--duration-normal), color var(--duration-normal);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-main);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -0.025em; /* Tight tracking for modern headlines */
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+
+p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+small, .text-muted, .small {
+    color: var(--text-muted) !important;
+}
+
+/* Dark Mode Global Text Overrides */
+[data-theme="dark"] body,
+[data-theme="dark"] h1, 
+[data-theme="dark"] h2, 
+[data-theme="dark"] h3, 
+[data-theme="dark"] h4, 
+[data-theme="dark"] h5, 
+[data-theme="dark"] h6, 
+[data-theme="dark"] p,
+[data-theme="dark"] label,
+[data-theme="dark"] span,
+[data-theme="dark"] div,
+[data-theme="dark"] li,
+[data-theme="dark"] i, 
+[data-theme="dark"] .card-title,
+[data-theme="dark"] .form-label {
+    color: var(--text-main);
+}
+
+/* Ensure muted text is visible on black */
+[data-theme="dark"] .text-muted, 
+[data-theme="dark"] .small,
+[data-theme="dark"] small {
+    color: #cbd5e1 !important; /* Lighter gray for better contrast on black */
+}
+
+/* Dark Mode Helper classes override */
+[data-theme="dark"] .text-dark {
+    color: var(--text-main) !important;
+}
+
+[data-theme="dark"] .bg-light {
+    background-color: var(--border-light) !important;
+    color: var(--text-main) !important;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 4px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--secondary-color);
+}

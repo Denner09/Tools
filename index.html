@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business tools | Home</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net blob: data:; script-src 'self' 'unsafe-eval' https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://unpkg.com https://fonts.googleapis.com; img-src 'self' data: blob:; font-src 'self' https://cdnjs.cloudflare.com https://unpkg.com data: https://fonts.gstatic.com; worker-src 'self' blob: https://cdnjs.cloudflare.com;">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f97316">
+    <title>Business tools | Início</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -36,9 +39,17 @@
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link active" href="index.html">Início</a></li>
-                        <li class="nav-item"><a class="nav-link" href="pages/pdf-tools.html">Ferramentas PDF</a></li>
-                        <li class="nav-item"><a class="nav-link" href="pages/flowchart.html">Fluxograma BPMN</a></li>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" @click.prevent.stop="toggleNav" :class="{ 'show': isNavOpen }" :aria-expanded="isNavOpen">
+                            Menu
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" :class="{ 'show': isNavOpen }" style="right: 0; left: auto;">
+                            <li><a class="dropdown-item active" href="index.html">Início</a></li>
+                            <li><a class="dropdown-item" href="pages/text-converter.html">Editor de Texto</a></li>
+                            <li><a class="dropdown-item" href="pages/pdf-tools.html">Ferramentas PDF</a></li>
+                            <li><a class="dropdown-item" href="pages/flowchart.html">Fluxograma BPMN</a></li>
+                        </ul>
+                    </li>
                     </ul>
                 </div>
             </div>
@@ -79,6 +90,18 @@
                         </div>
                     </a>
                 </div>
+                <div class="col-md-6">
+                    <a href="pages/text-converter.html" class="text-decoration-none">
+                        <div class="card h-100 p-4 text-center">
+                            <div class="card-body">
+                                <i class="fas fa-pen-nib card-icon-large"></i>
+                                <h3 class="card-title">Editor de Texto</h3>
+                                <p class="card-text">Ferramentas de correção, formatação e conversão de texto com exportação.</p>
+                                <span class="btn btn-outline-primary mt-3">Abrir Ferramenta</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -86,10 +109,17 @@
             <small>&copy; 2026 Business tools. Excelência em Gestão.</small>
             <br>
             <small>Criado por Denner Figueiredo</small>
+            <div class="mt-2">
+                <a href="pages/layout-demo.html" class="btn btn-sm btn-outline-secondary" style="font-size: 0.7rem;">
+                    <i class="fas fa-palette me-1"></i> Layout Demo (Dev)
+                </a>
+            </div>
         </footer>
     </div>
 
     <script src="js/main.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/pwa.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

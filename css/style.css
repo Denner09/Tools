@@ -725,3 +725,53 @@ textarea {
   background-color: #cff4fc !important; /* Ensure background stays light blue as seen/requested */
   border-color: #b6effb !important;
 }
+
+/* Dropdown System Styling */
+.dropdown-menu {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 0.5rem;
+}
+
+.dropdown-item {
+  color: var(--text-main);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease;
+  margin-bottom: 2px;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--primary-soft);
+  color: var(--primary-color);
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+/* Dark Mode Dropdown Overrides */
+[data-theme='dark'] .dropdown-menu {
+  background-color: var(--bg-surface);
+  border-color: var(--border-light);
+}
+
+[data-theme='dark'] .dropdown-item {
+  color: var(--text-main);
+}
+
+[data-theme='dark'] .dropdown-item:hover,
+[data-theme='dark'] .dropdown-item:focus {
+  background-color: rgba(249, 115, 22, 0.15); /* Primary Soft Dark */
+  color: var(--primary-color);
+}
+
+[data-theme='dark'] .dropdown-divider {
+  border-top-color: var(--border-light);
+}
+

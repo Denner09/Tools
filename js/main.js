@@ -3,7 +3,8 @@ const { createApp } = Vue;
 createApp({
     data() {
         return {
-            isDark: false
+            isDark: false,
+            isNavOpen: false
         }
     },
     mounted() {
@@ -24,6 +25,16 @@ createApp({
         },
         applyTheme() {
             document.documentElement.setAttribute('data-theme', this.isDark ? 'dark' : 'light');
+        },
+        toggleNav() {
+            this.isNavOpen = !this.isNavOpen;
+            if (this.isNavOpen) {
+                setTimeout(() => document.addEventListener('click', this.closeNav), 0);
+            }
+        },
+        closeNav() {
+            this.isNavOpen = false;
+            document.removeEventListener('click', this.closeNav);
         }
     }
 }).mount('#app');

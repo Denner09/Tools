@@ -16,7 +16,8 @@ createApp({
             // Or just treat Input as "Raw" and Output as "Final".
             // Let's treat Input as Source. Transformations apply to Source and update Output.
             spellCheckEnabled: false,
-            showExportMenu: false
+            showExportMenu: false,
+            isNavOpen: false
         }
     },
     computed: {
@@ -69,6 +70,16 @@ createApp({
             // Close menu on any click outside (or inside, acting like a selection)
             this.showExportMenu = false;
             document.removeEventListener('click', this.closeExportMenu);
+        },
+        toggleNav() {
+            this.isNavOpen = !this.isNavOpen;
+            if (this.isNavOpen) {
+                setTimeout(() => document.addEventListener('click', this.closeNav), 0);
+            }
+        },
+        closeNav() {
+            this.isNavOpen = false;
+            document.removeEventListener('click', this.closeNav);
         },
         handleInput(e) {
             this.inputText = e.target.innerText;

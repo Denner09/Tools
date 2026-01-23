@@ -227,8 +227,18 @@ createApp({
                 // Parse SVG to get dimensions
                 const parser = new DOMParser();
                 const svgElem = parser.parseFromString(svg, "image/svg+xml").documentElement;
-                const originalWidth = parseInt(svgElem.getAttribute("width")) || 800;
-                const originalHeight = parseInt(svgElem.getAttribute("height")) || 600;
+                
+                // Safety check for empty diagrams
+                let originalWidth = parseInt(svgElem.getAttribute("width")) || 800;
+                let originalHeight = parseInt(svgElem.getAttribute("height")) || 600;
+
+                // If dimensions are tiny (empty diagram usually), warn user
+                if (originalWidth < 50 || originalHeight < 50) {
+                     showNotify('Aviso: Diagrama vazio ou muito pequeno.');
+                     // Use default size to prevent crash
+                     originalWidth = 800;
+                     originalHeight = 600;
+                }
 
                 // High Quality Scale Factor (3x makes it look like vector on most screens/prints)
                 const scale = 3; 
@@ -258,9 +268,19 @@ createApp({
                 
                 // Add the high-res image into the PDF at the original size
                 // This compresses pixels, creating high DPI output
-                pdf.addImage(imgData, 'PNG', 20, 20, originalWidth, originalHeight);
-                pdf.save(`${name}.pdf`);
-                showNotify('Salvo em PDF (Alta Qualidade)!');
+                try {
+                    pdf.addImage(imgData, 'PNG', 20, 20, originalWidth, originalHeight);
+                    pdf.save(`${name}.pdf`);
+                    showNotify('Salvo em PDF (Alta Qualidade)!');
+                } catch (pdfErr) {
+                    console.error('PDF Generation Error:', pdfErr);
+                     // If addImage fails, it might be because the canvas is blank/empty
+                    if (pdfErr.message.includes('Incomplete or corrupt PNG')) {
+                        showNotify('Erro: O diagrama parece estar vazio.');
+                    } else {
+                        throw pdfErr;
+                    }
+                }
             } catch (e) {
                 console.error(e);
                 showNotify('Erro ao exportar PDF: ' + e.message);

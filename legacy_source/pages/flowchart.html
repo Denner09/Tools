@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net blob: data:; script-src 'self' 'unsafe-eval' https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://unpkg.com https://fonts.googleapis.com; img-src 'self' data: blob:; font-src 'self' https://cdnjs.cloudflare.com https://unpkg.com data: https://fonts.gstatic.com; worker-src 'self' blob: https://cdnjs.cloudflare.com;">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#f97316">
+    <title>Business tools | Modelador BPMN</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- bpmn-js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bpmn-js@13.2.2/dist/assets/diagram-js.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bpmn-js@13.2.2/dist/assets/bpmn-font/css/bpmn.css" />
+    
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/flowchart.css">
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/bpmn-js@13.2.2/dist/bpmn-modeler.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Canvg to convert SVG to Canvas (needed for jsPDF fallback) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/3.0.9/umd.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid px-3 flex-row justify-content-between">
+                <a class="navbar-brand" href="../index.html">
+                    <img src="../assets/logo.png" alt="Business tools">
+                    Business tools
+                </a>
+                
+                <div class="d-flex align-items-center gap-3">
+                    <!-- Theme Toggle -->
+                    <div class="theme-toggle" @click="toggleTheme" title="Alternar Tema">
+                        <i class="fas" :class="isDark ? 'fa-sun' : 'fa-moon'"></i>
+                    </div>
+
+                    <!-- Hamburger / Three Bars Menu for Options -->
+                    <div class="dropdown position-relative">
+                        <button class="btn btn-outline-secondary border-0" type="button" @click.stop="toggleMenu">
+                            <i class="fas fa-bars fa-lg"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2" 
+                            :class="{'dropdown-menu-dark': isDark, 'show': isMenuOpen}" 
+                            style="min-width: 200px; right: 0; left: auto; position: absolute;">
+                            <li><h6 class="dropdown-header">Arquivo</h6></li>
+                            <li><a class="dropdown-item" href="#" @click.prevent="createNewDiagram"><i class="fas fa-file me-2"></i> Novo</a></li>
+                            <li><a class="dropdown-item" href="#" @click.prevent="$refs.fileInput.click()"><i class="fas fa-folder-open me-2"></i> Abrir</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">Exportar</h6></li>
+                            <li><a class="dropdown-item" href="#" @click.prevent="openSaveModal('SVG')"><i class="fas fa-image me-2"></i> Salvar SVG</a></li>
+                            <li><a class="dropdown-item" href="#" @click.prevent="openSaveModal('PNG')"><i class="fas fa-file-image me-2"></i> Salvar PNG</a></li>
+                            <li><a class="dropdown-item" href="#" @click.prevent="openSaveModal('XML')"><i class="fas fa-code me-2"></i> Salvar XML</a></li>
+                            <li><a class="dropdown-item" href="#" @click.prevent="openSaveModal('PDF')"><i class="fas fa-file-pdf me-2"></i> Salvar PDF</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Hidden Input -->
+                    <input type="file" ref="fileInput" @change="loadDiagram" accept=".bpmn,.xml" style="display:none">
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content (Full Screen Canvas) -->
+       <div class="canvas-container">
+           <!-- Floating Controls -->
+           <div class="canvas-controls">
+               <button class="btn btn-control" @click="undo" title="Desfazer (Ctrl+Z)">
+                   <i class="fas fa-undo"></i>
+               </button>
+               <button class="btn btn-control" @click="redo" title="Refazer (Ctrl+Y)">
+                   <i class="fas fa-redo"></i>
+               </button>
+               <div class="vr mx-2"></div>
+               <button class="btn btn-control text-danger" @click="clearCanvas" title="Limpar Tudo">
+                   <i class="fas fa-trash"></i>
+               </button>
+           </div>
+           
+           <div id="canvas" class="bjs-container"></div>
+       </div>
+
+        <!-- Save File Modal -->
+        <div class="modal fade" id="saveFileModal" tabindex="-1" aria-hidden="true" ref="saveModalElement">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" :class="{'bg-dark text-white': isDark}">
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title">Salvar Diagrama</h5>
+                        <button type="button" class="btn-close" :class="{'btn-close-white': isDark}" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="fileNameInput" class="form-label">Nome do Arquivo</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" 
+                                   :class="{'bg-secondary text-white border-secondary': isDark}"
+                                   id="fileNameInput" 
+                                   v-model="fileName" 
+                                   @keyup.enter="confirmSave" 
+                                   placeholder="Digite o nome do arquivo"
+                                   autofocus>
+                            <span class="input-group-text" :class="{'bg-secondary text-white border-secondary': isDark}">.{{ saveType.toLowerCase() }}</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top-0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" @click="confirmSave">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification -->
+        <div v-if="notification" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
+            <div class="toast show align-items-center text-white bg-primary border-0" role="alert">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ notification }}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" @click="notification = ''"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/flowchart-logic.js"></script>
+    <script src="../js/pwa.js"></script>
+    <script src="../js/security-v2.js"></script>
+</body>
+</html>

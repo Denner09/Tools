@@ -57,6 +57,9 @@ const pdfAnalysis = {
 
     async runOCR() {
             // Check file type
+            if (typeof Tesseract === 'undefined') {
+                throw new Error("Biblioteca OCR (Tesseract) não carregada. Verifique sua conexão ou bloqueadores.");
+            }
             this.progressStats = 'Inicializando OCR...';
             let imageBlob = this.file;
             
@@ -82,6 +85,9 @@ const pdfAnalysis = {
             imageBlob, 
             this.ocrLang, 
             { 
+                workerBlobURL: true, // Allow using Blob to bypass Cross-Origin worker restriction
+                workerPath: 'https://unpkg.com/tesseract.js@v2.1.0/dist/worker.min.js',
+                corePath: 'https://unpkg.com/tesseract.js-core@v2.0.0/tesseract-core.wasm.js',
                 logger: m => {
                     if(m.status === 'recognizing text') {
                         this.progressPercent = m.progress * 100;

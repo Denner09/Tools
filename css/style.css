@@ -56,6 +56,13 @@ textarea {
   box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
 }
 
+.hero-section h1,
+.hero-section h2,
+.hero-section h3,
+.hero-section p {
+  color: white !important;
+}
+
 /* Sidebar for Tools Page - Responsive */
 .sidebar {
   height: auto;
@@ -771,7 +778,17 @@ textarea {
   color: var(--primary-color);
 }
 
-[data-theme='dark'] .dropdown-divider {
-  border-top-color: var(--border-light);
+/* OCR Result Box - Deep Green for Dark Mode */
+[data-theme="dark"] .alert-dark-green-mode {
+    background-color: #1b4d2e !important; /* Deep forest green to match request */
+    border-color: #143821 !important;
+    color: #ffffff !important; /* Black text requested for status message */
+}
+
+/* Inner OCR Content - Back to Black */
+[data-theme="dark"] .ocr-content-black {
+    background-color: #242424 !important; /* Back to black as requested */
+    border-color: #333 !important;
+    color: #e0e0e0 !important;
 }
 

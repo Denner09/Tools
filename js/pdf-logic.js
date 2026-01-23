@@ -257,7 +257,8 @@ createApp({
                 this.statusType = 'success';
             } catch (e) {
                 console.error(e);
-                this.statusMessage = 'Ocorreu um erro: ' + e.message;
+                const msg = (e && e.message) ? e.message : (typeof e === 'string' ? e : JSON.stringify(e));
+                this.statusMessage = 'Ocorreu um erro: ' + msg;
                 this.statusType = 'error';
             } finally {
                 this.processing = false;

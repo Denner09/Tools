@@ -1,0 +1,5 @@
+{
+  "/pdf-tools": [
+    "static/chunks/pages/pdf-tools.js"
+  ]
+}

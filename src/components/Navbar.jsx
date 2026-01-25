@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import logo from '../assets/logo.png';
 import ThemeToggle from './ThemeToggle';
 import clsx from 'clsx';
@@ -10,6 +11,9 @@ const AppNavbar = () => {
     // A captura de tela mostra "Menu" com um dropdown
     // Implementaremos um Menu alinhado à direita.
     
+    const router = useRouter();
+    const isHomePage = router.pathname === '/';
+
     return (
         <nav 
             className="fixed top-0 w-full z-50 border-b backdrop-blur-md transition-colors duration-300"
@@ -18,7 +22,10 @@ const AppNavbar = () => {
                 borderColor: 'var(--border-card)'
             }}
         >
-            <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div className={clsx(
+                "h-20 flex items-center justify-between px-6",
+                isHomePage ? "max-w-7xl mx-auto" : "w-full"
+            )}>
                 
                 {/* Área do Logo */}
                 <Link href="/" className="flex items-center gap-3 group text-decoration-none focus:outline-none">

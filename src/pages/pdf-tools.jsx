@@ -417,7 +417,7 @@ export default function PDFToolsPage() {
         }
     };
 
-    // Crop: Render Page Logic
+    // Recortar: Lógica de Renderização da Página
     const renderCropPage = useCallback(async () => {
         if (activeTool !== 'crop' || !files.length) return;
         
@@ -433,7 +433,7 @@ export default function PDFToolsPage() {
             if (cropPage < 1) setCropPage(1);
 
             const page = await pdf.getPage(cropPage);
-            // Reduced scale to 0.75 as requested (50% reduction from previous 1.5)
+            // Escala reduzida para 0.75 conforme solicitado (redução de 50% em relação ao anterior 1.5)
             const viewport = page.getViewport({ scale: 0.75 }); 
             
             const canvas = document.createElement('canvas');
@@ -445,7 +445,7 @@ export default function PDFToolsPage() {
             setCropImgData(canvas.toDataURL('image/png'));
             setProcessing(false);
             
-            // Auto select center if no selection
+            // Seleção automática ao centro se não houver seleção
             const w = viewport.width;
             const h = viewport.height;
             
@@ -480,12 +480,12 @@ export default function PDFToolsPage() {
         if (!cropSelection || !cropImgData) return;
 
         try {
-            // Load the source image (the rendered page)
+            // Carrega a imagem de origem (a página renderizada)
             const img = new Image();
             img.src = cropImgData;
             await new Promise(r => img.onload = r);
 
-            // Create canvas for the cropped area
+            // Cria canvas para a área recortada
             const canvas = document.createElement('canvas');
             canvas.width = cropSelection.width;
             canvas.height = cropSelection.height;
@@ -527,7 +527,7 @@ export default function PDFToolsPage() {
         }
     };
 
-    // Rotate: Render Page Logic
+    // Rotacionar: Lógica de Renderização da Página
     const renderRotatePage = useCallback(async () => {
         if (activeTool !== 'rotate' || !files.length) return;
         
@@ -1133,7 +1133,7 @@ export default function PDFToolsPage() {
                 </div>
             )}
 
-            {/* Fixed Sidebar (Desktop) */}
+            {/* Barra Lateral Fixa (Desktop) */}
             <aside 
                 className="hidden md:flex flex-col w-72 border-r fixed top-16 bottom-0 left-0 z-40 overflow-y-auto"
                 style={{ 
@@ -1174,7 +1174,7 @@ export default function PDFToolsPage() {
                 </div>
             </aside>
 
-            {/* Mobile Header/Nav (Visible only on small screens) */}
+            {/* Cabeçalho/Nav Mobile (Visível apenas em telas pequenas) */}
             <div 
                 className="md:hidden w-full border-b p-4 sticky top-16 z-30 overflow-x-auto whitespace-nowrap"
                 style={{ 
@@ -1205,16 +1205,16 @@ export default function PDFToolsPage() {
                  </div>
             </div>
 
-            {/* Main Content Area - Pushed right by sidebar width on desktop */}
+            {/* Área de Conteúdo Principal - Empurrada para a direita pela largura da barra lateral no desktop */}
             <main className="flex-1 md:ml-72 p-6 md:p-10 w-full min-h-screen" style={{ backgroundColor: 'var(--bg-page)' }}>
                 <div className="max-w-[1600px] mx-auto">
                     
-                    {/* Header */}
+                    {/* Cabeçalho */}
                     <div className="mb-6">
                         <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--text-main)' }}>
                              {tools.find(t => t.id === activeTool)?.label}
                         </h1>
-                        <span className="inline-block bg-gray-200 dark:bg-gray-800 rounded px-3 py-1 text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
+                        <span className="inline-block bg-zinc-800 dark:bg-gray-800 rounded px-3 py-1 text-sm font-medium text-white">
                             {activeTool === 'merge' && 'Junte múltiplos arquivos PDF em um único documento'}
                             {activeTool === 'split' && 'Separe um PDF em várias páginas ou extraia intervalos'}
                             {activeTool === 'compress' && 'Otimize o tamanho dos seus arquivos PDF'}
@@ -1239,7 +1239,7 @@ export default function PDFToolsPage() {
                              
                              <h4 className="font-semibold mb-4" style={{ color: 'var(--text-muted)' }}>Selecione seus arquivos PDF (Ordem de seleção importa)</h4>
 
-                             {/* Dropzone - Expanded */}
+                             {/* Área de Drop - Expandida */}
                              <div 
                                 {...getRootProps()} 
                                 className={clsx(
@@ -1269,7 +1269,7 @@ export default function PDFToolsPage() {
                                 </div>
                              </div>
 
-                             {/* File List */}
+                             {/* Lista de Arquivos */}
                              {files.length > 0 && (
                                  <div className="mt-6">
                                      <div className="grid grid-cols-1 gap-2">
@@ -1286,7 +1286,7 @@ export default function PDFToolsPage() {
                                  </div>
                              )}
 
-                             {/* Options Area (Split/OCR) */}
+                             {/* Área de Opções (Dividir/OCR) */}
                              {(activeTool === 'split' || activeTool === 'ocr') && files.length > 0 && (
                                  <div className="mt-6 p-4 rounded-lg" style={{ backgroundColor: 'var(--bg-card-hover)', borderColor: 'var(--border-card)' }}>
                                      {activeTool === 'split' && (

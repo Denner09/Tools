@@ -7,8 +7,8 @@ import clsx from 'clsx';
 const AppNavbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // Screenshot shows "Menu" with a dropdown caret
-    // We will implement a right-aligned Menu.
+    // A captura de tela mostra "Menu" com um dropdown
+    // Implementaremos um Menu alinhado à direita.
     
     return (
         <nav 
@@ -20,7 +20,7 @@ const AppNavbar = () => {
         >
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                 
-                {/* Logo Area */}
+                {/* Área do Logo */}
                 <Link href="/" className="flex items-center gap-3 group text-decoration-none focus:outline-none">
                     <div className="relative">
                         <div className="absolute inset-0 bg-orange-500 blur-lg opacity-20 rounded-full group-hover:opacity-40 transition-opacity"></div>
@@ -34,18 +34,15 @@ const AppNavbar = () => {
                         Business <span className="text-orange-500">tools</span>
                     </span>
                     
-                    {/* Settings Cog from screenshot */}
-                    <button className="ml-2 transition-colors" style={{ color: 'var(--text-muted)' }}>
-                        <i className="fas fa-cog"></i>
-                    </button>
+                    {/* Botão de Configurações Removido */}
                 </Link>
 
-                {/* Right Side: Menu Dropdown */}
+                {/* Lado Direito: Menu Dropdown */}
                 <div className="flex items-center gap-6">
                     
-                    {/* Desktop Menu Link style */}
+                    {/* Estilo do Menu Desktop */}
                     <div className="hidden md:flex items-center gap-8">
-                        {/* Theme Toggle - Elegant Switch */}
+                        {/* Alternar Tema - Switch Elegante */}
                         <ThemeToggle />
                         
                         <div className="relative group">
@@ -57,7 +54,7 @@ const AppNavbar = () => {
                                 <i className="fas fa-chevron-down text-[10px]"></i>
                             </button>
                             
-                            {/* Dropdown Menu */}
+                            {/* Menu Dropdown */}
                             <div 
                                 className="absolute right-0 top-full mt-2 w-48 border rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform origin-top-right z-50"
                                 style={{ 
@@ -97,7 +94,7 @@ const AppNavbar = () => {
                         </div>
                     </div>
 
-                    {/* Mobile Menu Toggle */}
+                    {/* Alternar Menu Mobile */}
                     <button 
                         className="md:hidden hover:text-orange-500"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -108,7 +105,7 @@ const AppNavbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu Overlay */}
+            {/* Overlay do Menu Mobile */}
             {isMenuOpen && (
                 <div 
                     className="md:hidden border-b"

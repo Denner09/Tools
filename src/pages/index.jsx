@@ -9,24 +9,24 @@ const Home = () => {
     <div className="min-h-screen font-sans transition-colors duration-300" 
          style={{ backgroundColor: 'var(--bg-page)', color: 'var(--text-main)' }}>
       
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        {/* Abstract Background Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-orange-200/40 via-orange-100/20 to-transparent dark:from-orange-600/20 dark:via-orange-900/10 dark:to-transparent blur-3xl -z-10 pointer-events-none transition-colors duration-500" />
-        
-        <div className="max-w-7xl mx-auto px-4 pt-32 pb-20 text-center relative z-10">
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 drop-shadow-sm dark:drop-shadow-lg transition-colors" style={{ color: 'var(--text-main)' }}>
-                Potencialize seu <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-600 dark:from-orange-400 dark:to-orange-600">Trabalho</span>
+      {/* Seção Hero */}
+      <div className="pb-12 md:pb-20 relative">
+        <div className="w-full bg-linear-to-r from-[#111111] via-[#1a1a1a] to-[#ea580c] py-10 md:py-20 px-4 text-center shadow-[0_25px_50px_-12px_rgba(234,88,12,0.20)] rounded-b-[3rem] relative overflow-hidden isolate group">
+            
+            {/* Efeito Sutil de Textura/Brilho */}
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-soft-light pointer-events-none"></div>
+            <div className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-b from-white/10 to-transparent blur-3xl rounded-full opacity-30 pointer-events-none group-hover:opacity-40 transition-opacity duration-700"></div>
+
+            <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tight mb-8 text-white drop-shadow-lg relative z-10 selection:bg-white/30">
+                Potencialize seu Trabalho
             </h1>
-            <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto leading-relaxed font-light transition-colors" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-base md:text-xl text-gray-200 font-bold w-full whitespace-nowrap mx-auto leading-relaxed opacity-90 relative z-10 selection:bg-white/30">
                 Ferramentas essenciais para gestão, documentos e processos executivos.
-                <br />
-                <span className="text-orange-500/80">Simples, rápido e direto no seu navegador.</span>
             </p>
         </div>
       </div>
 
-      {/* Tools Grid */}
+      {/* Grid de Ferramentas */}
       <div className="max-w-7xl mx-auto px-4 pb-32">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             

@@ -5,13 +5,9 @@ import clsx from 'clsx';
 const ThemeToggle = () => {
     const { theme, toggleTheme, mounted } = useTheme();
 
-    // Prevent hydration mismatch by rendering a placeholder or standard state until mounted
-    // We keep the visual size identical to prevent layout shift
     if (!mounted) {
         return (
-            <div className="w-14 h-8 rounded-full bg-slate-200 dark:bg-slate-800 p-1 flex items-center cursor-wait opacity-50">
-               <div className="w-6 h-6 rounded-full bg-white shadow-md transform translate-x-0"></div>
-            </div>
+             <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 animate-pulse"></div>
         );
     }
 
@@ -21,24 +17,16 @@ const ThemeToggle = () => {
         <button
             onClick={toggleTheme}
             className={clsx(
-                "w-14 h-8 rounded-full p-1 flex items-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500",
-                isDark ? "bg-slate-700" : "bg-slate-200"
+                "w-10 h-10 flex items-center justify-center rounded-lg border-none outline-none focus:outline-none shadow-none ring-0",
+                isDark 
+                    ? "bg-transparent text-orange-400" // Modo escuro
+                    : "bg-transparent text-orange-500" // Modo claro
             )}
+            style={{ border: 'none' }}
             title={isDark ? "Mudar para Modo Claro" : "Mudar para Modo Escuro"}
             aria-label="Alternar Tema"
         >
-            <div
-                className={clsx(
-                    "w-6 h-6 rounded-full bg-white shadow-md transform transition-transform duration-300 flex items-center justify-center",
-                    isDark ? "translate-x-6 bg-slate-800" : "translate-x-0"
-                )}
-            >
-                {isDark ? (
-                    <i className="fas fa-moon text-indigo-400 text-[10px]"></i>
-                ) : (
-                    <i className="fas fa-sun text-orange-500 text-[10px]"></i>
-                )}
-            </div>
+            <i className={clsx("fas text-lg", isDark ? "fa-moon" : "fa-sun")}></i>
         </button>
     );
 };

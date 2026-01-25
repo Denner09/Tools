@@ -9,7 +9,7 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState('light');
   const [mounted, setMounted] = useState(false);
 
-  // Efeito para sincronizar com localStorage e System Preference após a montagem
+  // Efeito para sincronizar com localStorage e Preferência do Sistema após a montagem
   useEffect(() => {
     setMounted(true);
     

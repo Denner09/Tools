@@ -923,7 +923,7 @@ function PDFToolsPage() {
             setOcrProgress(0);
         }
     };
-    // Crop: Render Page Logic
+    // Recortar: Lógica de Renderização da Página
     const renderCropPage = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "PDFToolsPage.useCallback[renderCropPage]": async ()=>{
             if (activeTool !== 'crop' || !files.length) return;
@@ -936,7 +936,7 @@ function PDFToolsPage() {
                 if (cropPage > pdf.numPages) setCropPage(pdf.numPages);
                 if (cropPage < 1) setCropPage(1);
                 const page = await pdf.getPage(cropPage);
-                // Reduced scale to 0.75 as requested (50% reduction from previous 1.5)
+                // Escala reduzida para 0.75 conforme solicitado (redução de 50% em relação ao anterior 1.5)
                 const viewport = page.getViewport({
                     scale: 0.75
                 });
@@ -950,7 +950,7 @@ function PDFToolsPage() {
                 }).promise;
                 setCropImgData(canvas.toDataURL('image/png'));
                 setProcessing(false);
-                // Auto select center if no selection
+                // Seleção automática ao centro se não houver seleção
                 const w = viewport.width;
                 const h = viewport.height;
                 if (!cropSelection) {
@@ -998,11 +998,11 @@ function PDFToolsPage() {
     const handleCropDownload = async ()=>{
         if (!cropSelection || !cropImgData) return;
         try {
-            // Load the source image (the rendered page)
+            // Carrega a imagem de origem (a página renderizada)
             const img = new Image();
             img.src = cropImgData;
             await new Promise((r)=>img.onload = r);
-            // Create canvas for the cropped area
+            // Cria canvas para a área recortada
             const canvas = document.createElement('canvas');
             canvas.width = cropSelection.width;
             canvas.height = cropSelection.height;
@@ -1041,7 +1041,7 @@ function PDFToolsPage() {
             alert("Erro ao realizar o corte: " + e.message);
         }
     };
-    // Rotate: Render Page Logic
+    // Rotacionar: Lógica de Renderização da Página
     const renderRotatePage = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "PDFToolsPage.useCallback[renderRotatePage]": async ()=>{
             if (activeTool !== 'rotate' || !files.length) return;
@@ -1883,10 +1883,7 @@ function PDFToolsPage() {
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "inline-block bg-gray-200 dark:bg-gray-800 rounded px-3 py-1 text-sm font-medium",
-                                    style: {
-                                        color: 'var(--text-muted)'
-                                    },
+                                    className: "inline-block bg-zinc-800 dark:bg-gray-800 rounded px-3 py-1 text-sm font-medium text-white",
                                     children: [
                                         activeTool === 'merge' && 'Junte múltiplos arquivos PDF em um único documento',
                                         activeTool === 'split' && 'Separe um PDF em várias páginas ou extraia intervalos',

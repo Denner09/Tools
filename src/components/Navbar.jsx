@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useTheme } from '../context/ThemeContext';
 import logo from '../assets/logo.png';
+import ThemeToggle from './ThemeToggle';
 import clsx from 'clsx';
 
 const AppNavbar = () => {
-    // Force dark theme visual for Navbar to match screenshot, regardless of context for now if preferred
-    // But better to respect context but provide Good defaults.
-    const { theme, toggleTheme } = useTheme();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     // Screenshot shows "Menu" with a dropdown caret
     // We will implement a right-aligned Menu.
     
     return (
-        <nav className="fixed top-0 w-full z-50 bg-[#0a0a0a] border-b border-white/5 backdrop-blur-md">
+        <nav 
+            className="fixed top-0 w-full z-50 border-b backdrop-blur-md transition-colors duration-300"
+            style={{ 
+                backgroundColor: 'var(--bg-card)', 
+                borderColor: 'var(--border-card)'
+            }}
+        >
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                 
                 {/* Logo Area */}
@@ -27,12 +30,12 @@ const AppNavbar = () => {
                             className="h-8 w-auto relative z-10" 
                         />
                     </div>
-                    <span className="font-bold text-xl text-white tracking-tight">
+                    <span className="font-bold text-xl tracking-tight transition-colors" style={{ color: 'var(--text-main)' }}>
                         Business <span className="text-orange-500">tools</span>
                     </span>
                     
                     {/* Settings Cog from screenshot */}
-                    <button className="ml-2 text-gray-500 hover:text-white transition-colors">
+                    <button className="ml-2 transition-colors" style={{ color: 'var(--text-muted)' }}>
                         <i className="fas fa-cog"></i>
                     </button>
                 </Link>
@@ -42,32 +45,52 @@ const AppNavbar = () => {
                     
                     {/* Desktop Menu Link style */}
                     <div className="hidden md:flex items-center gap-8">
-                        {/* Theme Toggle - Keep it subtle */}
-                        <button 
-                            onClick={toggleTheme}
-                            className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-all"
-                        >
-                            <i className={clsx("fas text-xs", theme === 'dark' ? "fa-sun" : "fa-moon")}></i>
-                        </button>
-
+                        {/* Theme Toggle - Elegant Switch */}
+                        <ThemeToggle />
+                        
                         <div className="relative group">
-                            <button className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-wider hover:text-white transition-colors py-2">
+                            <button 
+                                className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider transition-colors py-2"
+                                style={{ color: 'var(--text-muted)' }}
+                            >
                                 Menu
-                                <i className="fas fa-chevron-down text-[10px] text-gray-500 group-hover:text-white transition-colors"></i>
+                                <i className="fas fa-chevron-down text-[10px]"></i>
                             </button>
                             
                             {/* Dropdown Menu */}
-                            <div className="absolute right-0 top-full mt-2 w-48 bg-[#151515] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform origin-top-right z-50">
-                                <Link href="/" className="block px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 first:rounded-t-xl">
+                            <div 
+                                className="absolute right-0 top-full mt-2 w-48 border rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform origin-top-right z-50"
+                                style={{ 
+                                    backgroundColor: 'var(--bg-card)', 
+                                    borderColor: 'var(--border-card)'
+                                }}
+                            >
+                                <Link 
+                                    href="/" 
+                                    className="block px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-white/5 first:rounded-t-xl transition-colors"
+                                    style={{ color: 'var(--text-main)' }}
+                                >
                                     Início
                                 </Link>
-                                <Link href="/pdf-tools" className="block px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5">
+                                <Link 
+                                    href="/pdf-tools" 
+                                    className="block px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+                                    style={{ color: 'var(--text-main)' }}
+                                >
                                     Ferramentas PDF
                                 </Link>
-                                <Link href="/bpmn" className="block px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5">
+                                <Link 
+                                    href="/bpmn" 
+                                    className="block px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+                                    style={{ color: 'var(--text-main)' }}
+                                >
                                     Modelador BPMN
                                 </Link>
-                                <Link href="/text-editor" className="block px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 last:rounded-b-xl">
+                                <Link 
+                                    href="/text-editor" 
+                                    className="block px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-white/5 last:rounded-b-xl transition-colors"
+                                    style={{ color: 'var(--text-main)' }}
+                                >
                                     Editor de Texto
                                 </Link>
                             </div>
@@ -76,8 +99,9 @@ const AppNavbar = () => {
 
                     {/* Mobile Menu Toggle */}
                     <button 
-                        className="md:hidden text-gray-300 hover:text-white"
+                        className="md:hidden hover:text-orange-500"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        style={{ color: 'var(--text-muted)' }}
                     >
                         <i className="fas fa-bars fa-lg"></i>
                     </button>
@@ -86,12 +110,15 @@ const AppNavbar = () => {
 
             {/* Mobile Menu Overlay */}
             {isMenuOpen && (
-                <div className="md:hidden bg-[#0a0a0a] border-b border-white/10">
+                <div 
+                    className="md:hidden border-b"
+                    style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}
+                >
                     <div className="px-4 py-2 space-y-1">
-                        <Link href="/" className="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/10">Início</Link>
-                        <Link href="/pdf-tools" className="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/10">Ferramentas PDF</Link>
-                        <Link href="/bpmn" className="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/10">Modelador BPMN</Link>
-                         <Link href="/text-editor" className="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/10">Editor de Texto</Link>
+                        <Link href="/" className="block px-3 py-3 rounded-md text-base font-medium hover:text-orange-500 hover:bg-gray-100 dark:hover:bg-white/10" style={{ color: 'var(--text-main)' }}>Início</Link>
+                        <Link href="/pdf-tools" className="block px-3 py-3 rounded-md text-base font-medium hover:text-orange-500 hover:bg-gray-100 dark:hover:bg-white/10" style={{ color: 'var(--text-main)' }}>Ferramentas PDF</Link>
+                        <Link href="/bpmn" className="block px-3 py-3 rounded-md text-base font-medium hover:text-orange-500 hover:bg-gray-100 dark:hover:bg-white/10" style={{ color: 'var(--text-main)' }}>Modelador BPMN</Link>
+                         <Link href="/text-editor" className="block px-3 py-3 rounded-md text-base font-medium hover:text-orange-500 hover:bg-gray-100 dark:hover:bg-white/10" style={{ color: 'var(--text-main)' }}>Editor de Texto</Link>
                     </div>
                 </div>
             )}

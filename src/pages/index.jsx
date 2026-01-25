@@ -6,18 +6,19 @@ import FeatureCard from '../components/FeatureCard';
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-orange-500 selection:text-white font-sans">
+    <div className="min-h-screen font-sans transition-colors duration-300" 
+         style={{ backgroundColor: 'var(--bg-page)', color: 'var(--text-main)' }}>
       
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         {/* Abstract Background Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-orange-600/20 via-orange-900/10 to-transparent blur-3xl -z-10 pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-orange-200/40 via-orange-100/20 to-transparent dark:from-orange-600/20 dark:via-orange-900/10 dark:to-transparent blur-3xl -z-10 pointer-events-none transition-colors duration-500" />
         
         <div className="max-w-7xl mx-auto px-4 pt-32 pb-20 text-center relative z-10">
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 drop-shadow-lg">
-                Potencialize seu <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Trabalho</span>
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 drop-shadow-sm dark:drop-shadow-lg transition-colors" style={{ color: 'var(--text-main)' }}>
+                Potencialize seu <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-600 dark:from-orange-400 dark:to-orange-600">Trabalho</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
+            <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto leading-relaxed font-light transition-colors" style={{ color: 'var(--text-muted)' }}>
                 Ferramentas essenciais para gestão, documentos e processos executivos.
                 <br />
                 <span className="text-orange-500/80">Simples, rápido e direto no seu navegador.</span>

@@ -1090,29 +1090,29 @@ export default function PDFToolsPage() {
     };
 
     return (
-        <div className="flex min-h-[calc(100vh-64px)] bg-slate-50">
+        <div className="flex min-h-[calc(100vh-64px)]" style={{ backgroundColor: 'var(--bg-page)' }}>
             
-            {/* Split Confirmation Modal */}
+            {/* Split Confirmation Modal - Keep standard white modal for now or adapt */}
             {showSplitConfirm && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                    <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 animate-fade-in">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full p-6 animate-fade-in">
                         <div className="text-center mb-6">
                             <div className="w-16 h-16 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <i className="fas fa-cut text-2xl"></i>
                             </div>
-                            <h3 className="text-xl font-bold text-gray-800 mb-2">Alvo Não Atingido</h3>
-                            <p className="text-gray-600">
+                            <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">Alvo Não Atingido</h3>
+                            <p className="text-gray-600 dark:text-gray-300">
                                 O arquivo comprimido ficou com <strong>{(compressedBlob?.size / 1024 / 1024).toFixed(2)} MB</strong>, 
                                 o que é maior que seu alvo de <strong>{customTargetMB} MB</strong>.
                             </p>
-                            <p className="text-sm text-gray-500 mt-2">
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
                                 Deseja dividir o arquivo em múltiplas partes para respeitar o limite de tamanho?
                             </p>
                         </div>
                         <div className="flex gap-3">
                             <button 
                                 onClick={() => { setShowSplitConfirm(false); setCompressedBlob(null); setFiles([]); }}
-                                className="flex-1 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50"
+                                className="flex-1 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-700"
                             >
                                 Cancelar
                             </button>
@@ -1134,9 +1134,15 @@ export default function PDFToolsPage() {
             )}
 
             {/* Fixed Sidebar (Desktop) */}
-            <aside className="hidden md:flex flex-col w-72 bg-white border-r border-gray-200 fixed top-16 bottom-0 left-0 z-40 overflow-y-auto">
-                <div className="p-6 border-b border-gray-100">
-                    <div className="text-base font-bold text-gray-500 uppercase tracking-wider">Ferramentas PDF</div>
+            <aside 
+                className="hidden md:flex flex-col w-72 border-r fixed top-16 bottom-0 left-0 z-40 overflow-y-auto"
+                style={{ 
+                    backgroundColor: 'var(--bg-card)', 
+                    borderColor: 'var(--border-card)' 
+                }}
+            >
+                <div className="p-6 border-b" style={{ borderColor: 'var(--border-card)' }}>
+                    <div className="text-base font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Ferramentas PDF</div>
                 </div>
                 <nav className="flex-1 p-4 space-y-1">
                     {tools.map(tool => (
@@ -1146,13 +1152,16 @@ export default function PDFToolsPage() {
                             className={clsx(
                                 "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all w-full text-left group",
                                 activeTool === tool.id 
-                                    ? "bg-orange-50 text-orange-600 shadow-sm ring-1 ring-orange-200" 
-                                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                                    ? "bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 shadow-sm ring-1 ring-orange-200 dark:ring-orange-800" 
+                                    : "hover:bg-gray-50 dark:hover:bg-white/5"
                             )}
+                            style={{ 
+                                color: activeTool === tool.id ? undefined : 'var(--text-muted)'
+                            }}
                         >
                             <span className={clsx(
                                 "w-8 h-8 rounded-lg flex items-center justify-center transition-colors",
-                                activeTool === tool.id ? "bg-orange-100 text-orange-600" : "bg-gray-100/50 text-gray-400 group-hover:bg-gray-100"
+                                activeTool === tool.id ? "bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400" : "bg-gray-100/50 dark:bg-white/5 text-gray-400 group-hover:bg-gray-100 dark:group-hover:bg-white/10"
                             )}>
                                 <i className={`fas ${tool.icon}`}></i>
                             </span>
@@ -1160,13 +1169,19 @@ export default function PDFToolsPage() {
                         </button>
                     ))}
                 </nav>
-                <div className="p-4 bg-gray-50 border-t border-gray-100">
-                    <p className="text-xs text-gray-400 text-center">Business Tools v1.0</p>
+                <div className="p-4 bg-gray-50 dark:bg-white/5 border-t" style={{ borderColor: 'var(--border-card)' }}>
+                    <p className="text-xs text-center" style={{ color: 'var(--text-muted)' }}>Business Tools v1.0</p>
                 </div>
             </aside>
 
             {/* Mobile Header/Nav (Visible only on small screens) */}
-            <div className="md:hidden w-full bg-white border-b border-gray-200 p-4 sticky top-16 z-30 overflow-x-auto whitespace-nowrap">
+            <div 
+                className="md:hidden w-full border-b p-4 sticky top-16 z-30 overflow-x-auto whitespace-nowrap"
+                style={{ 
+                    backgroundColor: 'var(--bg-card)', 
+                    borderColor: 'var(--border-card)' 
+                }}
+            >
                  <div className="flex gap-2">
                     {tools.map(tool => (
                         <button
@@ -1175,9 +1190,13 @@ export default function PDFToolsPage() {
                             className={clsx(
                                 "flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors border",
                                 activeTool === tool.id 
-                                    ? "bg-orange-50 border-orange-200 text-orange-700" 
-                                    : "bg-white border-gray-200 text-gray-600"
+                                    ? "bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800 text-orange-700 dark:text-orange-400" 
+                                    : "border-gray-200 dark:border-gray-700"
                             )}
+                            style={{ 
+                                backgroundColor: activeTool === tool.id ? undefined : 'var(--bg-card)',
+                                color: activeTool === tool.id ? undefined : 'var(--text-muted)'
+                            }}
                         >
                             <i className={`fas ${tool.icon}`}></i>
                             {tool.label}
@@ -1187,15 +1206,15 @@ export default function PDFToolsPage() {
             </div>
 
             {/* Main Content Area - Pushed right by sidebar width on desktop */}
-            <main className="flex-1 md:ml-72 p-6 md:p-10 bg-slate-50 w-full min-h-screen">
+            <main className="flex-1 md:ml-72 p-6 md:p-10 w-full min-h-screen" style={{ backgroundColor: 'var(--bg-page)' }}>
                 <div className="max-w-[1600px] mx-auto">
                     
                     {/* Header */}
                     <div className="mb-6">
-                        <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                        <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--text-main)' }}>
                              {tools.find(t => t.id === activeTool)?.label}
                         </h1>
-                        <span className="inline-block bg-gray-200 rounded px-3 py-1 text-sm text-gray-600 font-medium">
+                        <span className="inline-block bg-gray-200 dark:bg-gray-800 rounded px-3 py-1 text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
                             {activeTool === 'merge' && 'Junte múltiplos arquivos PDF em um único documento'}
                             {activeTool === 'split' && 'Separe um PDF em várias páginas ou extraia intervalos'}
                             {activeTool === 'compress' && 'Otimize o tamanho dos seus arquivos PDF'}
@@ -1209,31 +1228,41 @@ export default function PDFToolsPage() {
                         </span>
                     </div>
 
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden min-h-[600px] flex flex-col justify-between">
+                    <div 
+                        className="rounded-xl shadow-sm border overflow-hidden min-h-[600px] flex flex-col justify-between"
+                        style={{ 
+                            backgroundColor: 'var(--bg-card)', 
+                            borderColor: 'var(--border-card)' 
+                        }}
+                    >
                          <div className="p-8 flex-grow flex flex-col">
                              
-                             <h4 className="font-semibold text-gray-700 mb-4">Selecione seus arquivos PDF (Ordem de seleção importa)</h4>
+                             <h4 className="font-semibold mb-4" style={{ color: 'var(--text-muted)' }}>Selecione seus arquivos PDF (Ordem de seleção importa)</h4>
 
                              {/* Dropzone - Expanded */}
                              <div 
                                 {...getRootProps()} 
                                 className={clsx(
-                                    "flex-grow flex flex-col items-center justify-center border-2 border-dashed rounded-xl transition-all duration-300 min-h-[400px] bg-slate-50/50",
-                                    isDragActive ? "border-orange-500 bg-orange-50" : "border-gray-300 hover:border-orange-400 hover:bg-slate-100"
+                                    "flex-grow flex flex-col items-center justify-center border-2 border-dashed rounded-xl transition-all duration-300 min-h-[400px]",
+                                    isDragActive ? "border-orange-500 bg-orange-50 dark:bg-orange-900/10" : "hover:border-orange-400"
                                 )}
+                                style={{ 
+                                    backgroundColor: isDragActive ? undefined : 'var(--bg-card-hover)',
+                                    borderColor: isDragActive ? undefined : 'var(--border-card)'
+                                }}
                              >
                                 <input {...getInputProps()} />
                                 <div className="text-center p-10">
                                     <div className={clsx(
                                         "w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 transition-all",
-                                        isDragActive ? "bg-white text-orange-600 shadow-md" : "bg-gray-400 text-white"
+                                        isDragActive ? "bg-white dark:bg-gray-800 text-orange-600 shadow-md" : "bg-gray-400 dark:bg-gray-600 text-white"
                                     )}>
                                         <i className="fas fa-cloud-upload-alt text-4xl"></i>
                                     </div>
-                                    <h3 className="text-2xl font-bold text-gray-400 mb-2">
+                                    <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-muted)' }}>
                                         {isDragActive ? "Solte para enviar" : "Clique ou arraste seus arquivos aqui"}
                                     </h3>
-                                    <p className="text-gray-400 font-medium uppercase text-sm tracking-wide">
+                                    <p className="font-medium uppercase text-sm tracking-wide" style={{ color: 'var(--text-muted)' }}>
                                          PDF Suportado
                                          {activeTool === 'compare' && ' (Necessário 2 arquivos)'}
                                     </p>
@@ -1245,10 +1274,10 @@ export default function PDFToolsPage() {
                                  <div className="mt-6">
                                      <div className="grid grid-cols-1 gap-2">
                                          {files.map((f, i) => (
-                                             <div key={i} className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg shadow-sm">
+                                             <div key={i} className="flex items-center justify-between p-3 border rounded-lg shadow-sm" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}>
                                                  <div className="flex items-center gap-3">
                                                      <i className="fas fa-file-pdf text-red-500 text-xl"></i>
-                                                     <span className="font-medium text-gray-700">{f.name} ({ (f.size/1024/1024).toFixed(2) } MB)</span>
+                                                     <span className="font-medium" style={{ color: 'var(--text-main)' }}>{f.name} ({ (f.size/1024/1024).toFixed(2) } MB)</span>
                                                  </div>
                                                  <i className="fas fa-check text-green-500"></i>
                                              </div>
@@ -1259,44 +1288,46 @@ export default function PDFToolsPage() {
 
                              {/* Options Area (Split/OCR) */}
                              {(activeTool === 'split' || activeTool === 'ocr') && files.length > 0 && (
-                                 <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                                 <div className="mt-6 p-4 rounded-lg" style={{ backgroundColor: 'var(--bg-card-hover)', borderColor: 'var(--border-card)' }}>
                                      {activeTool === 'split' && (
                                          <>
                                               <div className="flex gap-4 mb-4">
                                                   <label className="flex items-center gap-2 cursor-pointer">
                                                       <input type="radio" value="range" checked={splitMode === 'range'} onChange={() => setSplitMode('range')} className="text-orange-500" />
-                                                      <span className="font-medium text-gray-700">Por Página/Intervalo</span>
+                                                      <span className="font-medium" style={{ color: 'var(--text-main)' }}>Por Página/Intervalo</span>
                                                   </label>
                                                   <label className="flex items-center gap-2 cursor-pointer">
                                                       <input type="radio" value="size" checked={splitMode === 'size'} onChange={() => setSplitMode('size')} className="text-orange-500" />
-                                                      <span className="font-medium text-gray-700">Por Tamanho (MB)</span>
+                                                      <span className="font-medium" style={{ color: 'var(--text-main)' }}>Por Tamanho (MB)</span>
                                                   </label>
                                               </div>
 
                                              {splitMode === 'range' ? (
                                                 <>
-                                                 <label className="block text-sm font-bold text-gray-700 mb-2">Intervalos (Ex: 1-5, 8)</label>
+                                                 <label className="block text-sm font-bold mb-2" style={{ color: 'var(--text-main)' }}>Intervalos (Ex: 1-5, 8)</label>
                                                  <input 
                                                      type="text" 
                                                      value={splitRanges}
                                                      onChange={(e) => setSplitRanges(e.target.value)}
-                                                     className="w-full p-2 border border-gray-300 rounded focus:border-orange-500 focus:outline-none" 
+                                                     className="w-full p-2 border rounded focus:border-orange-500 focus:outline-none" 
+                                                     style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
                                                  />
                                                 </>
                                              ) : (
-                                                 <div className="p-3 bg-white border border-gray-200 rounded">
-                                                     <label className="block text-sm font-bold text-gray-700 mb-2">Tamanho Máximo por Arquivo (MB)</label>
+                                                 <div className="p-3 border rounded" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}>
+                                                     <label className="block text-sm font-bold mb-2" style={{ color: 'var(--text-main)' }}>Tamanho Máximo por Arquivo (MB)</label>
                                                      <div className="flex items-center gap-2">
                                                          <input 
                                                              type="number" 
                                                              value={customTargetMB}
                                                              onChange={(e) => setCustomTargetMB(e.target.value)}
-                                                             className="w-24 p-2 border border-gray-300 rounded focus:border-orange-500 focus:outline-none" 
+                                                             className="w-24 p-2 border rounded focus:border-orange-500 focus:outline-none" 
+                                                             style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
                                                              placeholder="Ex: 5"
                                                          />
-                                                         <span className="text-gray-500 text-sm">MB</span>
+                                                         <span className="text-sm" style={{ color: 'var(--text-muted)' }}>MB</span>
                                                      </div>
-                                                     <p className="text-xs text-gray-500 mt-2">
+                                                     <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
                                                          O arquivo será dividido em partes menores que este valor.
                                                      </p>
                                                  </div>
@@ -1305,27 +1336,27 @@ export default function PDFToolsPage() {
                                      )}
                                      {activeTool === 'ocr' && (
                                          <div>
-                                             <label className="block text-sm font-bold text-gray-700 mb-3">Modo de OCR</label>
+                                             <label className="block text-sm font-bold mb-3" style={{ color: 'var(--text-main)' }}>Modo de OCR</label>
                                              <div className="flex flex-col gap-2">
-                                                 <label className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300">
+                                                 <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}>
                                                     <input type="radio" name="ocrMode" value="extract" checked={ocrMode === 'extract'} onChange={() => setOcrMode('extract')} className="text-orange-500 focus:ring-orange-500" />
                                                     <div>
-                                                        <span className="font-bold text-gray-800 block text-sm">Extrair Texto (.txt)</span>
-                                                        <span className="text-xs text-gray-500">Lê o conteúdo e gera um arquivo de texto simples.</span>
+                                                        <span className="font-bold block text-sm" style={{ color: 'var(--text-main)' }}>Extrair Texto (.txt)</span>
+                                                        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Lê o conteúdo e gera um arquivo de texto simples.</span>
                                                     </div>
                                                  </label>
-                                                 <label className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300">
+                                                 <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}>
                                                     <input type="radio" name="ocrMode" value="searchable" checked={ocrMode === 'searchable'} onChange={() => setOcrMode('searchable')} className="text-orange-500 focus:ring-orange-500" />
                                                     <div>
-                                                        <span className="font-bold text-gray-800 block text-sm">PDF Pesquisável</span>
-                                                        <span className="text-xs text-gray-500">Gera um novo PDF onde o texto da imagem pode ser selecionado/pesquisado.</span>
+                                                        <span className="font-bold block text-sm" style={{ color: 'var(--text-main)' }}>PDF Pesquisável</span>
+                                                        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Gera um novo PDF onde o texto da imagem pode ser selecionado/pesquisado.</span>
                                                     </div>
                                                  </label>
-                                                 <label className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300">
+                                                 <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}>
                                                     <input type="radio" name="ocrMode" value="compare" checked={ocrMode === 'compare'} onChange={() => { setOcrMode('compare'); if(files.length > 2) setFiles(files.slice(0, 2)); }} className="text-orange-500 focus:ring-orange-500" />
                                                     <div>
-                                                        <span className="font-bold text-gray-800 block text-sm">Comparar Arquivos (Original vs Alterado)</span>
-                                                        <span className="text-xs text-gray-500">Extrai o texto de dois arquivos e mostra as diferenças.</span>
+                                                        <span className="font-bold block text-sm" style={{ color: 'var(--text-main)' }}>Comparar Arquivos (Original vs Alterado)</span>
+                                                        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Extrai o texto de dois arquivos e mostra as diferenças.</span>
                                                     </div>
                                                  </label>
                                              </div>
@@ -1337,29 +1368,32 @@ export default function PDFToolsPage() {
                              {/* Crop Area */}
                              {activeTool === 'crop' && files.length > 0 && cropImgData && (
                                 <div className="mt-6 flex flex-col gap-6">
-                                     <div className="flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                                     <div className="flex items-center justify-between p-4 border rounded-lg" style={{ backgroundColor: 'var(--bg-card-hover)', borderColor: 'var(--border-card)' }}>
                                          <div className="flex items-center gap-3">
                                             <button 
                                                 onClick={() => setCropPage(p => Math.max(1, p - 1))}
-                                                className="w-10 h-10 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-100 transition-colors"
+                                                className="w-10 h-10 flex items-center justify-center border rounded transition-colors"
+                                                style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
                                                 title="Página Anterior"
                                             >
-                                                <i className="fas fa-chevron-left text-gray-600"></i>
+                                                <i className="fas fa-chevron-left"></i>
                                             </button>
-                                            <span className="font-bold text-gray-700">Página {cropPage}</span>
+                                            <span className="font-bold" style={{ color: 'var(--text-main)' }}>Página {cropPage}</span>
                                             <button 
                                                 onClick={() => setCropPage(p => p + 1)}
-                                                className="w-10 h-10 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-100 transition-colors"
+                                                className="w-10 h-10 flex items-center justify-center border rounded transition-colors"
+                                                style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
                                                 title="Próxima Página"
                                             >
-                                                <i className="fas fa-chevron-right text-gray-600"></i>
+                                                <i className="fas fa-chevron-right"></i>
                                             </button>
                                          </div>
                                          <div className="flex items-center gap-4">
                                             <select 
                                                 value={cropFormat}
                                                 onChange={(e) => setCropFormat(e.target.value)}
-                                                className="p-2 border border-gray-300 rounded focus:border-orange-500 focus:outline-none bg-white text-sm font-medium text-gray-700"
+                                                className="p-2 border rounded focus:border-orange-500 focus:outline-none text-sm font-medium"
+                                                style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
                                             >
                                                 <option value="png">Salvar como PNG</option>
                                                 <option value="jpg">Salvar como JPG</option>
@@ -1368,7 +1402,7 @@ export default function PDFToolsPage() {
                                          </div>
                                      </div>
 
-                                     <div className="relative overflow-auto border border-gray-200 bg-gray-100 rounded-lg flex justify-center p-4">
+                                     <div className="relative overflow-auto border rounded-lg flex justify-center p-4" style={{ backgroundColor: 'var(--bg-card-hover)', borderColor: 'var(--border-card)' }}>
                                          <div 
                                              className="relative shadow-lg select-none cursor-crosshair"
                                              onMouseDown={onCropMouseDown}
@@ -1400,7 +1434,7 @@ export default function PDFToolsPage() {
                                          </div>
                                      </div>
                                      
-                                     <div className="bg-blue-50 text-blue-800 p-4 rounded-lg text-sm border border-blue-100 flex items-start gap-3">
+                                     <div className="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 p-4 rounded-lg text-sm border border-blue-100 dark:border-blue-800 flex items-start gap-3">
                                          <i className="fas fa-info-circle mt-0.5"></i>
                                          <div>
                                             <p className="font-bold">Instruções:</p>
@@ -1424,32 +1458,34 @@ export default function PDFToolsPage() {
                              {/* Rotate Area */}
                              {activeTool === 'rotate' && files.length > 0 && rotateImgData && (
                                 <div className="mt-6 flex flex-col gap-6">
-                                     <div className="flex flex-col md:flex-row items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg gap-4">
+                                     <div className="flex flex-col md:flex-row items-center justify-between p-4 border rounded-lg gap-4" style={{ backgroundColor: 'var(--bg-card-hover)', borderColor: 'var(--border-card)' }}>
                                          
                                          {/* Page Navigation */}
                                          <div className="flex items-center gap-3">
                                             <button 
                                                 onClick={() => setRotatePage(p => Math.max(1, p - 1))}
-                                                className="w-10 h-10 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-100 transition-colors"
+                                                className="w-10 h-10 flex items-center justify-center border rounded hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                                                style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
                                             >
-                                                <i className="fas fa-chevron-left text-gray-600"></i>
+                                                <i className="fas fa-chevron-left"></i>
                                             </button>
-                                            <span className="font-bold text-gray-700">Página {rotatePage}</span>
+                                            <span className="font-bold" style={{ color: 'var(--text-main)' }}>Página {rotatePage}</span>
                                             <button 
                                                 onClick={() => setRotatePage(p => p + 1)}
-                                                className="w-10 h-10 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-100 transition-colors"
+                                                className="w-10 h-10 flex items-center justify-center border rounded hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                                                style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
                                             >
-                                                <i className="fas fa-chevron-right text-gray-600"></i>
+                                                <i className="fas fa-chevron-right"></i>
                                             </button>
                                          </div>
 
                                          {/* Rotate Mode */}
-                                         <div className="flex bg-white rounded-lg border border-gray-200 p-1">
+                                         <div className="flex rounded-lg border p-1" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}>
                                              <button
                                                 onClick={() => setRotateMode('all')}
                                                 className={clsx(
                                                     "px-4 py-2 rounded-md text-sm font-medium transition-colors",
-                                                    rotateMode === 'all' ? "bg-orange-100 text-orange-700" : "text-gray-600 hover:bg-gray-50"
+                                                    rotateMode === 'all' ? "bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-400" : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"
                                                 )}
                                              >
                                                  Todas as Páginas
@@ -1458,7 +1494,7 @@ export default function PDFToolsPage() {
                                                 onClick={() => setRotateMode('page')}
                                                 className={clsx(
                                                     "px-4 py-2 rounded-md text-sm font-medium transition-colors",
-                                                    rotateMode === 'page' ? "bg-orange-100 text-orange-700" : "text-gray-600 hover:bg-gray-50"
+                                                    rotateMode === 'page' ? "bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-400" : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"
                                                 )}
                                              >
                                                  Apenas Esta Página
@@ -1469,7 +1505,8 @@ export default function PDFToolsPage() {
                                          <div className="flex items-center gap-2">
                                             <button 
                                                 onClick={() => setRotateAngle(a => a - 90)}
-                                                className="px-3 py-2 bg-white border border-gray-300 rounded hover:bg-gray-100 text-gray-700 flex items-center gap-2"
+                                                className="px-3 py-2 border rounded hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2"
+                                                style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
                                                 title="Girar 90° Anti-horário"
                                             >
                                                 <i className="fas fa-undo"></i>
@@ -1477,14 +1514,16 @@ export default function PDFToolsPage() {
                                             </button>
                                             <button 
                                                 onClick={() => setRotateAngle(0)}
-                                                className="px-3 py-2 bg-white border border-gray-300 rounded hover:bg-gray-100 text-gray-700 font-bold"
+                                                className="px-3 py-2 border rounded hover:bg-gray-100 dark:hover:bg-white/5 font-bold"
+                                                style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
                                                 title="Resetar"
                                             >
                                                 0°
                                             </button>
                                             <button 
                                                 onClick={() => setRotateAngle(a => a + 90)}
-                                                className="px-3 py-2 bg-white border border-gray-300 rounded hover:bg-gray-100 text-gray-700 flex items-center gap-2"
+                                                className="px-3 py-2 border rounded hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2"
+                                                style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
                                                 title="Girar 90° Horário"
                                             >
                                                 <span className="hidden sm:inline">Dir.</span>
@@ -1494,7 +1533,7 @@ export default function PDFToolsPage() {
                                      </div>
 
                                      {/* Preview */}
-                                     <div className="relative overflow-hidden border border-gray-200 bg-gray-100 rounded-lg flex justify-center p-8 bg-slate-200/50">
+                                     <div className="relative overflow-hidden border rounded-lg flex justify-center p-8" style={{ backgroundColor: 'var(--bg-card-hover)', borderColor: 'var(--border-card)' }}>
                                          <div 
                                              className="shadow-xl transition-transform duration-300 ease-in-out"
                                              style={{ 
@@ -1512,7 +1551,7 @@ export default function PDFToolsPage() {
                                      </div>
 
                                      <div className="flex justify-end gap-4 items-center">
-                                         <div className="text-gray-600 text-sm">
+                                         <div className="text-sm" style={{ color: 'var(--text-muted)' }}>
                                              {rotateMode === 'all' 
                                                 ? `Rotacionando TODO o documento em ${rotateAngle}°` 
                                                 : `Rotacionando a página ${rotatePage} em ${rotateAngle}°`
@@ -1534,37 +1573,43 @@ export default function PDFToolsPage() {
                              {/* Numbering Area */}
                              {activeTool === 'number' && files.length > 0 && (
                                 <div className="mt-6 flex flex-col gap-6">
-                                     <div className="flex flex-col gap-4 p-6 bg-gray-50 border border-gray-200 rounded-lg">
+                                     <div className="flex flex-col gap-4 p-6 border rounded-lg" style={{ backgroundColor: 'var(--bg-card-hover)', borderColor: 'var(--border-card)' }}>
                                          
                                          <div className="flex flex-col md:flex-row gap-8">
                                              {/* Position Grid */}
                                              <div className="flex-1">
-                                                 <label className="block text-sm font-bold text-gray-700 mb-3">Posição da Numeração</label>
+                                                 <label className="block text-sm font-bold mb-3" style={{ color: 'var(--text-main)' }}>Posição da Numeração</label>
                                                  <div className="grid grid-cols-3 gap-3 w-48 mx-auto md:mx-0">
                                                      {['top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'].map(pos => (
                                                          <button
                                                              key={pos}
                                                              onClick={() => setNumPosition(pos)}
                                                              className={clsx(
-                                                                 "w-12 h-16 border-2 rounded transition-all flex items-center justify-center relative bg-white",
+                                                                 "w-12 h-16 border-2 rounded transition-all flex items-center justify-center relative",
                                                                  numPosition === pos 
-                                                                    ? "border-orange-500 bg-orange-50" 
-                                                                    : "border-gray-300 hover:border-orange-300 hover:bg-gray-50"
+                                                                    ? "border-orange-500 bg-orange-50 dark:bg-orange-900/20" 
+                                                                    : "hover:border-orange-300"
                                                              )}
+                                                             style={{ 
+                                                                 backgroundColor: numPosition === pos ? undefined : 'var(--bg-card)',
+                                                                 borderColor: numPosition === pos ? undefined : 'var(--border-card)'
+                                                             }}
                                                              title={pos}
                                                          >
                                                              <div className={clsx(
-                                                                 "absolute w-2 h-2 bg-gray-400 rounded-full",
+                                                                 "absolute w-2 h-2 rounded-full",
                                                                  pos.includes('top') ? "top-2" : "bottom-2",
                                                                  pos.includes('left') ? "left-2" : pos.includes('right') ? "right-2" : "left-1/2 -translate-x-1/2"
-                                                             )}>
+                                                             )}
+                                                             style={{ backgroundColor: 'var(--text-muted)' }}
+                                                             >
                                                                  {numPosition === pos && <div className="absolute inset-0 bg-orange-600 rounded-full animate-ping"></div>}
                                                                  {numPosition === pos && <div className="absolute inset-0 bg-orange-600 rounded-full"></div>}
                                                              </div>
                                                              {/* Page Preview Lines */}
-                                                             <div className="w-8 h-0.5 bg-gray-100 top-6 absolute rounded"></div>
-                                                             <div className="w-8 h-0.5 bg-gray-100 top-8 absolute rounded"></div>
-                                                             <div className="w-6 h-0.5 bg-gray-100 top-10 absolute rounded"></div>
+                                                             <div className="w-8 h-0.5 top-6 absolute rounded" style={{ backgroundColor: 'var(--border-card)' }}></div>
+                                                             <div className="w-8 h-0.5 top-8 absolute rounded" style={{ backgroundColor: 'var(--border-card)' }}></div>
+                                                             <div className="w-6 h-0.5 top-10 absolute rounded" style={{ backgroundColor: 'var(--border-card)' }}></div>
                                                          </button>
                                                      ))}
                                                  </div>
@@ -1572,39 +1617,46 @@ export default function PDFToolsPage() {
  
                                              {/* Start Number */}
                                              <div className="flex-1">
-                                                 <label className="block text-sm font-bold text-gray-700 mb-3">Iniciar em</label>
+                                                 <label className="block text-sm font-bold mb-3" style={{ color: 'var(--text-main)' }}>Iniciar em</label>
                                                  <div className="flex items-center gap-2 mb-4">
                                                      <input 
                                                          type="number" 
                                                          min="1"
                                                          value={numStart}
                                                          onChange={(e) => setNumStart(parseInt(e.target.value) || 1)}
-                                                         className="w-24 p-3 border border-gray-300 rounded-lg text-lg font-bold text-center focus:border-orange-500 focus:outline-none"
+                                                         className="w-24 p-3 border rounded-lg text-lg font-bold text-center focus:border-orange-500 focus:outline-none"
+                                                         style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
                                                      />
-                                                     <span className="text-gray-500 text-sm">(A primeira página do PDF será "{numStart}")</span>
+                                                     <span className="text-sm" style={{ color: 'var(--text-muted)' }}>(A primeira página do PDF será "{numStart}")</span>
                                                  </div>
 
-                                                 <label className="block text-sm font-bold text-gray-700 mb-3">Cor da Numeração</label>
+                                                 <label className="block text-sm font-bold mb-3" style={{ color: 'var(--text-main)' }}>Cor da Numeração</label>
                                                  <div className="flex items-center gap-2 mb-4">
                                                      <input 
                                                          type="color" 
                                                          value={numColor}
                                                          onChange={(e) => setNumColor(e.target.value)}
-                                                         className="h-10 w-10 p-1 border border-gray-300 rounded cursor-pointer"
+                                                         className="h-10 w-10 p-1 border rounded cursor-pointer"
+                                                         style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}
                                                      />
-                                                     <span className="text-sm text-gray-600">{numColor}</span>
+                                                     <span className="text-sm" style={{ color: 'var(--text-muted)' }}>{numColor}</span>
                                                  </div>
 
-                                                 <label className="block text-sm font-bold text-gray-700 mb-3">Formato do Texto</label>
+                                                 <label className="block text-sm font-bold mb-3" style={{ color: 'var(--text-main)' }}>Formato do Texto</label>
                                                  <div className="flex gap-2">
                                                      <button
                                                          onClick={() => setNumTextFormat('page_num')}
                                                          className={clsx(
                                                              "px-3 py-2 rounded text-sm font-bold border transition-colors",
                                                              numTextFormat === 'page_num' 
-                                                                 ? "bg-orange-100 border-orange-500 text-orange-700" 
-                                                                 : "bg-white border-gray-300 text-gray-600 hover:bg-gray-50"
+                                                                 ? "bg-orange-100 dark:bg-orange-900/40 border-orange-500 text-orange-700 dark:text-orange-400" 
+                                                                 : "hover:bg-gray-50 dark:hover:bg-white/5"
                                                          )}
+                                                         style={{ 
+                                                             backgroundColor: numTextFormat === 'page_num' ? undefined : 'var(--bg-card)',
+                                                             borderColor: numTextFormat === 'page_num' ? undefined : 'var(--border-card)',
+                                                             color: numTextFormat === 'page_num' ? undefined : 'var(--text-muted)'
+                                                         }}
                                                      >
                                                          Página X
                                                      </button>
@@ -1613,9 +1665,14 @@ export default function PDFToolsPage() {
                                                          className={clsx(
                                                              "px-3 py-2 rounded text-sm font-bold border transition-colors",
                                                              numTextFormat === 'num_only' 
-                                                                 ? "bg-orange-100 border-orange-500 text-orange-700" 
-                                                                 : "bg-white border-gray-300 text-gray-600 hover:bg-gray-50"
+                                                                 ? "bg-orange-100 dark:bg-orange-900/40 border-orange-500 text-orange-700 dark:text-orange-400" 
+                                                                 : "hover:bg-gray-50 dark:hover:bg-white/5"
                                                          )}
+                                                         style={{ 
+                                                             backgroundColor: numTextFormat === 'num_only' ? undefined : 'var(--bg-card)',
+                                                             borderColor: numTextFormat === 'num_only' ? undefined : 'var(--border-card)',
+                                                             color: numTextFormat === 'num_only' ? undefined : 'var(--text-muted)'
+                                                         }}
                                                      >
                                                          XX
                                                      </button>
@@ -1629,24 +1686,26 @@ export default function PDFToolsPage() {
                                      {numImgData && (
                                          <div className="flex flex-col gap-2">
                                             <div className="flex items-center justify-between">
-                                                <h4 className="text-sm font-bold text-gray-700">Pré-visualização:</h4>
+                                                <h4 className="text-sm font-bold" style={{ color: 'var(--text-main)' }}>Pré-visualização:</h4>
                                                 <div className="flex items-center gap-3">
                                                     <button 
                                                         onClick={() => setNumPage(p => Math.max(1, p - 1))}
-                                                        className="w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-100 transition-colors"
+                                                        className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-100 transition-colors"
+                                                        style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}
                                                     >
-                                                        <i className="fas fa-chevron-left text-xs text-gray-600"></i>
+                                                        <i className="fas fa-chevron-left text-xs" style={{ color: 'var(--text-muted)' }}></i>
                                                     </button>
-                                                    <span className="text-sm font-medium text-gray-700">Página {numPage}</span>
+                                                    <span className="text-sm font-medium" style={{ color: 'var(--text-main)' }}>Página {numPage}</span>
                                                     <button 
                                                         onClick={() => setNumPage(p => p + 1)}
-                                                        className="w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-100 transition-colors"
+                                                        className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-100 transition-colors"
+                                                        style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}
                                                     >
-                                                        <i className="fas fa-chevron-right text-xs text-gray-600"></i>
+                                                        <i className="fas fa-chevron-right text-xs" style={{ color: 'var(--text-muted)' }}></i>
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div className="relative overflow-hidden border border-gray-200 bg-gray-100 rounded-lg flex justify-center p-8 bg-slate-200/50">
+                                            <div className="relative overflow-hidden border rounded-lg flex justify-center p-8" style={{ backgroundColor: 'var(--bg-card-hover)', borderColor: 'var(--border-card)' }}>
                                                 <div className="shadow-xl">
                                                     <img 
                                                         src={numImgData} 
@@ -1674,8 +1733,8 @@ export default function PDFToolsPage() {
                              {/* Convert Area */}
                              {activeTool === 'convert' && files.length > 0 && (
                                 <div className="mt-6 flex flex-col gap-6">
-                                     <div className="p-6 bg-gray-50 border border-gray-200 rounded-lg">
-                                         <label className="block text-sm font-bold text-gray-700 mb-4">Escolha o formato de destino:</label>
+                                     <div className="p-6 border rounded-lg" style={{ backgroundColor: 'var(--bg-card-hover)', borderColor: 'var(--border-card)' }}>
+                                         <label className="block text-sm font-bold mb-4" style={{ color: 'var(--text-main)' }}>Escolha o formato de destino:</label>
                                          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                              {[
                                                  { id: 'word', label: 'Word (.doc)', icon: 'fa-file-word', color: 'text-blue-600' },
@@ -1691,18 +1750,22 @@ export default function PDFToolsPage() {
                                                      className={clsx(
                                                          "flex flex-col items-center gap-3 p-6 border-2 rounded-xl transition-all",
                                                          convertFormat === fmt.id 
-                                                            ? "border-orange-500 bg-orange-50 shadow-md" 
-                                                            : "border-gray-200 bg-white hover:border-orange-300 hover:shadow-sm"
+                                                            ? "border-orange-500 bg-orange-50 dark:bg-orange-900/20 shadow-md" 
+                                                            : "hover:border-orange-300 hover:shadow-sm"
                                                      )}
+                                                     style={{ 
+                                                         backgroundColor: convertFormat === fmt.id ? undefined : 'var(--bg-card)',
+                                                         borderColor: convertFormat === fmt.id ? undefined : 'var(--border-card)'
+                                                     }}
                                                  >
                                                      <i className={clsx("fas fa-3x", fmt.icon, fmt.color)}></i>
-                                                     <span className="font-bold text-gray-700">{fmt.label}</span>
+                                                     <span className="font-bold" style={{ color: 'var(--text-main)' }}>{fmt.label}</span>
                                                  </button>
                                              ))}
                                          </div>
                                          
                                          {['word', 'excel', 'powerpoint'].includes(convertFormat) && (
-                                             <div className="mt-4 p-4 bg-yellow-50 text-yellow-800 rounded-lg text-sm border border-yellow-200">
+                                             <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200 rounded-lg text-sm border border-yellow-200 dark:border-yellow-800">
                                                  <i className="fas fa-exclamation-triangle mr-2"></i>
                                                  Atenção: A conversão para Office irá gerar um arquivo contendo as páginas como imagens para garantir a fidelidade visual.
                                              </div>
@@ -1725,17 +1788,17 @@ export default function PDFToolsPage() {
                              {/* Repair Area */}
                              {activeTool === 'repair' && files.length > 0 && (
                                 <div className="mt-6 flex flex-col gap-6">
-                                     <div className="p-6 bg-blue-50 border border-blue-200 rounded-lg">
-                                         <h4 className="font-bold text-blue-800 mb-2">
+                                     <div className="p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                                         <h4 className="font-bold text-blue-800 dark:text-blue-300 mb-2">
                                              <i className="fas fa-search-plus mr-2"></i>
                                              Análise de Integridade
                                          </h4>
-                                         <p className="text-blue-700 text-sm mb-4">
+                                         <p className="text-blue-700 dark:text-blue-200 text-sm mb-4">
                                              O PDFMaster tentará reconstruir a tabela de referências do seu arquivo (XRef) e salvar uma nova cópia limpa.
                                              Isso geralmente corrige erros como "Arquivo corrompido", "Fim de arquivo inesperado" ou páginas em branco.
                                          </p>
-                                         <div className="bg-white p-4 rounded border border-blue-100 text-sm text-gray-600">
-                                             Status: <span className="font-bold text-gray-800">Pronto para análise</span>
+                                         <div className="p-4 rounded border border-blue-100 dark:border-blue-800 text-sm" style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}>
+                                             Status: <span className="font-bold" style={{ color: 'var(--text-main)' }}>Pronto para análise</span>
                                          </div>
                                      </div>
 
@@ -1753,50 +1816,51 @@ export default function PDFToolsPage() {
 
                              {/* Compress Options */}
                              {activeTool === 'compress' && files.length > 0 && (
-                                 <div className="mb-8 bg-gray-50 border border-gray-200 p-6 rounded-xl">
-                                     <label className="block text-sm font-bold text-gray-700 mb-3">Nível de Compressão</label>
+                                 <div className="mb-8 p-6 rounded-xl border" style={{ backgroundColor: 'var(--bg-card-hover)', borderColor: 'var(--border-card)' }}>
+                                     <label className="block text-sm font-bold mb-3" style={{ color: 'var(--text-main)' }}>Nível de Compressão</label>
                                      <div className="flex flex-col gap-2">
-                                         <label className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300">
+                                         <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}>
                                             <input type="radio" name="compLevel" value="normal" checked={compressionLevel === 'normal'} onChange={() => setCompressionLevel('normal')} className="text-orange-500 focus:ring-orange-500" />
                                             <div>
-                                                <span className="font-bold text-gray-800 block text-sm">Normal (Recomendado)</span>
-                                                <span className="text-xs text-gray-500">Boa qualidade, tamanho reduzido (Qualidade ~70%)</span>
+                                                <span className="font-bold block text-sm" style={{ color: 'var(--text-main)' }}>Normal (Recomendado)</span>
+                                                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Boa qualidade, tamanho reduzido (Qualidade ~70%)</span>
                                             </div>
                                          </label>
-                                         <label className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300">
+                                         <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}>
                                             <input type="radio" name="compLevel" value="high" checked={compressionLevel === 'high'} onChange={() => setCompressionLevel('high')} className="text-orange-500 focus:ring-orange-500" />
                                             <div>
-                                                <span className="font-bold text-gray-800 block text-sm">Alta Compressão</span>
-                                                <span className="text-xs text-gray-500">Qualidade de imagem reduzida, foco em tamanho (Qualidade ~50%)</span>
+                                                <span className="font-bold block text-sm" style={{ color: 'var(--text-main)' }}>Alta Compressão</span>
+                                                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Qualidade de imagem reduzida, foco em tamanho (Qualidade ~50%)</span>
                                             </div>
                                          </label>
-                                         <label className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300">
+                                         <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}>
                                             <input type="radio" name="compLevel" value="extreme" checked={compressionLevel === 'extreme'} onChange={() => setCompressionLevel('extreme')} className="text-orange-500 focus:ring-orange-500" />
                                             <div>
-                                                <span className="font-bold text-gray-800 block text-sm">Extrema</span>
-                                                <span className="text-xs text-gray-500">Baixa resolução, máxima redução (Ideal para rascunhos)</span>
+                                                <span className="font-bold block text-sm" style={{ color: 'var(--text-main)' }}>Extrema</span>
+                                                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Baixa resolução, máxima redução (Ideal para rascunhos)</span>
                                             </div>
                                          </label>
-                                         <label className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300">
+                                         <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}>
                                             <input type="radio" name="compLevel" value="custom" checked={compressionLevel === 'custom'} onChange={() => setCompressionLevel('custom')} className="text-orange-500 focus:ring-orange-500" />
                                             <div className="w-full">
-                                                <span className="font-bold text-gray-800 block text-sm">Personalizado (Alvo MB)</span>
+                                                <span className="font-bold block text-sm" style={{ color: 'var(--text-main)' }}>Personalizado (Alvo MB)</span>
                                                 <div className="mt-1 flex items-center gap-2">
-                                                    <span className="text-xs text-gray-500">Tamanho Máximo:</span>
+                                                    <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Tamanho Máximo:</span>
                                                     <input 
                                                         type="number" 
                                                         placeholder="Ex: 5" 
                                                         value={customTargetMB}
                                                         onChange={(e) => setCustomTargetMB(e.target.value)}
                                                         disabled={compressionLevel !== 'custom'}
-                                                        className="w-24 px-2 py-1 text-sm border border-gray-300 rounded focus:ring-orange-500 focus:outline-none"
+                                                        className="w-24 px-2 py-1 text-sm border rounded focus:ring-orange-500 focus:outline-none"
+                                                        style={{ backgroundColor: 'var(--bg-page)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
                                                     />
-                                                    <span className="text-xs text-gray-500">MB</span>
+                                                    <span className="text-xs" style={{ color: 'var(--text-muted)' }}>MB</span>
                                                 </div>
                                             </div>
                                          </label>
                                      </div>
-                                     <div className="mt-3 text-xs text-gray-500">
+                                     <div className="mt-3 text-xs" style={{ color: 'var(--text-muted)' }}>
                                          <i className="fas fa-info-circle mr-1"></i> 
                                          Se o Alvo Personalizado não for atingido, ofereceremos dividir o arquivo automaticamente.
                                      </div>
@@ -1806,13 +1870,13 @@ export default function PDFToolsPage() {
                              {/* Progress Bar */}
                              {processing && (
                                  <div className="mt-6">
-                                     <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 overflow-hidden">
                                          <div 
                                              className="bg-orange-500 h-full transition-all duration-300 striped-progress" 
                                              style={{ width: `${(activeTool === 'ocr' || activeTool === 'compress') ? ocrProgress : 100}%` }}
                                          ></div>
                                      </div>
-                                     <p className="text-center text-sm text-gray-500 mt-2">
+                                     <p className="text-center text-sm mt-2" style={{ color: 'var(--text-muted)' }}>
                                          Processando... { (activeTool === 'ocr' || activeTool === 'compress') ? `${ocrProgress}%` : '' }
                                      </p>
                                  </div>
@@ -1821,7 +1885,7 @@ export default function PDFToolsPage() {
                              {/* Diff Result Box */}
                              {diffResult && (
                                  <div className="mt-6">
-                                     <h5 className="font-bold text-gray-700 mb-2">Resultado da Comparação:</h5>
+                                     <h5 className="font-bold mb-2" style={{ color: 'var(--text-main)' }}>Resultado da Comparação:</h5>
                                      <div className="bg-slate-900 text-gray-300 p-4 rounded-lg h-64 overflow-y-auto font-mono text-sm">
                                          {diffResult.map((part, index) => (
                                              <span key={index} className={part.added ? 'text-green-400 bg-green-900/30' : part.removed ? 'text-red-400 bg-red-900/30 line-through' : ''}>
@@ -1835,8 +1899,11 @@ export default function PDFToolsPage() {
                              {/* Extracted Text Result Box */}
                              {extractedText && (
                                  <div className="mt-6">
-                                     <h5 className="font-bold text-gray-700 mb-2">Texto Extraído:</h5>
-                                     <div className="bg-slate-50 border border-gray-200 text-gray-800 p-4 rounded-lg h-96 overflow-y-auto font-mono text-sm whitespace-pre-wrap">
+                                     <h5 className="font-bold mb-2" style={{ color: 'var(--text-main)' }}>Texto Extraído:</h5>
+                                     <div 
+                                        className="border p-4 rounded-lg h-96 overflow-y-auto font-mono text-sm whitespace-pre-wrap"
+                                        style={{ backgroundColor: 'var(--bg-page)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
+                                     >
                                          {extractedText}
                                      </div>
                                  </div>
@@ -1845,7 +1912,7 @@ export default function PDFToolsPage() {
 
                          {/* Footer Action Area - Hide for Crop/Rotate/Number/Convert/Repair as they have inline buttons */}
                          {activeTool !== 'crop' && activeTool !== 'rotate' && activeTool !== 'number' && activeTool !== 'convert' && activeTool !== 'repair' && (
-                             <div className="p-6 border-t border-gray-100 bg-white">
+                             <div className="p-6 border-t" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}>
                                  <button
                                      onClick={handleProcess}
                                      disabled={processing || files.length === 0}

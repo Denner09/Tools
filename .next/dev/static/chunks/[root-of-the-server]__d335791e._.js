@@ -475,15 +475,15 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$ind
 ;
 const Footer = ()=>{
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
-        className: "w-full py-8 mt-auto bg-[#0a0a0a] border-t border-white/5",
+        className: "w-full py-8 mt-auto bg-gray-50 dark:bg-[#0a0a0a] border-t border-gray-200 dark:border-white/5 transition-colors duration-300",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "max-w-7xl mx-auto px-4 text-center",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                className: "text-gray-600 text-sm",
+                className: "text-gray-600 dark:text-gray-600 text-sm",
                 children: [
                     "© 2026 ",
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                        className: "font-bold text-gray-400",
+                        className: "font-bold text-gray-800 dark:text-gray-400",
                         children: "Business Tools"
                     }, void 0, false, {
                         fileName: "[project]/src/components/Footer.jsx",
@@ -538,39 +538,71 @@ const useTheme = ()=>{
 _s(useTheme, "gDsCjeeItUuvgOWf1v4qoK9RF6k=");
 const ThemeProvider = ({ children })=>{
     _s1();
-    const [theme, setTheme] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
-        "ThemeProvider.useState": ()=>{
-            if ("TURBOPACK compile-time truthy", 1) {
-                return localStorage.getItem('theme') || 'light';
-            }
-            //TURBOPACK unreachable
-            ;
-        }
-    }["ThemeProvider.useState"]);
+    // Inicializa como 'light' para evitar incompatibilidade de hidratação (SSR vs Client)
+    const [theme, setTheme] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('light');
+    const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // Efeito para sincronizar com localStorage e System Preference após a montagem
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ThemeProvider.useEffect": ()=>{
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
+            setMounted(true);
+            // Tenta obter do localStorage
+            const storedTheme = window.localStorage.getItem('theme');
+            if (storedTheme) {
+                setTheme(storedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                // Se não houver preferência salva, verifica a preferência do sistema
+                setTheme('dark');
+            }
+        }
+    }["ThemeProvider.useEffect"], []);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "ThemeProvider.useEffect": ()=>{
+            // Evita execução no servidor ou antes da montagem
+            if (!mounted) return;
+            const root = window.document.documentElement;
+            // Aplicação da classe 'dark' no elemento raiz (<html>)
+            if (theme === 'dark') {
+                root.classList.add('dark');
+            } else {
+                root.classList.remove('dark');
+            }
+            // Persistência da escolha
+            window.localStorage.setItem('theme', theme);
         }
     }["ThemeProvider.useEffect"], [
-        theme
+        theme,
+        mounted
     ]);
-    const toggleTheme = ()=>{
-        setTheme((prevTheme)=>prevTheme === 'light' ? 'dark' : 'light');
-    };
+    // Função memoizada para evitar recriação desnecessária
+    const toggleTheme = useCallback({
+        "ThemeProvider.useCallback[toggleTheme]": ()=>{
+            setTheme({
+                "ThemeProvider.useCallback[toggleTheme]": (prevTheme)=>prevTheme === 'light' ? 'dark' : 'light'
+            }["ThemeProvider.useCallback[toggleTheme]"]);
+        }
+    }["ThemeProvider.useCallback[toggleTheme]"], []);
+    // Valor do contexto memoizado
+    const contextValue = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].useMemo({
+        "ThemeProvider.useMemo[contextValue]": ()=>({
+                theme,
+                toggleTheme,
+                mounted
+            })
+    }["ThemeProvider.useMemo[contextValue]"], [
+        theme,
+        toggleTheme,
+        mounted
+    ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ThemeContext.Provider, {
-        value: {
-            theme,
-            toggleTheme
-        },
+        value: contextValue,
         children: children
     }, void 0, false, {
         fileName: "[project]/src/context/ThemeContext.jsx",
-        lineNumber: 25,
+        lineNumber: 57,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s1(ThemeProvider, "KfbYRAVVq/NtjqnM3aXyQVLTJ4Y=");
+_s1(ThemeProvider, "vcUp2T+XGdhyX48GTOxC/PlvufM=");
 _c = ThemeProvider;
 var _c;
 __turbopack_context__.k.register(_c, "ThemeProvider");
@@ -626,12 +658,12 @@ const AppNavbar = ()=>{
     _s();
     // Force dark theme visual for Navbar to match screenshot, regardless of context for now if preferred
     // But better to respect context but provide Good defaults.
-    const { theme, toggleTheme } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$ThemeContext$2e$jsx__$5b$client$5d$__$28$ecmascript$29$__["useTheme"])();
+    const { theme, toggleTheme, mounted } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$ThemeContext$2e$jsx__$5b$client$5d$__$28$ecmascript$29$__["useTheme"])();
     const [isMenuOpen, setIsMenuOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
     // Screenshot shows "Menu" with a dropdown caret
     // We will implement a right-aligned Menu.
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
-        className: "fixed top-0 w-full z-50 bg-[#0a0a0a] border-b border-white/5 backdrop-blur-md",
+        className: "fixed top-0 w-full z-50 bg-white/80 dark:bg-[#0a0a0a]/80 border-b border-gray-200 dark:border-white/5 backdrop-blur-md transition-colors duration-300",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "max-w-7xl mx-auto px-6 h-20 flex items-center justify-between",
@@ -666,7 +698,7 @@ const AppNavbar = ()=>{
                                 columnNumber: 21
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "font-bold text-xl text-white tracking-tight",
+                                className: "font-bold text-xl text-gray-900 dark:text-white tracking-tight transition-colors",
                                 children: [
                                     "Business ",
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -711,13 +743,20 @@ const AppNavbar = ()=>{
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         onClick: toggleTheme,
-                                        className: "w-8 h-8 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-all",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
-                                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist$2f$clsx$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"])("fas text-xs", theme === 'dark' ? "fa-sun" : "fa-moon")
+                                        className: "w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-orange-500 dark:text-gray-400 dark:hover:text-orange-400 dark:hover:bg-gray-700 transition-all border border-transparent dark:border-gray-700",
+                                        "aria-label": "Alternar tema",
+                                        children: mounted ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
+                                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist$2f$clsx$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"])("fas text-sm", theme === 'dark' ? "fa-sun" : "fa-moon")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Navbar.jsx",
-                                            lineNumber: 50,
-                                            columnNumber: 29
+                                            lineNumber: 52,
+                                            columnNumber: 33
+                                        }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
+                                            className: "fas fa-moon text-sm"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Navbar.jsx",
+                                            lineNumber: 54,
+                                            columnNumber: 33
                                         }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Navbar.jsx",
@@ -728,71 +767,71 @@ const AppNavbar = ()=>{
                                         className: "relative group",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                className: "flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-wider hover:text-white transition-colors py-2",
+                                                className: "flex items-center gap-2 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider hover:text-gray-900 dark:hover:text-white transition-colors py-2",
                                                 children: [
                                                     "Menu",
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
-                                                        className: "fas fa-chevron-down text-[10px] text-gray-500 group-hover:text-white transition-colors"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/Navbar.jsx",
-                                                        lineNumber: 56,
-                                                        columnNumber: 33
-                                                    }, ("TURBOPACK compile-time value", void 0))
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/components/Navbar.jsx",
-                                                lineNumber: 54,
-                                                columnNumber: 29
-                                            }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "absolute right-0 top-full mt-2 w-48 bg-[#151515] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform origin-top-right z-50",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                                        href: "/",
-                                                        className: "block px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 first:rounded-t-xl",
-                                                        children: "Início"
+                                                        className: "fas fa-chevron-down text-[10px] text-gray-500 group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Navbar.jsx",
                                                         lineNumber: 61,
                                                         columnNumber: 33
+                                                    }, ("TURBOPACK compile-time value", void 0))
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/Navbar.jsx",
+                                                lineNumber: 59,
+                                                columnNumber: 29
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "absolute right-0 top-full mt-2 w-48 bg-white dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform origin-top-right z-50",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                                                        href: "/",
+                                                        className: "block px-4 py-3 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 first:rounded-t-xl transition-colors",
+                                                        children: "Início"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/Navbar.jsx",
+                                                        lineNumber: 66,
+                                                        columnNumber: 33
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
                                                         href: "/pdf-tools",
-                                                        className: "block px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5",
+                                                        className: "block px-4 py-3 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors",
                                                         children: "Ferramentas PDF"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Navbar.jsx",
-                                                        lineNumber: 64,
+                                                        lineNumber: 69,
                                                         columnNumber: 33
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
                                                         href: "/bpmn",
-                                                        className: "block px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5",
+                                                        className: "block px-4 py-3 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors",
                                                         children: "Modelador BPMN"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Navbar.jsx",
-                                                        lineNumber: 67,
+                                                        lineNumber: 72,
                                                         columnNumber: 33
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
                                                         href: "/text-editor",
-                                                        className: "block px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 last:rounded-b-xl",
+                                                        className: "block px-4 py-3 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 last:rounded-b-xl transition-colors",
                                                         children: "Editor de Texto"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Navbar.jsx",
-                                                        lineNumber: 70,
+                                                        lineNumber: 75,
                                                         columnNumber: 33
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/Navbar.jsx",
-                                                lineNumber: 60,
+                                                lineNumber: 65,
                                                 columnNumber: 29
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/Navbar.jsx",
-                                        lineNumber: 53,
+                                        lineNumber: 58,
                                         columnNumber: 25
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
@@ -808,12 +847,12 @@ const AppNavbar = ()=>{
                                     className: "fas fa-bars fa-lg"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Navbar.jsx",
-                                    lineNumber: 82,
+                                    lineNumber: 87,
                                     columnNumber: 25
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Navbar.jsx",
-                                lineNumber: 78,
+                                lineNumber: 83,
                                 columnNumber: 21
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
@@ -839,7 +878,7 @@ const AppNavbar = ()=>{
                             children: "Início"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Navbar.jsx",
-                            lineNumber: 91,
+                            lineNumber: 96,
                             columnNumber: 25
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -848,7 +887,7 @@ const AppNavbar = ()=>{
                             children: "Ferramentas PDF"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Navbar.jsx",
-                            lineNumber: 92,
+                            lineNumber: 97,
                             columnNumber: 25
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -857,7 +896,7 @@ const AppNavbar = ()=>{
                             children: "Modelador BPMN"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Navbar.jsx",
-                            lineNumber: 93,
+                            lineNumber: 98,
                             columnNumber: 25
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -866,18 +905,18 @@ const AppNavbar = ()=>{
                             children: "Editor de Texto"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Navbar.jsx",
-                            lineNumber: 94,
+                            lineNumber: 99,
                             columnNumber: 26
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Navbar.jsx",
-                    lineNumber: 90,
+                    lineNumber: 95,
                     columnNumber: 21
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/Navbar.jsx",
-                lineNumber: 89,
+                lineNumber: 94,
                 columnNumber: 17
             }, ("TURBOPACK compile-time value", void 0))
         ]
@@ -887,7 +926,7 @@ const AppNavbar = ()=>{
         columnNumber: 9
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(AppNavbar, "LoJmXJBEQeELSNhqf4uNeFqG0LI=", false, function() {
+_s(AppNavbar, "d3kvSFuW26+Ns8BPUyPHjJTmAWw=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$ThemeContext$2e$jsx__$5b$client$5d$__$28$ecmascript$29$__["useTheme"]
     ];
@@ -922,54 +961,63 @@ const FeatureCard = ({ href, icon, title, description, buttonText = "Acessar" })
             color: 'inherit'
         },
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "h-full bg-[#111] border border-[#333] p-10 rounded-3xl transition-all duration-300 hover:border-gray-600 hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.1)] hover:-translate-y-2 flex flex-col items-center text-center relative overflow-hidden",
+            className: "h-full border p-10 rounded-3xl transition-all duration-300 hover:-translate-y-2 flex flex-col items-center text-center relative overflow-hidden",
+            style: {
+                backgroundColor: 'var(--bg-card)',
+                borderColor: 'var(--border-card)',
+                color: 'var(--text-main)'
+            },
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "absolute inset-0 bg-gradient-to-br from-gray-800/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity border border-white/5 rounded-3xl"
+                    className: "absolute inset-0 bg-gradient-to-br from-orange-50/50 to-transparent dark:from-gray-800/20 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity border border-orange-100 dark:border-white/5 rounded-3xl"
                 }, void 0, false, {
                     fileName: "[project]/src/components/FeatureCard.jsx",
-                    lineNumber: 8,
+                    lineNumber: 15,
                     columnNumber: 17
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "w-16 h-16 bg-[#1a1a1a] text-orange-500 rounded-2xl flex items-center justify-center text-3xl mb-8 border border-[#333] group-hover:bg-orange-500 group-hover:text-white group-hover:scale-110 transition-all duration-300 relative z-10",
+                    className: "w-16 h-16 bg-gray-50 dark:bg-gray-800 text-orange-600 dark:text-orange-500 rounded-2xl flex items-center justify-center text-3xl mb-8 border border-gray-200 dark:border-gray-700 group-hover:bg-orange-500 group-hover:text-white group-hover:scale-110 transition-all duration-300 relative z-10",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
                         className: icon
                     }, void 0, false, {
                         fileName: "[project]/src/components/FeatureCard.jsx",
-                        lineNumber: 10,
+                        lineNumber: 17,
                         columnNumber: 21
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/src/components/FeatureCard.jsx",
-                    lineNumber: 9,
+                    lineNumber: 16,
                     columnNumber: 17
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                    className: "text-2xl font-bold text-white mb-4 transition-colors relative z-10",
+                    className: "text-2xl font-bold mb-4 has-text-main transition-colors relative z-10",
+                    style: {
+                        color: 'var(--text-main)'
+                    },
                     children: title
                 }, void 0, false, {
                     fileName: "[project]/src/components/FeatureCard.jsx",
-                    lineNumber: 12,
+                    lineNumber: 19,
                     columnNumber: 17
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                    className: "text-gray-400 leading-relaxed mb-8 flex-grow relative z-10",
+                    className: "leading-relaxed mb-8 flex-grow relative z-10",
                     style: {
-                        textDecoration: 'none'
+                        textDecoration: 'none',
+                        color: 'var(--text-muted)'
                     },
                     children: description
                 }, void 0, false, {
                     fileName: "[project]/src/components/FeatureCard.jsx",
-                    lineNumber: 13,
+                    lineNumber: 20,
                     columnNumber: 17
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                    className: "relative z-10 px-6 py-3 rounded-full bg-[#1a1a1a] border border-[#333] text-gray-300 text-sm font-bold group-hover:bg-orange-600 group-hover:text-white group-hover:border-transparent transition-all shadow-md",
+                    className: "relative z-10 px-6 py-3 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm font-bold group-hover:bg-orange-600 group-hover:text-white group-hover:border-transparent transition-all shadow-sm",
                     children: buttonText
                 }, void 0, false, {
                     fileName: "[project]/src/components/FeatureCard.jsx",
-                    lineNumber: 16,
+                    lineNumber: 23,
                     columnNumber: 17
                 }, ("TURBOPACK compile-time value", void 0))
             ]
@@ -1013,13 +1061,13 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Feature
 ;
 const Home = ()=>{
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-[#0a0a0a] text-white selection:bg-orange-500 selection:text-white font-sans",
+        className: "min-h-screen bg-gray-50 dark:bg-[#0a0a0a] text-gray-900 dark:text-white selection:bg-orange-500 selection:text-white font-sans transition-colors duration-300",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "relative overflow-hidden",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-orange-600/20 via-orange-900/10 to-transparent blur-3xl -z-10 pointer-events-none"
+                        className: "absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-orange-200/40 via-orange-100/20 to-transparent dark:from-orange-600/20 dark:via-orange-900/10 dark:to-transparent blur-3xl -z-10 pointer-events-none transition-colors duration-500"
                     }, void 0, false, {
                         fileName: "[project]/src/pages/index.jsx",
                         lineNumber: 14,
@@ -1029,11 +1077,11 @@ const Home = ()=>{
                         className: "max-w-7xl mx-auto px-4 pt-32 pb-20 text-center relative z-10",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                className: "text-5xl md:text-7xl font-extrabold tracking-tight mb-8 drop-shadow-lg",
+                                className: "text-5xl md:text-7xl font-extrabold tracking-tight mb-8 drop-shadow-sm dark:drop-shadow-lg text-gray-900 dark:text-white transition-colors",
                                 children: [
                                     "Potencialize seu ",
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600",
+                                        className: "text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-600 dark:from-orange-400 dark:to-orange-600",
                                         children: "Trabalho"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/index.jsx",
@@ -1047,7 +1095,7 @@ const Home = ()=>{
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed font-light",
+                                className: "text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed font-light transition-colors",
                                 children: [
                                     "Ferramentas essenciais para gestão, documentos e processos executivos.",
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {

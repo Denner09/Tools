@@ -7,7 +7,16 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #f8f9fa; /* Changed to lighter bg */
+  background-color: #f8f9fa;
+
+  /* Theme Variables */
+  --bg-page: #f8f9fa;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f3f4f6;
+  --text-main: #111827;
+  --text-muted: #4b5563;
+  --border-card: #e5e7eb;
+  --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,8 +24,33 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Dark Theme Variables applied to root when .dark class is present */
+.dark {
+  color-scheme: dark;
+  --bg-page: #0a0a0a;
+  --bg-card: #151515;
+  --bg-card-hover: #1a1a1a;
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+  --border-card: #333333;
+  --shadow-card: 0 0 30px -5px rgba(255, 255, 255, 0.1);
+  
+  /* Apply background and color to body when in dark mode */
+  background-color: var(--bg-page);
+  color: var(--text-main);
+}
+
+/* Ensure body inherits or uses these if not already set by root propagation */
+.dark body {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+}
+
 body {
     margin: 0;
     min-height: 100vh;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 

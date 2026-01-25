@@ -8,9 +8,9 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/node_modules_next_link_207af988.js",
       "static/chunks/node_modules_react-dom_4411d9bd._.js",
       "static/chunks/node_modules_c1a066ef._.js",
-      "static/chunks/[root-of-the-server]__d335791e._.js",
+      "static/chunks/[root-of-the-server]__7a0b223a._.js",
       "static/chunks/src_pages_index_2da965e7._.js",
-      "static/chunks/turbopack-src_pages_index_eab97e69._.js"
+      "static/chunks/turbopack-src_pages_index_ae76ae45._.js"
     ],
     "/_app": [
       "static/chunks/node_modules_next_dist_compiled_8ca6b690._.js",
@@ -20,10 +20,10 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/node_modules_next_74932de7._.js",
       "static/chunks/node_modules_react-dom_4411d9bd._.js",
       "static/chunks/node_modules_c1a066ef._.js",
-      "static/chunks/[root-of-the-server]__703ab3ac._.js",
+      "static/chunks/[root-of-the-server]__861da044._.js",
       "static/chunks/_4db2917e._.css",
       "static/chunks/src_pages__app_2da965e7._.js",
-      "static/chunks/turbopack-src_pages__app_c1e395ee._.js"
+      "static/chunks/turbopack-src_pages__app_242d3b95._.js"
     ],
     "/_error": [
       "static/chunks/node_modules_next_dist_compiled_8ca6b690._.js",

@@ -1113,12 +1113,15 @@ function PDFToolsPage() {
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-        className: "flex min-h-[calc(100vh-64px)] bg-slate-50",
+        className: "flex min-h-[calc(100vh-64px)]",
+        style: {
+            backgroundColor: 'var(--bg-page)'
+        },
         children: [
             showSplitConfirm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                 className: "fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                    className: "bg-white rounded-xl shadow-2xl max-w-md w-full p-6 animate-fade-in",
+                    className: "bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full p-6 animate-fade-in",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                             className: "text-center mb-6",
@@ -1138,7 +1141,7 @@ function PDFToolsPage() {
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
-                                    className: "text-xl font-bold text-gray-800 mb-2",
+                                    className: "text-xl font-bold text-gray-800 dark:text-white mb-2",
                                     children: "Alvo Não Atingido"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/pdf-tools.jsx",
@@ -1146,7 +1149,7 @@ function PDFToolsPage() {
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                    className: "text-gray-600",
+                                    className: "text-gray-600 dark:text-gray-300",
                                     children: [
                                         "O arquivo comprimido ficou com ",
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("strong", {
@@ -1178,7 +1181,7 @@ function PDFToolsPage() {
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                    className: "text-sm text-gray-500 mt-2",
+                                    className: "text-sm text-gray-500 dark:text-gray-400 mt-2",
                                     children: "Deseja dividir o arquivo em múltiplas partes para respeitar o limite de tamanho?"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/pdf-tools.jsx",
@@ -1200,7 +1203,7 @@ function PDFToolsPage() {
                                         setCompressedBlob(null);
                                         setFiles([]);
                                     },
-                                    className: "flex-1 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50",
+                                    className: "flex-1 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-700",
                                     children: "Cancelar"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/pdf-tools.jsx",
@@ -1243,21 +1246,31 @@ function PDFToolsPage() {
                 columnNumber: 17
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("aside", {
-                className: "hidden md:flex flex-col w-72 bg-white border-r border-gray-200 fixed top-16 bottom-0 left-0 z-40 overflow-y-auto",
+                className: "hidden md:flex flex-col w-72 border-r fixed top-16 bottom-0 left-0 z-40 overflow-y-auto",
+                style: {
+                    backgroundColor: 'var(--bg-card)',
+                    borderColor: 'var(--border-card)'
+                },
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "p-6 border-b border-gray-100",
+                        className: "p-6 border-b",
+                        style: {
+                            borderColor: 'var(--border-card)'
+                        },
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                            className: "text-base font-bold text-gray-500 uppercase tracking-wider",
+                            className: "text-base font-bold uppercase tracking-wider",
+                            style: {
+                                color: 'var(--text-muted)'
+                            },
                             children: "Ferramentas PDF"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                            lineNumber: 1139,
+                            lineNumber: 1145,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                        lineNumber: 1138,
+                        lineNumber: 1144,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("nav", {
@@ -1268,47 +1281,56 @@ function PDFToolsPage() {
                                     setFiles([]);
                                     setDiffResult(null);
                                 },
-                                className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all w-full text-left group", activeTool === tool.id ? "bg-orange-50 text-orange-600 shadow-sm ring-1 ring-orange-200" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"),
+                                className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all w-full text-left group", activeTool === tool.id ? "bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 shadow-sm ring-1 ring-orange-200 dark:ring-orange-800" : "hover:bg-gray-50 dark:hover:bg-white/5"),
+                                style: {
+                                    color: activeTool === tool.id ? undefined : 'var(--text-muted)'
+                                },
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                        className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("w-8 h-8 rounded-lg flex items-center justify-center transition-colors", activeTool === tool.id ? "bg-orange-100 text-orange-600" : "bg-gray-100/50 text-gray-400 group-hover:bg-gray-100"),
+                                        className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("w-8 h-8 rounded-lg flex items-center justify-center transition-colors", activeTool === tool.id ? "bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400" : "bg-gray-100/50 dark:bg-white/5 text-gray-400 group-hover:bg-gray-100 dark:group-hover:bg-white/10"),
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
                                             className: `fas ${tool.icon}`
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1157,
+                                            lineNumber: 1166,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                        lineNumber: 1153,
+                                        lineNumber: 1162,
                                         columnNumber: 29
                                     }, this),
                                     tool.label
                                 ]
                             }, tool.id, true, {
                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                lineNumber: 1143,
+                                lineNumber: 1149,
                                 columnNumber: 25
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                        lineNumber: 1141,
+                        lineNumber: 1147,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "p-4 bg-gray-50 border-t border-gray-100",
+                        className: "p-4 bg-gray-50 dark:bg-white/5 border-t",
+                        style: {
+                            borderColor: 'var(--border-card)'
+                        },
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                            className: "text-xs text-gray-400 text-center",
+                            className: "text-xs text-center",
+                            style: {
+                                color: 'var(--text-muted)'
+                            },
                             children: "Business Tools v1.0"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                            lineNumber: 1164,
+                            lineNumber: 1173,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                        lineNumber: 1163,
+                        lineNumber: 1172,
                         columnNumber: 17
                     }, this)
                 ]
@@ -1318,7 +1340,11 @@ function PDFToolsPage() {
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                className: "md:hidden w-full bg-white border-b border-gray-200 p-4 sticky top-16 z-30 overflow-x-auto whitespace-nowrap",
+                className: "md:hidden w-full border-b p-4 sticky top-16 z-30 overflow-x-auto whitespace-nowrap",
+                style: {
+                    backgroundColor: 'var(--bg-card)',
+                    borderColor: 'var(--border-card)'
+                },
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                     className: "flex gap-2",
                     children: tools.map((tool)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -1327,34 +1353,41 @@ function PDFToolsPage() {
                                 setFiles([]);
                                 setDiffResult(null);
                             },
-                            className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors border", activeTool === tool.id ? "bg-orange-50 border-orange-200 text-orange-700" : "bg-white border-gray-200 text-gray-600"),
+                            className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors border", activeTool === tool.id ? "bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800 text-orange-700 dark:text-orange-400" : "border-gray-200 dark:border-gray-700"),
+                            style: {
+                                backgroundColor: activeTool === tool.id ? undefined : 'var(--bg-card)',
+                                color: activeTool === tool.id ? undefined : 'var(--text-muted)'
+                            },
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
                                     className: `fas ${tool.icon}`
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                    lineNumber: 1182,
+                                    lineNumber: 1201,
                                     columnNumber: 29
                                 }, this),
                                 tool.label
                             ]
                         }, tool.id, true, {
                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                            lineNumber: 1172,
+                            lineNumber: 1187,
                             columnNumber: 25
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                    lineNumber: 1170,
+                    lineNumber: 1185,
                     columnNumber: 18
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                lineNumber: 1169,
+                lineNumber: 1178,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("main", {
-                className: "flex-1 md:ml-72 p-6 md:p-10 bg-slate-50 w-full min-h-screen",
+                className: "flex-1 md:ml-72 p-6 md:p-10 w-full min-h-screen",
+                style: {
+                    backgroundColor: 'var(--bg-page)'
+                },
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                     className: "max-w-[1600px] mx-auto",
                     children: [
@@ -1362,15 +1395,21 @@ function PDFToolsPage() {
                             className: "mb-6",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h1", {
-                                    className: "text-3xl font-bold text-gray-800 mb-2",
+                                    className: "text-3xl font-bold mb-2",
+                                    style: {
+                                        color: 'var(--text-main)'
+                                    },
                                     children: tools.find((t)=>t.id === activeTool)?.label
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                    lineNumber: 1195,
+                                    lineNumber: 1214,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                    className: "inline-block bg-gray-200 rounded px-3 py-1 text-sm text-gray-600 font-medium",
+                                    className: "inline-block bg-gray-200 dark:bg-gray-800 rounded px-3 py-1 text-sm font-medium",
+                                    style: {
+                                        color: 'var(--text-muted)'
+                                    },
                                     children: [
                                         activeTool === 'merge' && 'Junte múltiplos arquivos PDF em um único documento',
                                         activeTool === 'split' && 'Separe um PDF em várias páginas ou extraia intervalos',
@@ -1385,86 +1424,103 @@ function PDFToolsPage() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                    lineNumber: 1198,
+                                    lineNumber: 1217,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                            lineNumber: 1194,
+                            lineNumber: 1213,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                            className: "bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden min-h-[600px] flex flex-col justify-between",
+                            className: "rounded-xl shadow-sm border overflow-hidden min-h-[600px] flex flex-col justify-between",
+                            style: {
+                                backgroundColor: 'var(--bg-card)',
+                                borderColor: 'var(--border-card)'
+                            },
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                     className: "p-8 flex-grow flex flex-col",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h4", {
-                                            className: "font-semibold text-gray-700 mb-4",
+                                            className: "font-semibold mb-4",
+                                            style: {
+                                                color: 'var(--text-muted)'
+                                            },
                                             children: "Selecione seus arquivos PDF (Ordem de seleção importa)"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1215,
+                                            lineNumber: 1240,
                                             columnNumber: 30
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                             ...getRootProps(),
-                                            className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("flex-grow flex flex-col items-center justify-center border-2 border-dashed rounded-xl transition-all duration-300 min-h-[400px] bg-slate-50/50", isDragActive ? "border-orange-500 bg-orange-50" : "border-gray-300 hover:border-orange-400 hover:bg-slate-100"),
+                                            className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("flex-grow flex flex-col items-center justify-center border-2 border-dashed rounded-xl transition-all duration-300 min-h-[400px]", isDragActive ? "border-orange-500 bg-orange-50 dark:bg-orange-900/10" : "hover:border-orange-400"),
+                                            style: {
+                                                backgroundColor: isDragActive ? undefined : 'var(--bg-card-hover)',
+                                                borderColor: isDragActive ? undefined : 'var(--border-card)'
+                                            },
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                                     ...getInputProps()
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1225,
+                                                    lineNumber: 1254,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                     className: "text-center p-10",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                            className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 transition-all", isDragActive ? "bg-white text-orange-600 shadow-md" : "bg-gray-400 text-white"),
+                                                            className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 transition-all", isDragActive ? "bg-white dark:bg-gray-800 text-orange-600 shadow-md" : "bg-gray-400 dark:bg-gray-600 text-white"),
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
                                                                 className: "fas fa-cloud-upload-alt text-4xl"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                lineNumber: 1231,
+                                                                lineNumber: 1260,
                                                                 columnNumber: 41
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1227,
+                                                            lineNumber: 1256,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
-                                                            className: "text-2xl font-bold text-gray-400 mb-2",
+                                                            className: "text-2xl font-bold mb-2",
+                                                            style: {
+                                                                color: 'var(--text-muted)'
+                                                            },
                                                             children: isDragActive ? "Solte para enviar" : "Clique ou arraste seus arquivos aqui"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1233,
+                                                            lineNumber: 1262,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                                            className: "text-gray-400 font-medium uppercase text-sm tracking-wide",
+                                                            className: "font-medium uppercase text-sm tracking-wide",
+                                                            style: {
+                                                                color: 'var(--text-muted)'
+                                                            },
                                                             children: [
                                                                 "PDF Suportado",
                                                                 activeTool === 'compare' && ' (Necessário 2 arquivos)'
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1236,
+                                                            lineNumber: 1265,
                                                             columnNumber: 37
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1226,
+                                                    lineNumber: 1255,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1218,
+                                            lineNumber: 1243,
                                             columnNumber: 30
                                         }, this),
                                         files.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -1472,7 +1528,11 @@ function PDFToolsPage() {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                 className: "grid grid-cols-1 gap-2",
                                                 children: files.map((f, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                        className: "flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg shadow-sm",
+                                                        className: "flex items-center justify-between p-3 border rounded-lg shadow-sm",
+                                                        style: {
+                                                            backgroundColor: 'var(--bg-card)',
+                                                            borderColor: 'var(--border-card)'
+                                                        },
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                 className: "flex items-center gap-3",
@@ -1481,11 +1541,14 @@ function PDFToolsPage() {
                                                                         className: "fas fa-file-pdf text-red-500 text-xl"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1250,
+                                                                        lineNumber: 1279,
                                                                         columnNumber: 54
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                        className: "font-medium text-gray-700",
+                                                                        className: "font-medium",
+                                                                        style: {
+                                                                            color: 'var(--text-main)'
+                                                                        },
                                                                         children: [
                                                                             f.name,
                                                                             " (",
@@ -1494,40 +1557,44 @@ function PDFToolsPage() {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1251,
+                                                                        lineNumber: 1280,
                                                                         columnNumber: 54
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                lineNumber: 1249,
+                                                                lineNumber: 1278,
                                                                 columnNumber: 50
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
                                                                 className: "fas fa-check text-green-500"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                lineNumber: 1253,
+                                                                lineNumber: 1282,
                                                                 columnNumber: 50
                                                             }, this)
                                                         ]
                                                     }, i, true, {
                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                        lineNumber: 1248,
+                                                        lineNumber: 1277,
                                                         columnNumber: 46
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                lineNumber: 1246,
+                                                lineNumber: 1275,
                                                 columnNumber: 38
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1245,
+                                            lineNumber: 1274,
                                             columnNumber: 34
                                         }, this),
                                         (activeTool === 'split' || activeTool === 'ocr') && files.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                            className: "mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg",
+                                            className: "mt-6 p-4 rounded-lg",
+                                            style: {
+                                                backgroundColor: 'var(--bg-card-hover)',
+                                                borderColor: 'var(--border-card)'
+                                            },
                                             children: [
                                                 activeTool === 'split' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["Fragment"], {
                                                     children: [
@@ -1545,21 +1612,24 @@ function PDFToolsPage() {
                                                                             className: "text-orange-500"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1267,
+                                                                            lineNumber: 1296,
                                                                             columnNumber: 55
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                            className: "font-medium text-gray-700",
+                                                                            className: "font-medium",
+                                                                            style: {
+                                                                                color: 'var(--text-main)'
+                                                                            },
                                                                             children: "Por Página/Intervalo"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1268,
+                                                                            lineNumber: 1297,
                                                                             columnNumber: 55
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1266,
+                                                                    lineNumber: 1295,
                                                                     columnNumber: 51
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
@@ -1573,59 +1643,77 @@ function PDFToolsPage() {
                                                                             className: "text-orange-500"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1271,
+                                                                            lineNumber: 1300,
                                                                             columnNumber: 55
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                            className: "font-medium text-gray-700",
+                                                                            className: "font-medium",
+                                                                            style: {
+                                                                                color: 'var(--text-main)'
+                                                                            },
                                                                             children: "Por Tamanho (MB)"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1272,
+                                                                            lineNumber: 1301,
                                                                             columnNumber: 55
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1270,
+                                                                    lineNumber: 1299,
                                                                     columnNumber: 51
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1265,
+                                                            lineNumber: 1294,
                                                             columnNumber: 47
                                                         }, this),
                                                         splitMode === 'range' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["Fragment"], {
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                                    className: "block text-sm font-bold text-gray-700 mb-2",
+                                                                    className: "block text-sm font-bold mb-2",
+                                                                    style: {
+                                                                        color: 'var(--text-main)'
+                                                                    },
                                                                     children: "Intervalos (Ex: 1-5, 8)"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1278,
+                                                                    lineNumber: 1307,
                                                                     columnNumber: 50
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                                                     type: "text",
                                                                     value: splitRanges,
                                                                     onChange: (e)=>setSplitRanges(e.target.value),
-                                                                    className: "w-full p-2 border border-gray-300 rounded focus:border-orange-500 focus:outline-none"
+                                                                    className: "w-full p-2 border rounded focus:border-orange-500 focus:outline-none",
+                                                                    style: {
+                                                                        backgroundColor: 'var(--bg-card)',
+                                                                        borderColor: 'var(--border-card)',
+                                                                        color: 'var(--text-main)'
+                                                                    }
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1279,
+                                                                    lineNumber: 1308,
                                                                     columnNumber: 50
                                                                 }, this)
                                                             ]
                                                         }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                            className: "p-3 bg-white border border-gray-200 rounded",
+                                                            className: "p-3 border rounded",
+                                                            style: {
+                                                                backgroundColor: 'var(--bg-card)',
+                                                                borderColor: 'var(--border-card)'
+                                                            },
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                                    className: "block text-sm font-bold text-gray-700 mb-2",
+                                                                    className: "block text-sm font-bold mb-2",
+                                                                    style: {
+                                                                        color: 'var(--text-main)'
+                                                                    },
                                                                     children: "Tamanho Máximo por Arquivo (MB)"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1288,
+                                                                    lineNumber: 1318,
                                                                     columnNumber: 54
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -1635,39 +1723,50 @@ function PDFToolsPage() {
                                                                             type: "number",
                                                                             value: customTargetMB,
                                                                             onChange: (e)=>setCustomTargetMB(e.target.value),
-                                                                            className: "w-24 p-2 border border-gray-300 rounded focus:border-orange-500 focus:outline-none",
+                                                                            className: "w-24 p-2 border rounded focus:border-orange-500 focus:outline-none",
+                                                                            style: {
+                                                                                backgroundColor: 'var(--bg-card)',
+                                                                                borderColor: 'var(--border-card)',
+                                                                                color: 'var(--text-main)'
+                                                                            },
                                                                             placeholder: "Ex: 5"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1290,
+                                                                            lineNumber: 1320,
                                                                             columnNumber: 58
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                            className: "text-gray-500 text-sm",
+                                                                            className: "text-sm",
+                                                                            style: {
+                                                                                color: 'var(--text-muted)'
+                                                                            },
                                                                             children: "MB"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1297,
+                                                                            lineNumber: 1328,
                                                                             columnNumber: 58
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1289,
+                                                                    lineNumber: 1319,
                                                                     columnNumber: 54
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                                                    className: "text-xs text-gray-500 mt-2",
+                                                                    className: "text-xs mt-2",
+                                                                    style: {
+                                                                        color: 'var(--text-muted)'
+                                                                    },
                                                                     children: "O arquivo será dividido em partes menores que este valor."
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1299,
+                                                                    lineNumber: 1330,
                                                                     columnNumber: 54
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1287,
+                                                            lineNumber: 1317,
                                                             columnNumber: 50
                                                         }, this)
                                                     ]
@@ -1675,18 +1774,25 @@ function PDFToolsPage() {
                                                 activeTool === 'ocr' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                            className: "block text-sm font-bold text-gray-700 mb-3",
+                                                            className: "block text-sm font-bold mb-3",
+                                                            style: {
+                                                                color: 'var(--text-main)'
+                                                            },
                                                             children: "Modo de OCR"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1308,
+                                                            lineNumber: 1339,
                                                             columnNumber: 46
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                             className: "flex flex-col gap-2",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                                    className: "flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300",
+                                                                    className: "flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300",
+                                                                    style: {
+                                                                        backgroundColor: 'var(--bg-card)',
+                                                                        borderColor: 'var(--border-card)'
+                                                                    },
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                                                             type: "radio",
@@ -1697,41 +1803,51 @@ function PDFToolsPage() {
                                                                             className: "text-orange-500 focus:ring-orange-500"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1311,
+                                                                            lineNumber: 1342,
                                                                             columnNumber: 53
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                             children: [
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                                    className: "font-bold text-gray-800 block text-sm",
+                                                                                    className: "font-bold block text-sm",
+                                                                                    style: {
+                                                                                        color: 'var(--text-main)'
+                                                                                    },
                                                                                     children: "Extrair Texto (.txt)"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                    lineNumber: 1313,
+                                                                                    lineNumber: 1344,
                                                                                     columnNumber: 57
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                                    className: "text-xs text-gray-500",
+                                                                                    className: "text-xs",
+                                                                                    style: {
+                                                                                        color: 'var(--text-muted)'
+                                                                                    },
                                                                                     children: "Lê o conteúdo e gera um arquivo de texto simples."
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                    lineNumber: 1314,
+                                                                                    lineNumber: 1345,
                                                                                     columnNumber: 57
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1312,
+                                                                            lineNumber: 1343,
                                                                             columnNumber: 53
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1310,
+                                                                    lineNumber: 1341,
                                                                     columnNumber: 50
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                                    className: "flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300",
+                                                                    className: "flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300",
+                                                                    style: {
+                                                                        backgroundColor: 'var(--bg-card)',
+                                                                        borderColor: 'var(--border-card)'
+                                                                    },
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                                                             type: "radio",
@@ -1742,41 +1858,51 @@ function PDFToolsPage() {
                                                                             className: "text-orange-500 focus:ring-orange-500"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1318,
+                                                                            lineNumber: 1349,
                                                                             columnNumber: 53
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                             children: [
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                                    className: "font-bold text-gray-800 block text-sm",
+                                                                                    className: "font-bold block text-sm",
+                                                                                    style: {
+                                                                                        color: 'var(--text-main)'
+                                                                                    },
                                                                                     children: "PDF Pesquisável"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                    lineNumber: 1320,
+                                                                                    lineNumber: 1351,
                                                                                     columnNumber: 57
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                                    className: "text-xs text-gray-500",
+                                                                                    className: "text-xs",
+                                                                                    style: {
+                                                                                        color: 'var(--text-muted)'
+                                                                                    },
                                                                                     children: "Gera um novo PDF onde o texto da imagem pode ser selecionado/pesquisado."
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                    lineNumber: 1321,
+                                                                                    lineNumber: 1352,
                                                                                     columnNumber: 57
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1319,
+                                                                            lineNumber: 1350,
                                                                             columnNumber: 53
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1317,
+                                                                    lineNumber: 1348,
                                                                     columnNumber: 50
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                                    className: "flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300",
+                                                                    className: "flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300",
+                                                                    style: {
+                                                                        backgroundColor: 'var(--bg-card)',
+                                                                        borderColor: 'var(--border-card)'
+                                                                    },
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                                                             type: "radio",
@@ -1790,113 +1916,136 @@ function PDFToolsPage() {
                                                                             className: "text-orange-500 focus:ring-orange-500"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1325,
+                                                                            lineNumber: 1356,
                                                                             columnNumber: 53
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                             children: [
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                                    className: "font-bold text-gray-800 block text-sm",
+                                                                                    className: "font-bold block text-sm",
+                                                                                    style: {
+                                                                                        color: 'var(--text-main)'
+                                                                                    },
                                                                                     children: "Comparar Arquivos (Original vs Alterado)"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                    lineNumber: 1327,
+                                                                                    lineNumber: 1358,
                                                                                     columnNumber: 57
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                                    className: "text-xs text-gray-500",
+                                                                                    className: "text-xs",
+                                                                                    style: {
+                                                                                        color: 'var(--text-muted)'
+                                                                                    },
                                                                                     children: "Extrai o texto de dois arquivos e mostra as diferenças."
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                    lineNumber: 1328,
+                                                                                    lineNumber: 1359,
                                                                                     columnNumber: 57
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1326,
+                                                                            lineNumber: 1357,
                                                                             columnNumber: 53
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1324,
+                                                                    lineNumber: 1355,
                                                                     columnNumber: 50
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1309,
+                                                            lineNumber: 1340,
                                                             columnNumber: 46
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1307,
+                                                    lineNumber: 1338,
                                                     columnNumber: 42
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1262,
+                                            lineNumber: 1291,
                                             columnNumber: 34
                                         }, this),
                                         activeTool === 'crop' && files.length > 0 && cropImgData && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                             className: "mt-6 flex flex-col gap-6",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                    className: "flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg",
+                                                    className: "flex items-center justify-between p-4 border rounded-lg",
+                                                    style: {
+                                                        backgroundColor: 'var(--bg-card-hover)',
+                                                        borderColor: 'var(--border-card)'
+                                                    },
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                             className: "flex items-center gap-3",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setCropPage((p)=>Math.max(1, p - 1)),
-                                                                    className: "w-10 h-10 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-100 transition-colors",
+                                                                    className: "w-10 h-10 flex items-center justify-center border rounded transition-colors",
+                                                                    style: {
+                                                                        backgroundColor: 'var(--bg-card)',
+                                                                        borderColor: 'var(--border-card)',
+                                                                        color: 'var(--text-main)'
+                                                                    },
                                                                     title: "Página Anterior",
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
-                                                                        className: "fas fa-chevron-left text-gray-600"
+                                                                        className: "fas fa-chevron-left"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1347,
+                                                                        lineNumber: 1379,
                                                                         columnNumber: 49
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1342,
+                                                                    lineNumber: 1373,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                    className: "font-bold text-gray-700",
+                                                                    className: "font-bold",
+                                                                    style: {
+                                                                        color: 'var(--text-main)'
+                                                                    },
                                                                     children: [
                                                                         "Página ",
                                                                         cropPage
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1349,
+                                                                    lineNumber: 1381,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setCropPage((p)=>p + 1),
-                                                                    className: "w-10 h-10 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-100 transition-colors",
+                                                                    className: "w-10 h-10 flex items-center justify-center border rounded transition-colors",
+                                                                    style: {
+                                                                        backgroundColor: 'var(--bg-card)',
+                                                                        borderColor: 'var(--border-card)',
+                                                                        color: 'var(--text-main)'
+                                                                    },
                                                                     title: "Próxima Página",
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
-                                                                        className: "fas fa-chevron-right text-gray-600"
+                                                                        className: "fas fa-chevron-right"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1355,
+                                                                        lineNumber: 1388,
                                                                         columnNumber: 49
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1350,
+                                                                    lineNumber: 1382,
                                                                     columnNumber: 45
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1341,
+                                                            lineNumber: 1372,
                                                             columnNumber: 42
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -1904,14 +2053,19 @@ function PDFToolsPage() {
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
                                                                 value: cropFormat,
                                                                 onChange: (e)=>setCropFormat(e.target.value),
-                                                                className: "p-2 border border-gray-300 rounded focus:border-orange-500 focus:outline-none bg-white text-sm font-medium text-gray-700",
+                                                                className: "p-2 border rounded focus:border-orange-500 focus:outline-none text-sm font-medium",
+                                                                style: {
+                                                                    backgroundColor: 'var(--bg-card)',
+                                                                    borderColor: 'var(--border-card)',
+                                                                    color: 'var(--text-main)'
+                                                                },
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
                                                                         value: "png",
                                                                         children: "Salvar como PNG"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1364,
+                                                                        lineNumber: 1398,
                                                                         columnNumber: 49
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -1919,7 +2073,7 @@ function PDFToolsPage() {
                                                                         children: "Salvar como JPG"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1365,
+                                                                        lineNumber: 1399,
                                                                         columnNumber: 49
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -1927,28 +2081,32 @@ function PDFToolsPage() {
                                                                         children: "Salvar como PDF"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1366,
+                                                                        lineNumber: 1400,
                                                                         columnNumber: 49
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                lineNumber: 1359,
+                                                                lineNumber: 1392,
                                                                 columnNumber: 45
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1358,
+                                                            lineNumber: 1391,
                                                             columnNumber: 42
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1340,
+                                                    lineNumber: 1371,
                                                     columnNumber: 38
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                    className: "relative overflow-auto border border-gray-200 bg-gray-100 rounded-lg flex justify-center p-4",
+                                                    className: "relative overflow-auto border rounded-lg flex justify-center p-4",
+                                                    style: {
+                                                        backgroundColor: 'var(--bg-card-hover)',
+                                                        borderColor: 'var(--border-card)'
+                                                    },
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                         className: "relative shadow-lg select-none cursor-crosshair",
                                                         onMouseDown: onCropMouseDown,
@@ -1970,7 +2128,7 @@ function PDFToolsPage() {
                                                                 }
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                lineNumber: 1380,
+                                                                lineNumber: 1414,
                                                                 columnNumber: 46
                                                             }, this),
                                                             cropSelection && cropSelection.width > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -1984,28 +2142,28 @@ function PDFToolsPage() {
                                                                 }
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                lineNumber: 1388,
+                                                                lineNumber: 1422,
                                                                 columnNumber: 49
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                        lineNumber: 1372,
+                                                        lineNumber: 1406,
                                                         columnNumber: 42
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1371,
+                                                    lineNumber: 1405,
                                                     columnNumber: 38
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                    className: "bg-blue-50 text-blue-800 p-4 rounded-lg text-sm border border-blue-100 flex items-start gap-3",
+                                                    className: "bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 p-4 rounded-lg text-sm border border-blue-100 dark:border-blue-800 flex items-start gap-3",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
                                                             className: "fas fa-info-circle mt-0.5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1404,
+                                                            lineNumber: 1438,
                                                             columnNumber: 42
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -2015,26 +2173,26 @@ function PDFToolsPage() {
                                                                     children: "Instruções:"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1406,
+                                                                    lineNumber: 1440,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                                                                     children: "Clique e arraste na imagem para selecionar a área que deseja cortar. Use os botões de navegação para trocar de página."
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1407,
+                                                                    lineNumber: 1441,
                                                                     columnNumber: 45
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1405,
+                                                            lineNumber: 1439,
                                                             columnNumber: 42
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1403,
+                                                    lineNumber: 1437,
                                                     columnNumber: 38
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -2048,108 +2206,129 @@ function PDFToolsPage() {
                                                                 className: "fas fa-cut"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                lineNumber: 1417,
+                                                                lineNumber: 1451,
                                                                 columnNumber: 45
                                                             }, this),
                                                             "Cortar e Salvar"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                        lineNumber: 1412,
+                                                        lineNumber: 1446,
                                                         columnNumber: 41
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1411,
+                                                    lineNumber: 1445,
                                                     columnNumber: 38
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1339,
+                                            lineNumber: 1370,
                                             columnNumber: 33
                                         }, this),
                                         activeTool === 'rotate' && files.length > 0 && rotateImgData && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                             className: "mt-6 flex flex-col gap-6",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                    className: "flex flex-col md:flex-row items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg gap-4",
+                                                    className: "flex flex-col md:flex-row items-center justify-between p-4 border rounded-lg gap-4",
+                                                    style: {
+                                                        backgroundColor: 'var(--bg-card-hover)',
+                                                        borderColor: 'var(--border-card)'
+                                                    },
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                             className: "flex items-center gap-3",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setRotatePage((p)=>Math.max(1, p - 1)),
-                                                                    className: "w-10 h-10 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-100 transition-colors",
+                                                                    className: "w-10 h-10 flex items-center justify-center border rounded hover:bg-gray-100 dark:hover:bg-white/5 transition-colors",
+                                                                    style: {
+                                                                        backgroundColor: 'var(--bg-card)',
+                                                                        borderColor: 'var(--border-card)',
+                                                                        color: 'var(--text-main)'
+                                                                    },
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
-                                                                        className: "fas fa-chevron-left text-gray-600"
+                                                                        className: "fas fa-chevron-left"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1435,
+                                                                        lineNumber: 1470,
                                                                         columnNumber: 49
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1431,
+                                                                    lineNumber: 1465,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                    className: "font-bold text-gray-700",
+                                                                    className: "font-bold",
+                                                                    style: {
+                                                                        color: 'var(--text-main)'
+                                                                    },
                                                                     children: [
                                                                         "Página ",
                                                                         rotatePage
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1437,
+                                                                    lineNumber: 1472,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setRotatePage((p)=>p + 1),
-                                                                    className: "w-10 h-10 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-100 transition-colors",
+                                                                    className: "w-10 h-10 flex items-center justify-center border rounded hover:bg-gray-100 dark:hover:bg-white/5 transition-colors",
+                                                                    style: {
+                                                                        backgroundColor: 'var(--bg-card)',
+                                                                        borderColor: 'var(--border-card)',
+                                                                        color: 'var(--text-main)'
+                                                                    },
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
-                                                                        className: "fas fa-chevron-right text-gray-600"
+                                                                        className: "fas fa-chevron-right"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1442,
+                                                                        lineNumber: 1478,
                                                                         columnNumber: 49
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1438,
+                                                                    lineNumber: 1473,
                                                                     columnNumber: 45
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1430,
+                                                            lineNumber: 1464,
                                                             columnNumber: 42
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                            className: "flex bg-white rounded-lg border border-gray-200 p-1",
+                                                            className: "flex rounded-lg border p-1",
+                                                            style: {
+                                                                backgroundColor: 'var(--bg-card)',
+                                                                borderColor: 'var(--border-card)'
+                                                            },
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setRotateMode('all'),
-                                                                    className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("px-4 py-2 rounded-md text-sm font-medium transition-colors", rotateMode === 'all' ? "bg-orange-100 text-orange-700" : "text-gray-600 hover:bg-gray-50"),
+                                                                    className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("px-4 py-2 rounded-md text-sm font-medium transition-colors", rotateMode === 'all' ? "bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-400" : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"),
                                                                     children: "Todas as Páginas"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1448,
+                                                                    lineNumber: 1484,
                                                                     columnNumber: 46
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setRotateMode('page'),
-                                                                    className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("px-4 py-2 rounded-md text-sm font-medium transition-colors", rotateMode === 'page' ? "bg-orange-100 text-orange-700" : "text-gray-600 hover:bg-gray-50"),
+                                                                    className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("px-4 py-2 rounded-md text-sm font-medium transition-colors", rotateMode === 'page' ? "bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-400" : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"),
                                                                     children: "Apenas Esta Página"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1457,
+                                                                    lineNumber: 1493,
                                                                     columnNumber: 46
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1447,
+                                                            lineNumber: 1483,
                                                             columnNumber: 42
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -2157,14 +2336,19 @@ function PDFToolsPage() {
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setRotateAngle((a)=>a - 90),
-                                                                    className: "px-3 py-2 bg-white border border-gray-300 rounded hover:bg-gray-100 text-gray-700 flex items-center gap-2",
+                                                                    className: "px-3 py-2 border rounded hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2",
+                                                                    style: {
+                                                                        backgroundColor: 'var(--bg-card)',
+                                                                        borderColor: 'var(--border-card)',
+                                                                        color: 'var(--text-main)'
+                                                                    },
                                                                     title: "Girar 90° Anti-horário",
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
                                                                             className: "fas fa-undo"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1475,
+                                                                            lineNumber: 1512,
                                                                             columnNumber: 49
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -2172,28 +2356,38 @@ function PDFToolsPage() {
                                                                             children: "Esq."
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1476,
+                                                                            lineNumber: 1513,
                                                                             columnNumber: 49
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1470,
+                                                                    lineNumber: 1506,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setRotateAngle(0),
-                                                                    className: "px-3 py-2 bg-white border border-gray-300 rounded hover:bg-gray-100 text-gray-700 font-bold",
+                                                                    className: "px-3 py-2 border rounded hover:bg-gray-100 dark:hover:bg-white/5 font-bold",
+                                                                    style: {
+                                                                        backgroundColor: 'var(--bg-card)',
+                                                                        borderColor: 'var(--border-card)',
+                                                                        color: 'var(--text-main)'
+                                                                    },
                                                                     title: "Resetar",
                                                                     children: "0°"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1478,
+                                                                    lineNumber: 1515,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setRotateAngle((a)=>a + 90),
-                                                                    className: "px-3 py-2 bg-white border border-gray-300 rounded hover:bg-gray-100 text-gray-700 flex items-center gap-2",
+                                                                    className: "px-3 py-2 border rounded hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2",
+                                                                    style: {
+                                                                        backgroundColor: 'var(--bg-card)',
+                                                                        borderColor: 'var(--border-card)',
+                                                                        color: 'var(--text-main)'
+                                                                    },
                                                                     title: "Girar 90° Horário",
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -2201,36 +2395,40 @@ function PDFToolsPage() {
                                                                             children: "Dir."
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1490,
+                                                                            lineNumber: 1529,
                                                                             columnNumber: 49
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
                                                                             className: "fas fa-redo"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1491,
+                                                                            lineNumber: 1530,
                                                                             columnNumber: 49
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1485,
+                                                                    lineNumber: 1523,
                                                                     columnNumber: 45
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1469,
+                                                            lineNumber: 1505,
                                                             columnNumber: 42
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1427,
+                                                    lineNumber: 1461,
                                                     columnNumber: 38
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                    className: "relative overflow-hidden border border-gray-200 bg-gray-100 rounded-lg flex justify-center p-8 bg-slate-200/50",
+                                                    className: "relative overflow-hidden border rounded-lg flex justify-center p-8",
+                                                    style: {
+                                                        backgroundColor: 'var(--bg-card-hover)',
+                                                        borderColor: 'var(--border-card)'
+                                                    },
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                         className: "shadow-xl transition-transform duration-300 ease-in-out",
                                                         style: {
@@ -2244,28 +2442,31 @@ function PDFToolsPage() {
                                                             className: "block rounded"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1506,
+                                                            lineNumber: 1545,
                                                             columnNumber: 46
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                        lineNumber: 1498,
+                                                        lineNumber: 1537,
                                                         columnNumber: 42
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1497,
+                                                    lineNumber: 1536,
                                                     columnNumber: 38
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                     className: "flex justify-end gap-4 items-center",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                            className: "text-gray-600 text-sm",
+                                                            className: "text-sm",
+                                                            style: {
+                                                                color: 'var(--text-muted)'
+                                                            },
                                                             children: rotateMode === 'all' ? `Rotacionando TODO o documento em ${rotateAngle}°` : `Rotacionando a página ${rotatePage} em ${rotateAngle}°`
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1515,
+                                                            lineNumber: 1554,
                                                             columnNumber: 42
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -2276,33 +2477,37 @@ function PDFToolsPage() {
                                                                     className: "fas fa-save"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1525,
+                                                                    lineNumber: 1564,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 "Salvar Rotação"
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1521,
+                                                            lineNumber: 1560,
                                                             columnNumber: 41
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1514,
+                                                    lineNumber: 1553,
                                                     columnNumber: 38
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1426,
+                                            lineNumber: 1460,
                                             columnNumber: 33
                                         }, this),
                                         activeTool === 'number' && files.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                             className: "mt-6 flex flex-col gap-6",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                    className: "flex flex-col gap-4 p-6 bg-gray-50 border border-gray-200 rounded-lg",
+                                                    className: "flex flex-col gap-4 p-6 border rounded-lg",
+                                                    style: {
+                                                        backgroundColor: 'var(--bg-card-hover)',
+                                                        borderColor: 'var(--border-card)'
+                                                    },
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                         className: "flex flex-col md:flex-row gap-8",
                                                         children: [
@@ -2310,11 +2515,14 @@ function PDFToolsPage() {
                                                                 className: "flex-1",
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                                        className: "block text-sm font-bold text-gray-700 mb-3",
+                                                                        className: "block text-sm font-bold mb-3",
+                                                                        style: {
+                                                                            color: 'var(--text-main)'
+                                                                        },
                                                                         children: "Posição da Numeração"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1542,
+                                                                        lineNumber: 1581,
                                                                         columnNumber: 50
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -2328,79 +2536,98 @@ function PDFToolsPage() {
                                                                             'bottom-right'
                                                                         ].map((pos)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                                 onClick: ()=>setNumPosition(pos),
-                                                                                className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("w-12 h-16 border-2 rounded transition-all flex items-center justify-center relative bg-white", numPosition === pos ? "border-orange-500 bg-orange-50" : "border-gray-300 hover:border-orange-300 hover:bg-gray-50"),
+                                                                                className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("w-12 h-16 border-2 rounded transition-all flex items-center justify-center relative", numPosition === pos ? "border-orange-500 bg-orange-50 dark:bg-orange-900/20" : "hover:border-orange-300"),
+                                                                                style: {
+                                                                                    backgroundColor: numPosition === pos ? undefined : 'var(--bg-card)',
+                                                                                    borderColor: numPosition === pos ? undefined : 'var(--border-card)'
+                                                                                },
                                                                                 title: pos,
                                                                                 children: [
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                                                        className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("absolute w-2 h-2 bg-gray-400 rounded-full", pos.includes('top') ? "top-2" : "bottom-2", pos.includes('left') ? "left-2" : pos.includes('right') ? "right-2" : "left-1/2 -translate-x-1/2"),
+                                                                                        className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("absolute w-2 h-2 rounded-full", pos.includes('top') ? "top-2" : "bottom-2", pos.includes('left') ? "left-2" : pos.includes('right') ? "right-2" : "left-1/2 -translate-x-1/2"),
+                                                                                        style: {
+                                                                                            backgroundColor: 'var(--text-muted)'
+                                                                                        },
                                                                                         children: [
                                                                                             numPosition === pos && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                                                 className: "absolute inset-0 bg-orange-600 rounded-full animate-ping"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                                lineNumber: 1561,
+                                                                                                lineNumber: 1606,
                                                                                                 columnNumber: 90
                                                                                             }, this),
                                                                                             numPosition === pos && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                                                 className: "absolute inset-0 bg-orange-600 rounded-full"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                                lineNumber: 1562,
+                                                                                                lineNumber: 1607,
                                                                                                 columnNumber: 90
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                        lineNumber: 1556,
+                                                                                        lineNumber: 1599,
                                                                                         columnNumber: 62
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                                                        className: "w-8 h-0.5 bg-gray-100 top-6 absolute rounded"
+                                                                                        className: "w-8 h-0.5 top-6 absolute rounded",
+                                                                                        style: {
+                                                                                            backgroundColor: 'var(--border-card)'
+                                                                                        }
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                        lineNumber: 1565,
+                                                                                        lineNumber: 1610,
                                                                                         columnNumber: 62
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                                                        className: "w-8 h-0.5 bg-gray-100 top-8 absolute rounded"
+                                                                                        className: "w-8 h-0.5 top-8 absolute rounded",
+                                                                                        style: {
+                                                                                            backgroundColor: 'var(--border-card)'
+                                                                                        }
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                        lineNumber: 1566,
+                                                                                        lineNumber: 1611,
                                                                                         columnNumber: 62
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                                                        className: "w-6 h-0.5 bg-gray-100 top-10 absolute rounded"
+                                                                                        className: "w-6 h-0.5 top-10 absolute rounded",
+                                                                                        style: {
+                                                                                            backgroundColor: 'var(--border-card)'
+                                                                                        }
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                        lineNumber: 1567,
+                                                                                        lineNumber: 1612,
                                                                                         columnNumber: 62
                                                                                     }, this)
                                                                                 ]
                                                                             }, pos, true, {
                                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                lineNumber: 1545,
+                                                                                lineNumber: 1584,
                                                                                 columnNumber: 58
                                                                             }, this))
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1543,
+                                                                        lineNumber: 1582,
                                                                         columnNumber: 50
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                lineNumber: 1541,
+                                                                lineNumber: 1580,
                                                                 columnNumber: 46
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                 className: "flex-1",
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                                        className: "block text-sm font-bold text-gray-700 mb-3",
+                                                                        className: "block text-sm font-bold mb-3",
+                                                                        style: {
+                                                                            color: 'var(--text-main)'
+                                                                        },
                                                                         children: "Iniciar em"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1575,
+                                                                        lineNumber: 1620,
                                                                         columnNumber: 50
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -2411,14 +2638,22 @@ function PDFToolsPage() {
                                                                                 min: "1",
                                                                                 value: numStart,
                                                                                 onChange: (e)=>setNumStart(parseInt(e.target.value) || 1),
-                                                                                className: "w-24 p-3 border border-gray-300 rounded-lg text-lg font-bold text-center focus:border-orange-500 focus:outline-none"
+                                                                                className: "w-24 p-3 border rounded-lg text-lg font-bold text-center focus:border-orange-500 focus:outline-none",
+                                                                                style: {
+                                                                                    backgroundColor: 'var(--bg-card)',
+                                                                                    borderColor: 'var(--border-card)',
+                                                                                    color: 'var(--text-main)'
+                                                                                }
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                lineNumber: 1577,
+                                                                                lineNumber: 1622,
                                                                                 columnNumber: 54
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                                className: "text-gray-500 text-sm",
+                                                                                className: "text-sm",
+                                                                                style: {
+                                                                                    color: 'var(--text-muted)'
+                                                                                },
                                                                                 children: [
                                                                                     '(A primeira página do PDF será "',
                                                                                     numStart,
@@ -2426,21 +2661,24 @@ function PDFToolsPage() {
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                lineNumber: 1584,
+                                                                                lineNumber: 1630,
                                                                                 columnNumber: 54
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1576,
+                                                                        lineNumber: 1621,
                                                                         columnNumber: 50
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                                        className: "block text-sm font-bold text-gray-700 mb-3",
+                                                                        className: "block text-sm font-bold mb-3",
+                                                                        style: {
+                                                                            color: 'var(--text-main)'
+                                                                        },
                                                                         children: "Cor da Numeração"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1587,
+                                                                        lineNumber: 1633,
                                                                         columnNumber: 50
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -2450,32 +2688,42 @@ function PDFToolsPage() {
                                                                                 type: "color",
                                                                                 value: numColor,
                                                                                 onChange: (e)=>setNumColor(e.target.value),
-                                                                                className: "h-10 w-10 p-1 border border-gray-300 rounded cursor-pointer"
+                                                                                className: "h-10 w-10 p-1 border rounded cursor-pointer",
+                                                                                style: {
+                                                                                    backgroundColor: 'var(--bg-card)',
+                                                                                    borderColor: 'var(--border-card)'
+                                                                                }
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                lineNumber: 1589,
+                                                                                lineNumber: 1635,
                                                                                 columnNumber: 54
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                                className: "text-sm text-gray-600",
+                                                                                className: "text-sm",
+                                                                                style: {
+                                                                                    color: 'var(--text-muted)'
+                                                                                },
                                                                                 children: numColor
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                lineNumber: 1595,
+                                                                                lineNumber: 1642,
                                                                                 columnNumber: 54
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1588,
+                                                                        lineNumber: 1634,
                                                                         columnNumber: 50
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                                        className: "block text-sm font-bold text-gray-700 mb-3",
+                                                                        className: "block text-sm font-bold mb-3",
+                                                                        style: {
+                                                                            color: 'var(--text-main)'
+                                                                        },
                                                                         children: "Formato do Texto"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1598,
+                                                                        lineNumber: 1645,
                                                                         columnNumber: 50
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -2483,43 +2731,53 @@ function PDFToolsPage() {
                                                                         children: [
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                                 onClick: ()=>setNumTextFormat('page_num'),
-                                                                                className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("px-3 py-2 rounded text-sm font-bold border transition-colors", numTextFormat === 'page_num' ? "bg-orange-100 border-orange-500 text-orange-700" : "bg-white border-gray-300 text-gray-600 hover:bg-gray-50"),
+                                                                                className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("px-3 py-2 rounded text-sm font-bold border transition-colors", numTextFormat === 'page_num' ? "bg-orange-100 dark:bg-orange-900/40 border-orange-500 text-orange-700 dark:text-orange-400" : "hover:bg-gray-50 dark:hover:bg-white/5"),
+                                                                                style: {
+                                                                                    backgroundColor: numTextFormat === 'page_num' ? undefined : 'var(--bg-card)',
+                                                                                    borderColor: numTextFormat === 'page_num' ? undefined : 'var(--border-card)',
+                                                                                    color: numTextFormat === 'page_num' ? undefined : 'var(--text-muted)'
+                                                                                },
                                                                                 children: "Página X"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                lineNumber: 1600,
+                                                                                lineNumber: 1647,
                                                                                 columnNumber: 54
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                                 onClick: ()=>setNumTextFormat('num_only'),
-                                                                                className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("px-3 py-2 rounded text-sm font-bold border transition-colors", numTextFormat === 'num_only' ? "bg-orange-100 border-orange-500 text-orange-700" : "bg-white border-gray-300 text-gray-600 hover:bg-gray-50"),
+                                                                                className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("px-3 py-2 rounded text-sm font-bold border transition-colors", numTextFormat === 'num_only' ? "bg-orange-100 dark:bg-orange-900/40 border-orange-500 text-orange-700 dark:text-orange-400" : "hover:bg-gray-50 dark:hover:bg-white/5"),
+                                                                                style: {
+                                                                                    backgroundColor: numTextFormat === 'num_only' ? undefined : 'var(--bg-card)',
+                                                                                    borderColor: numTextFormat === 'num_only' ? undefined : 'var(--border-card)',
+                                                                                    color: numTextFormat === 'num_only' ? undefined : 'var(--text-muted)'
+                                                                                },
                                                                                 children: "XX"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                lineNumber: 1611,
+                                                                                lineNumber: 1663,
                                                                                 columnNumber: 54
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                        lineNumber: 1599,
+                                                                        lineNumber: 1646,
                                                                         columnNumber: 50
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                lineNumber: 1574,
+                                                                lineNumber: 1619,
                                                                 columnNumber: 46
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                        lineNumber: 1539,
+                                                        lineNumber: 1578,
                                                         columnNumber: 42
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1537,
+                                                    lineNumber: 1576,
                                                     columnNumber: 38
                                                 }, this),
                                                 numImgData && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -2529,11 +2787,14 @@ function PDFToolsPage() {
                                                             className: "flex items-center justify-between",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h4", {
-                                                                    className: "text-sm font-bold text-gray-700",
+                                                                    className: "text-sm font-bold",
+                                                                    style: {
+                                                                        color: 'var(--text-main)'
+                                                                    },
                                                                     children: "Pré-visualização:"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1632,
+                                                                    lineNumber: 1689,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -2541,59 +2802,80 @@ function PDFToolsPage() {
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                             onClick: ()=>setNumPage((p)=>Math.max(1, p - 1)),
-                                                                            className: "w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-100 transition-colors",
+                                                                            className: "w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-100 transition-colors",
+                                                                            style: {
+                                                                                backgroundColor: 'var(--bg-card)',
+                                                                                borderColor: 'var(--border-card)'
+                                                                            },
                                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
-                                                                                className: "fas fa-chevron-left text-xs text-gray-600"
+                                                                                className: "fas fa-chevron-left text-xs",
+                                                                                style: {
+                                                                                    color: 'var(--text-muted)'
+                                                                                }
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                lineNumber: 1638,
+                                                                                lineNumber: 1696,
                                                                                 columnNumber: 57
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1634,
+                                                                            lineNumber: 1691,
                                                                             columnNumber: 53
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                            className: "text-sm font-medium text-gray-700",
+                                                                            className: "text-sm font-medium",
+                                                                            style: {
+                                                                                color: 'var(--text-main)'
+                                                                            },
                                                                             children: [
                                                                                 "Página ",
                                                                                 numPage
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1640,
+                                                                            lineNumber: 1698,
                                                                             columnNumber: 53
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                             onClick: ()=>setNumPage((p)=>p + 1),
-                                                                            className: "w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-100 transition-colors",
+                                                                            className: "w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-100 transition-colors",
+                                                                            style: {
+                                                                                backgroundColor: 'var(--bg-card)',
+                                                                                borderColor: 'var(--border-card)'
+                                                                            },
                                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
-                                                                                className: "fas fa-chevron-right text-xs text-gray-600"
+                                                                                className: "fas fa-chevron-right text-xs",
+                                                                                style: {
+                                                                                    color: 'var(--text-muted)'
+                                                                                }
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                lineNumber: 1645,
+                                                                                lineNumber: 1704,
                                                                                 columnNumber: 57
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1641,
+                                                                            lineNumber: 1699,
                                                                             columnNumber: 53
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1633,
+                                                                    lineNumber: 1690,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1631,
+                                                            lineNumber: 1688,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                            className: "relative overflow-hidden border border-gray-200 bg-gray-100 rounded-lg flex justify-center p-8 bg-slate-200/50",
+                                                            className: "relative overflow-hidden border rounded-lg flex justify-center p-8",
+                                                            style: {
+                                                                backgroundColor: 'var(--bg-card-hover)',
+                                                                borderColor: 'var(--border-card)'
+                                                            },
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                 className: "shadow-xl",
                                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
@@ -2602,23 +2884,23 @@ function PDFToolsPage() {
                                                                     className: "block rounded max-h-[50vh]"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1651,
+                                                                    lineNumber: 1710,
                                                                     columnNumber: 53
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                lineNumber: 1650,
+                                                                lineNumber: 1709,
                                                                 columnNumber: 49
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1649,
+                                                            lineNumber: 1708,
                                                             columnNumber: 45
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1630,
+                                                    lineNumber: 1687,
                                                     columnNumber: 42
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -2631,39 +2913,46 @@ function PDFToolsPage() {
                                                                 className: "fas fa-list-ol"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                lineNumber: 1666,
+                                                                lineNumber: 1725,
                                                                 columnNumber: 45
                                                             }, this),
                                                             "Inserir Numeração"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                        lineNumber: 1662,
+                                                        lineNumber: 1721,
                                                         columnNumber: 41
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1661,
+                                                    lineNumber: 1720,
                                                     columnNumber: 38
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1536,
+                                            lineNumber: 1575,
                                             columnNumber: 33
                                         }, this),
                                         activeTool === 'convert' && files.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                             className: "mt-6 flex flex-col gap-6",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                    className: "p-6 bg-gray-50 border border-gray-200 rounded-lg",
+                                                    className: "p-6 border rounded-lg",
+                                                    style: {
+                                                        backgroundColor: 'var(--bg-card-hover)',
+                                                        borderColor: 'var(--border-card)'
+                                                    },
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                            className: "block text-sm font-bold text-gray-700 mb-4",
+                                                            className: "block text-sm font-bold mb-4",
+                                                            style: {
+                                                                color: 'var(--text-main)'
+                                                            },
                                                             children: "Escolha o formato de destino:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1678,
+                                                            lineNumber: 1737,
                                                             columnNumber: 42
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -2707,32 +2996,39 @@ function PDFToolsPage() {
                                                                 }
                                                             ].map((fmt)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                                     onClick: ()=>setConvertFormat(fmt.id),
-                                                                    className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("flex flex-col items-center gap-3 p-6 border-2 rounded-xl transition-all", convertFormat === fmt.id ? "border-orange-500 bg-orange-50 shadow-md" : "border-gray-200 bg-white hover:border-orange-300 hover:shadow-sm"),
+                                                                    className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("flex flex-col items-center gap-3 p-6 border-2 rounded-xl transition-all", convertFormat === fmt.id ? "border-orange-500 bg-orange-50 dark:bg-orange-900/20 shadow-md" : "hover:border-orange-300 hover:shadow-sm"),
+                                                                    style: {
+                                                                        backgroundColor: convertFormat === fmt.id ? undefined : 'var(--bg-card)',
+                                                                        borderColor: convertFormat === fmt.id ? undefined : 'var(--border-card)'
+                                                                    },
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
                                                                             className: (0, __TURBOPACK__imported__module__$5b$externals$5d2f$clsx__$5b$external$5d$__$28$clsx$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$clsx$29$__["default"])("fas fa-3x", fmt.icon, fmt.color)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1698,
+                                                                            lineNumber: 1761,
                                                                             columnNumber: 54
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                            className: "font-bold text-gray-700",
+                                                                            className: "font-bold",
+                                                                            style: {
+                                                                                color: 'var(--text-main)'
+                                                                            },
                                                                             children: fmt.label
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1699,
+                                                                            lineNumber: 1762,
                                                                             columnNumber: 54
                                                                         }, this)
                                                                     ]
                                                                 }, fmt.id, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1688,
+                                                                    lineNumber: 1747,
                                                                     columnNumber: 50
                                                                 }, this))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1679,
+                                                            lineNumber: 1738,
                                                             columnNumber: 42
                                                         }, this),
                                                         [
@@ -2740,26 +3036,26 @@ function PDFToolsPage() {
                                                             'excel',
                                                             'powerpoint'
                                                         ].includes(convertFormat) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                            className: "mt-4 p-4 bg-yellow-50 text-yellow-800 rounded-lg text-sm border border-yellow-200",
+                                                            className: "mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200 rounded-lg text-sm border border-yellow-200 dark:border-yellow-800",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
                                                                     className: "fas fa-exclamation-triangle mr-2"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1706,
+                                                                    lineNumber: 1769,
                                                                     columnNumber: 50
                                                                 }, this),
                                                                 "Atenção: A conversão para Office irá gerar um arquivo contendo as páginas como imagens para garantir a fidelidade visual."
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1705,
+                                                            lineNumber: 1768,
                                                             columnNumber: 46
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1677,
+                                                    lineNumber: 1736,
                                                     columnNumber: 38
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -2772,80 +3068,87 @@ function PDFToolsPage() {
                                                                 className: "fas fa-exchange-alt"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                lineNumber: 1717,
+                                                                lineNumber: 1780,
                                                                 columnNumber: 45
                                                             }, this),
                                                             "Converter agora"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                        lineNumber: 1713,
+                                                        lineNumber: 1776,
                                                         columnNumber: 41
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1712,
+                                                    lineNumber: 1775,
                                                     columnNumber: 38
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1676,
+                                            lineNumber: 1735,
                                             columnNumber: 33
                                         }, this),
                                         activeTool === 'repair' && files.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                             className: "mt-6 flex flex-col gap-6",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                    className: "p-6 bg-blue-50 border border-blue-200 rounded-lg",
+                                                    className: "p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h4", {
-                                                            className: "font-bold text-blue-800 mb-2",
+                                                            className: "font-bold text-blue-800 dark:text-blue-300 mb-2",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
                                                                     className: "fas fa-search-plus mr-2"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1730,
+                                                                    lineNumber: 1793,
                                                                     columnNumber: 46
                                                                 }, this),
                                                                 "Análise de Integridade"
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1729,
+                                                            lineNumber: 1792,
                                                             columnNumber: 42
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                                            className: "text-blue-700 text-sm mb-4",
+                                                            className: "text-blue-700 dark:text-blue-200 text-sm mb-4",
                                                             children: 'O PDFMaster tentará reconstruir a tabela de referências do seu arquivo (XRef) e salvar uma nova cópia limpa. Isso geralmente corrige erros como "Arquivo corrompido", "Fim de arquivo inesperado" ou páginas em branco.'
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1733,
+                                                            lineNumber: 1796,
                                                             columnNumber: 42
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                            className: "bg-white p-4 rounded border border-blue-100 text-sm text-gray-600",
+                                                            className: "p-4 rounded border border-blue-100 dark:border-blue-800 text-sm",
+                                                            style: {
+                                                                backgroundColor: 'var(--bg-card)',
+                                                                color: 'var(--text-muted)'
+                                                            },
                                                             children: [
                                                                 "Status: ",
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                    className: "font-bold text-gray-800",
+                                                                    className: "font-bold",
+                                                                    style: {
+                                                                        color: 'var(--text-main)'
+                                                                    },
                                                                     children: "Pronto para análise"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1738,
+                                                                    lineNumber: 1801,
                                                                     columnNumber: 54
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1737,
+                                                            lineNumber: 1800,
                                                             columnNumber: 42
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1728,
+                                                    lineNumber: 1791,
                                                     columnNumber: 38
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -2858,43 +3161,54 @@ function PDFToolsPage() {
                                                                 className: "fas fa-wrench"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                lineNumber: 1747,
+                                                                lineNumber: 1810,
                                                                 columnNumber: 45
                                                             }, this),
                                                             "Reparar Arquivo"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                        lineNumber: 1743,
+                                                        lineNumber: 1806,
                                                         columnNumber: 41
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1742,
+                                                    lineNumber: 1805,
                                                     columnNumber: 38
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1727,
+                                            lineNumber: 1790,
                                             columnNumber: 33
                                         }, this),
                                         activeTool === 'compress' && files.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                            className: "mb-8 bg-gray-50 border border-gray-200 p-6 rounded-xl",
+                                            className: "mb-8 p-6 rounded-xl border",
+                                            style: {
+                                                backgroundColor: 'var(--bg-card-hover)',
+                                                borderColor: 'var(--border-card)'
+                                            },
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                    className: "block text-sm font-bold text-gray-700 mb-3",
+                                                    className: "block text-sm font-bold mb-3",
+                                                    style: {
+                                                        color: 'var(--text-main)'
+                                                    },
                                                     children: "Nível de Compressão"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1757,
+                                                    lineNumber: 1820,
                                                     columnNumber: 38
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                     className: "flex flex-col gap-2",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                            className: "flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300",
+                                                            className: "flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300",
+                                                            style: {
+                                                                backgroundColor: 'var(--bg-card)',
+                                                                borderColor: 'var(--border-card)'
+                                                            },
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                                                     type: "radio",
@@ -2905,41 +3219,51 @@ function PDFToolsPage() {
                                                                     className: "text-orange-500 focus:ring-orange-500"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1760,
+                                                                    lineNumber: 1823,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                            className: "font-bold text-gray-800 block text-sm",
+                                                                            className: "font-bold block text-sm",
+                                                                            style: {
+                                                                                color: 'var(--text-main)'
+                                                                            },
                                                                             children: "Normal (Recomendado)"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1762,
+                                                                            lineNumber: 1825,
                                                                             columnNumber: 49
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                            className: "text-xs text-gray-500",
+                                                                            className: "text-xs",
+                                                                            style: {
+                                                                                color: 'var(--text-muted)'
+                                                                            },
                                                                             children: "Boa qualidade, tamanho reduzido (Qualidade ~70%)"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1763,
+                                                                            lineNumber: 1826,
                                                                             columnNumber: 49
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1761,
+                                                                    lineNumber: 1824,
                                                                     columnNumber: 45
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1759,
+                                                            lineNumber: 1822,
                                                             columnNumber: 42
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                            className: "flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300",
+                                                            className: "flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300",
+                                                            style: {
+                                                                backgroundColor: 'var(--bg-card)',
+                                                                borderColor: 'var(--border-card)'
+                                                            },
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                                                     type: "radio",
@@ -2950,41 +3274,51 @@ function PDFToolsPage() {
                                                                     className: "text-orange-500 focus:ring-orange-500"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1767,
+                                                                    lineNumber: 1830,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                            className: "font-bold text-gray-800 block text-sm",
+                                                                            className: "font-bold block text-sm",
+                                                                            style: {
+                                                                                color: 'var(--text-main)'
+                                                                            },
                                                                             children: "Alta Compressão"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1769,
+                                                                            lineNumber: 1832,
                                                                             columnNumber: 49
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                            className: "text-xs text-gray-500",
+                                                                            className: "text-xs",
+                                                                            style: {
+                                                                                color: 'var(--text-muted)'
+                                                                            },
                                                                             children: "Qualidade de imagem reduzida, foco em tamanho (Qualidade ~50%)"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1770,
+                                                                            lineNumber: 1833,
                                                                             columnNumber: 49
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1768,
+                                                                    lineNumber: 1831,
                                                                     columnNumber: 45
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1766,
+                                                            lineNumber: 1829,
                                                             columnNumber: 42
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                            className: "flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300",
+                                                            className: "flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300",
+                                                            style: {
+                                                                backgroundColor: 'var(--bg-card)',
+                                                                borderColor: 'var(--border-card)'
+                                                            },
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                                                     type: "radio",
@@ -2995,41 +3329,51 @@ function PDFToolsPage() {
                                                                     className: "text-orange-500 focus:ring-orange-500"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1774,
+                                                                    lineNumber: 1837,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                            className: "font-bold text-gray-800 block text-sm",
+                                                                            className: "font-bold block text-sm",
+                                                                            style: {
+                                                                                color: 'var(--text-main)'
+                                                                            },
                                                                             children: "Extrema"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1776,
+                                                                            lineNumber: 1839,
                                                                             columnNumber: 49
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                            className: "text-xs text-gray-500",
+                                                                            className: "text-xs",
+                                                                            style: {
+                                                                                color: 'var(--text-muted)'
+                                                                            },
                                                                             children: "Baixa resolução, máxima redução (Ideal para rascunhos)"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1777,
+                                                                            lineNumber: 1840,
                                                                             columnNumber: 49
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1775,
+                                                                    lineNumber: 1838,
                                                                     columnNumber: 45
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1773,
+                                                            lineNumber: 1836,
                                                             columnNumber: 42
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                            className: "flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange-300",
+                                                            className: "flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-orange-300",
+                                                            style: {
+                                                                backgroundColor: 'var(--bg-card)',
+                                                                borderColor: 'var(--border-card)'
+                                                            },
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                                                     type: "radio",
@@ -3040,29 +3384,35 @@ function PDFToolsPage() {
                                                                     className: "text-orange-500 focus:ring-orange-500"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1781,
+                                                                    lineNumber: 1844,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                     className: "w-full",
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                            className: "font-bold text-gray-800 block text-sm",
+                                                                            className: "font-bold block text-sm",
+                                                                            style: {
+                                                                                color: 'var(--text-main)'
+                                                                            },
                                                                             children: "Personalizado (Alvo MB)"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1783,
+                                                                            lineNumber: 1846,
                                                                             columnNumber: 49
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                             className: "mt-1 flex items-center gap-2",
                                                                             children: [
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                                    className: "text-xs text-gray-500",
+                                                                                    className: "text-xs",
+                                                                                    style: {
+                                                                                        color: 'var(--text-muted)'
+                                                                                    },
                                                                                     children: "Tamanho Máximo:"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                    lineNumber: 1785,
+                                                                                    lineNumber: 1848,
                                                                                     columnNumber: 53
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -3071,72 +3421,83 @@ function PDFToolsPage() {
                                                                                     value: customTargetMB,
                                                                                     onChange: (e)=>setCustomTargetMB(e.target.value),
                                                                                     disabled: compressionLevel !== 'custom',
-                                                                                    className: "w-24 px-2 py-1 text-sm border border-gray-300 rounded focus:ring-orange-500 focus:outline-none"
+                                                                                    className: "w-24 px-2 py-1 text-sm border rounded focus:ring-orange-500 focus:outline-none",
+                                                                                    style: {
+                                                                                        backgroundColor: 'var(--bg-page)',
+                                                                                        borderColor: 'var(--border-card)',
+                                                                                        color: 'var(--text-main)'
+                                                                                    }
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                    lineNumber: 1786,
+                                                                                    lineNumber: 1849,
                                                                                     columnNumber: 53
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                                                    className: "text-xs text-gray-500",
+                                                                                    className: "text-xs",
+                                                                                    style: {
+                                                                                        color: 'var(--text-muted)'
+                                                                                    },
                                                                                     children: "MB"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                                    lineNumber: 1794,
+                                                                                    lineNumber: 1858,
                                                                                     columnNumber: 53
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                            lineNumber: 1784,
+                                                                            lineNumber: 1847,
                                                                             columnNumber: 49
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                                    lineNumber: 1782,
+                                                                    lineNumber: 1845,
                                                                     columnNumber: 45
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1780,
+                                                            lineNumber: 1843,
                                                             columnNumber: 42
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1758,
+                                                    lineNumber: 1821,
                                                     columnNumber: 38
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                    className: "mt-3 text-xs text-gray-500",
+                                                    className: "mt-3 text-xs",
+                                                    style: {
+                                                        color: 'var(--text-muted)'
+                                                    },
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
                                                             className: "fas fa-info-circle mr-1"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1800,
+                                                            lineNumber: 1864,
                                                             columnNumber: 42
                                                         }, this),
                                                         "Se o Alvo Personalizado não for atingido, ofereceremos dividir o arquivo automaticamente."
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1799,
+                                                    lineNumber: 1863,
                                                     columnNumber: 38
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1756,
+                                            lineNumber: 1819,
                                             columnNumber: 34
                                         }, this),
                                         processing && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                             className: "mt-6",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                    className: "w-full bg-gray-200 rounded-full h-4 overflow-hidden",
+                                                    className: "w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 overflow-hidden",
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                         className: "bg-orange-500 h-full transition-all duration-300 striped-progress",
                                                         style: {
@@ -3144,40 +3505,46 @@ function PDFToolsPage() {
                                                         }
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                        lineNumber: 1810,
+                                                        lineNumber: 1874,
                                                         columnNumber: 42
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1809,
+                                                    lineNumber: 1873,
                                                     columnNumber: 38
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                                    className: "text-center text-sm text-gray-500 mt-2",
+                                                    className: "text-center text-sm mt-2",
+                                                    style: {
+                                                        color: 'var(--text-muted)'
+                                                    },
                                                     children: [
                                                         "Processando... ",
                                                         activeTool === 'ocr' || activeTool === 'compress' ? `${ocrProgress}%` : ''
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1815,
+                                                    lineNumber: 1879,
                                                     columnNumber: 38
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1808,
+                                            lineNumber: 1872,
                                             columnNumber: 34
                                         }, this),
                                         diffResult && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                             className: "mt-6",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h5", {
-                                                    className: "font-bold text-gray-700 mb-2",
+                                                    className: "font-bold mb-2",
+                                                    style: {
+                                                        color: 'var(--text-main)'
+                                                    },
                                                     children: "Resultado da Comparação:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1824,
+                                                    lineNumber: 1888,
                                                     columnNumber: 38
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3187,53 +3554,65 @@ function PDFToolsPage() {
                                                             children: part.value
                                                         }, index, false, {
                                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                            lineNumber: 1827,
+                                                            lineNumber: 1891,
                                                             columnNumber: 46
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1825,
+                                                    lineNumber: 1889,
                                                     columnNumber: 38
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1823,
+                                            lineNumber: 1887,
                                             columnNumber: 34
                                         }, this),
                                         extractedText && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                             className: "mt-6",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h5", {
-                                                    className: "font-bold text-gray-700 mb-2",
+                                                    className: "font-bold mb-2",
+                                                    style: {
+                                                        color: 'var(--text-main)'
+                                                    },
                                                     children: "Texto Extraído:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1838,
+                                                    lineNumber: 1902,
                                                     columnNumber: 38
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                    className: "bg-slate-50 border border-gray-200 text-gray-800 p-4 rounded-lg h-96 overflow-y-auto font-mono text-sm whitespace-pre-wrap",
+                                                    className: "border p-4 rounded-lg h-96 overflow-y-auto font-mono text-sm whitespace-pre-wrap",
+                                                    style: {
+                                                        backgroundColor: 'var(--bg-page)',
+                                                        borderColor: 'var(--border-card)',
+                                                        color: 'var(--text-main)'
+                                                    },
                                                     children: extractedText
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1839,
+                                                    lineNumber: 1903,
                                                     columnNumber: 38
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1837,
+                                            lineNumber: 1901,
                                             columnNumber: 34
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                    lineNumber: 1213,
+                                    lineNumber: 1238,
                                     columnNumber: 26
                                 }, this),
                                 activeTool !== 'crop' && activeTool !== 'rotate' && activeTool !== 'number' && activeTool !== 'convert' && activeTool !== 'repair' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                    className: "p-6 border-t border-gray-100 bg-white",
+                                    className: "p-6 border-t",
+                                    style: {
+                                        backgroundColor: 'var(--bg-card)',
+                                        borderColor: 'var(--border-card)'
+                                    },
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                         onClick: handleProcess,
                                         disabled: processing || files.length === 0,
@@ -3241,29 +3620,29 @@ function PDFToolsPage() {
                                         children: processing ? 'Processando...' : `${tools.find((t)=>t.id === activeTool)?.label}s`
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                        lineNumber: 1849,
+                                        lineNumber: 1916,
                                         columnNumber: 34
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                    lineNumber: 1848,
+                                    lineNumber: 1915,
                                     columnNumber: 30
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                            lineNumber: 1212,
+                            lineNumber: 1231,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                    lineNumber: 1191,
+                    lineNumber: 1210,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/pages/pdf-tools.jsx",
-                lineNumber: 1190,
+                lineNumber: 1209,
                 columnNumber: 13
             }, this)
         ]

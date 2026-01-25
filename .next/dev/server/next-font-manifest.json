@@ -2,7 +2,8 @@
   "app": {},
   "appUsingSizeAdjust": false,
   "pages": {
-    "/_app": []
+    "/_app": [],
+    "/bpmn": []
   },
   "pagesUsingSizeAdjust": true
 }

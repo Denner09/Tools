@@ -25,18 +25,19 @@
       "static/chunks/src_pages__app_2da965e7._.js",
       "static/chunks/turbopack-src_pages__app_d7c6e8bc._.js"
     ],
-    "/_error": [
+    "/bpmn": [
+      "static/chunks/node_modules_jspdf_dist_jspdf_es_min_4aa5388b.js",
       "static/chunks/node_modules_next_dist_compiled_8ca6b690._.js",
-      "static/chunks/node_modules_next_dist_shared_lib_9a2a7093._.js",
+      "static/chunks/node_modules_next_dist_shared_lib_8bac8163._.js",
       "static/chunks/node_modules_next_dist_client_5a8a528e._.js",
-      "static/chunks/node_modules_next_dist_a183fb77._.js",
-      "static/chunks/node_modules_next_error_1cfbb379.js",
-      "static/chunks/[next]_entry_page-loader_ts_43b523b5._.js",
+      "static/chunks/node_modules_next_dist_75b597d7._.js",
       "static/chunks/node_modules_react-dom_4411d9bd._.js",
-      "static/chunks/node_modules_e1b9f01a._.js",
-      "static/chunks/[root-of-the-server]__a2d5dfc8._.js",
-      "static/chunks/src_pages__error_2da965e7._.js",
-      "static/chunks/turbopack-src_pages__error_a69b9adc._.js"
+      "static/chunks/node_modules_bpmn-js_dist_bpmn-modeler_production_min_b8f3b667.js",
+      "static/chunks/node_modules_c1a066ef._.js",
+      "static/chunks/[root-of-the-server]__f8b1e2bd._.js",
+      "static/chunks/node_modules_bpmn-js_dist_assets_f2d323ef._.css",
+      "static/chunks/src_pages_bpmn_2da965e7._.js",
+      "static/chunks/turbopack-src_pages_bpmn_8594e3fa._.js"
     ],
     "/pdf-tools": [
       "static/chunks/node_modules_05ec8d9c._.js",

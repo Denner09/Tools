@@ -17,6 +17,7 @@
   --text-muted: #4b5563;
   --border-card: #e5e7eb;
   --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --primary-color: #f97316; /* Orange 500 */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -54,3 +55,435 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* ==========================================================================
+   BPMN.io Dark Theme & Customization
+   ========================================================================== */
+
+/* Canvas Container */
+.canvas-container {
+  height: 100%; /* Fill the parent flex container */
+  position: relative;
+  background-color: #f8f9fa;
+  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+  background-size: 20px 20px;
+  overflow: hidden; 
+}
+
+.bjs-container {
+  height: 100%;
+}
+
+/* Remove Watermark */
+.bjs-powered-by {
+     display: none !important;
+}
+
+/* Palette Styling - Left Side (Restored with High Specificity) */
+/* Palette Styling - Left Side (Restored with High Specificity) */
+/* Palette Styling - Left Side (Restored with High Specificity) */
+/* Palette Styling - Left Side (Restored with High Specificity) */
+body .canvas-container .djs-palette {
+    position: absolute;
+    top: 20px !important; 
+    left: 20px !important;
+    right: auto !important;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-card) !important;
+    border-radius: 8px !important;
+    box-shadow: var(--shadow-card) !important; 
+    width: 90px !important; /* Reduced width to bring columns horizontally closer */
+    padding: 8px !important;
+    box-sizing: border-box !important;
+    height: auto !important; /* Fix empty space issue */
+    min-height: 0 !important;
+}
+
+/* MAIN GRID LAYOUT: ALL ENTRIES IN ONE CONTINUOUS FLOW */
+.djs-palette .djs-palette-entries {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    row-gap: 8px !important; /* Restored vertical gap */
+    column-gap: 2px !important; /* Reduced horizontal distance */
+    width: 100% !important;
+    box-sizing: border-box !important;
+    height: auto !important; /* Allow shrinking */
+}
+
+/* Fix phantom grid cell caused by library clearfix */
+.djs-palette .djs-palette-entries::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* FLATTEN GROUPS: Make entries direct children of the grid layout */
+.djs-palette .djs-palette-entries .group {
+    display: contents !important;
+}
+
+/* Individual Entries */
+.djs-palette .djs-palette-entries .entry {
+    width: 100% !important;
+    height: 40px !important; 
+    float: none !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    box-sizing: border-box !important;
+}
+
+.djs-palette .djs-palette-entries .entry:hover {
+    background-color: var(--bg-card-hover) !important;
+    color: var(--primary-color) !important;
+}
+
+/* Hide separators completely to allow dense packing */
+.djs-palette .djs-palette-entries .separator,
+.djs-palette .djs-palette-entries hr {
+    display: none !important; 
+}
+
+/* Tweaked Context Pad Entry Sizing */
+.djs-context-pad .entry {
+    text-align: center !important;
+    cursor: pointer !important; 
+    background-color: transparent !important; 
+    width: 22px !important;
+    height: 22px !important;
+    box-shadow: none !important; 
+    pointer-events: all;
+    vertical-align: middle;
+    border-radius: 3px;
+    margin: 0 2px 2px 0 !important;
+    font-size: 22px !important;
+    display: inline-block !important;
+}
+
+/* Custom Icons Centering */
+.custom-palette-icon {
+    font-size: 16px !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+}
+
+/* Force Dark Mode Canvas Background */
+.dark .canvas-container,
+.dark .bjs-container,
+.dark .djs-container {
+    background-color: #121212 !important;
+    background-image: radial-gradient(#333 1px, transparent 1px) !important;
+    background-size: 20px 20px !important;
+}
+
+
+
+
+.dark .custom-palette-icon {
+    color: #e0e0e0;
+}
+
+.dark .djs-palette,
+.dark .djs-context-pad,
+.dark .djs-popup {
+  background: #1e1e1e !important;
+  border-color: #333 !important;
+}
+
+.dark .djs-palette .entry,
+.dark .djs-context-pad .entry,
+.dark .djs-popup .entry {
+  color: #e0e0e0 !important;
+}
+
+.dark .djs-palette .entry:hover,
+.dark .djs-context-pad .entry:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: var(--primary-color) !important;
+}
+
+/* SVG Icon Fills in Context Pad */
+.dark .djs-context-pad .entry svg path,
+.dark .djs-popup .entry svg path {
+  fill: #e0e0e0 !important;
+}
+.dark .djs-context-pad .entry:hover svg path,
+.dark .djs-popup .entry:hover svg path {
+  fill: var(--primary-color) !important;
+}
+
+/* 2. Main Shape Outlines */
+.dark .djs-visual > rect,
+.dark .djs-visual > circle,
+.dark .djs-visual > polygon,
+.dark .djs-visual > path,
+.dark .djs-visual > polyline {
+  stroke: #e0e0e0 !important;
+}
+
+/* 3. Shape Fills - Black Bodies */
+.dark .djs-visual > rect,
+.dark .djs-visual > circle,
+.dark .djs-visual > polygon {
+  fill: #000000 !important;
+}
+
+/* 4. Inner Icons/Symbols */
+.dark .djs-visual > path:not(:first-child) {
+  fill: none !important; 
+  stroke: #e0e0e0 !important;
+}
+
+/* 5. Connections */
+.dark .djs-connection .djs-visual > path {
+  fill: none !important;
+  stroke: #ffffff !important;
+}
+
+/* 6. Labels/Text */
+.dark .djs-visual text,
+.dark .djs-label {
+  fill: #ffffff !important;
+}
+
+/* NUCLEAR DRAG FIX (High Specificity) */
+html.dark body .djs-drag-group .djs-visual rect,
+html.dark body .djs-drag-group .djs-visual circle,
+html.dark body .djs-drag-group .djs-visual polygon,
+html.dark body .djs-drag-group .djs-visual path,
+html.dark body .djs-drag-group .djs-visual polyline {
+    fill: #000000 !important;
+    stroke: #ffffff !important;
+    stroke-width: 2px !important;
+    fill-opacity: 0.6 !important;
+}
+
+/* Fix inner icons (paths that are not the main shape) */
+html.dark body .djs-drag-group .djs-visual path:not(:first-child) {
+    fill: none !important; /* Keep icons transparent filled */
+    stroke: #ffffff !important;
+}
+
+/* Fix Text */
+html.dark body .djs-drag-group .djs-visual text {
+    fill: #ffffff !important;
+    stroke: none !important;
+}
+
+/* Same for .djs-dragger if used */
+html.dark body .djs-dragger .djs-visual > * {
+    fill: #000000 !important;
+    stroke: #ffffff !important;
+    stroke-width: 2px !important;
+    fill-opacity: 0.6 !important;
+}
+
+html.dark body .djs-dragger .djs-visual text {
+    fill: #ffffff !important;
+    stroke: none !important;
+}
+
+/* Force Dark Mode Canvas Background - AGGRESSIVE OVERRIDE */
+.dark .canvas-container,
+.dark .bjs-container,
+.dark .djs-container {
+    background-color: #121212 !important;
+    background-image: radial-gradient(#333 1px, transparent 1px) !important;
+    background-size: 20px 20px !important;
+}
+
+/* Ensure SVG itself is transparent so container bg shows through */
+.dark .bjs-container svg,
+.dark .djs-container svg {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* 9. Selection Outline */
+.dark .djs-outline {
+  stroke: var(--primary-color) !important;
+  stroke-width: 2px !important;
+}
+
+/* 12. Fix DataObject paths */
+.dark .djs-element.dark-fill-fix .djs-visual > path {
+  fill: #000000 !important;
+}
+
+/* 13. Fix Message Event Icon */
+.dark .djs-element.message-event-styled .djs-visual > path:not(:first-child) {
+  fill: none !important; 
+  stroke: #e0e0e0 !important;
+}
+
+/* NUCLEAR FLASH FIX: Force transparency/darkness on EVERYTHING during drag */
+
+/* 1. Base Container always dark */
+html.dark .canvas-container,
+html.dark .bjs-container,
+html.dark .djs-container {
+    background: #121212 !important;
+    background-color: #121212 !important;
+}
+
+/* 2. SVG and Internal Layers always transparent */
+html.dark .bjs-container svg,
+html.dark .djs-container svg,
+html.dark .djs-container .viewport,
+html.dark .djs-container .layer-base,
+html.dark .djs-container .layer-overlays {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* 3. OVERRIDE ALL 'Active' Classes that might add white bg */
+html.dark .djs-container svg.djs-drag-active,
+html.dark .djs-container.djs-drag-active,
+html.dark .djs-drag-active,
+html.dark .djs-drag-active *,
+html.dark .djs-container svg.hover,
+html.dark .djs-container svg.new-parent {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* 4. Ensure the background color comes ONLY from the parent container */
+html.dark .djs-parent {
+    background: transparent !important;
+}
+
+/* 5. Last resort: If the library adds inline styles to SVG, this might help */
+html.dark .bjs-container .djs-container svg[data-element-id] {
+    background: transparent !important;
+}
+
+/* Fix Arrow Heads / Markers in Dark Mode */
+html.dark svg marker path {
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* Fix Direct Editing - True Dark Mode */
+html.dark .djs-direct-editing-content,
+html.dark .djs-direct-editing-parent {
+    background-color: #1e1e1e !important;
+    color: #ffffff !important;
+    border-color: #444 !important;
+}
+
+/* Custom Menu Backgrounds - Visual Reference Match */
+html .bg-menu-light {
+    background-color: #ffffff !important;
+    color: #111827 !important; /* Texto quase preto */
+    border: 1px solid #e5e7eb !important;
+}
+
+/* Forçar cores escuras para o texto no modo light */
+html .bg-menu-light * {
+    color: #111827 !important;
+    border-color: #e5e7eb !important;
+}
+
+/* Ícones e textos específicos no modo light */
+html .bg-menu-light .text-xs {
+    color: #6b7280 !important; /* Cinza médio para descrições */
+}
+
+html .bg-menu-light .text-orange-500,
+html .bg-menu-light .text-orange-500 * {
+    color: #f97316 !important; /* Laranja mantido */
+}
+
+html .bg-menu-light .text-blue-500,
+html .bg-menu-light .text-blue-500 * {
+    color: #3b82f6 !important; /* Azul mantido */
+}
+
+/* Backgrounds dos ícones no modo light (suaves) */
+html .bg-menu-light .bg-orange-100 {
+    background-color: #ffedd5 !important;
+}
+
+html .bg-menu-light .bg-blue-100 {
+    background-color: #dbeafe !important;
+}
+
+html .bg-menu-light button:hover {
+    background-color: #f3f4f6 !important; /* Cinza muito claro no hover */
+}
+
+html .bg-menu-light .h-px {
+    background-color: #e5e7eb !important; /* Divisor visível */
+}
+
+html.dark .bg-menu-dark {
+    background-color: #151515 !important;
+    color: #ffffff !important;
+    border: 1px solid #ffffff !important; /* Borda Branca conforme imagem */
+    border-radius: 12px !important;
+}
+
+/* Force override of Tailwind text colors inside the dark menu */
+html.dark .bg-menu-dark * {
+    color: #ffffff !important; 
+    border-color: #333 !important; /* Divisores internos sutis */
+}
+
+/* Proper Icon Background Styling (Light/Dark via CSS) */
+/* Light Mode Defaults (Pale backgrounds) */
+.icon-bg-orange {
+    background-color: #ffedd5; 
+}
+.icon-bg-blue {
+    background-color: #dbeafe;
+}
+
+/* Back Button Icon Styling */
+html .icon-bg-back {
+    background-color: #374151 !important; /* Cinza Escuro para contraste */
+    color: #ffffff !important; /* Seta Branca */
+}
+
+/* Force white icon inside back button in light mode */
+html .bg-menu-light .icon-bg-back i {
+    color: #ffffff !important; 
+}
+
+html.dark .icon-bg-back {
+    background-color: #374151 !important;
+    color: #e5e7eb !important;
+}
+
+/* Dark Mode Overrides (Solid Dark backgrounds) */
+html.dark .icon-bg-orange {
+    background-color: #431407 !important; 
+}
+html.dark .icon-bg-blue {
+    background-color: #172554 !important; 
+}
+
+/* Dark Mode: Ensure icons inside are bright */
+html.dark .bg-menu-dark .icon-bg-orange {
+    color: #f97316 !important; /* Laranja original */
+}
+html.dark .bg-menu-dark .icon-bg-blue {
+    color: #3b82f6 !important; /* Azul original */
+}
+html.dark .bg-menu-dark .text-orange-500,
+html.dark .bg-menu-dark .text-blue-500 {
+    color: inherit !important;
+}
+
+/* Texto secundário (descrição) levemente mais ciza */
+html.dark .bg-menu-dark .text-xs {
+    color: #a0a0a0 !important;
+}
+
+/* Efeito Hover nos itens */
+html.dark .bg-menu-dark button:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}

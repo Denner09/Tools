@@ -7,7 +7,12 @@ import { ThemeProvider } from '../context/ThemeContext';
 import AppNavbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
+import { useRouter } from 'next/router';
+
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+  const isBpmnPage = router.pathname.startsWith('/bpmn');
+
   return (
     <ThemeProvider>
        <Head>
@@ -16,11 +21,11 @@ function MyApp({ Component, pageProps }) {
        </Head>
        
        <div className="d-flex flex-column min-vh-100">
-          <AppNavbar />
-          <div className="flex-grow-1" style={{ paddingTop: '70px' }}>
+          {!isBpmnPage && <AppNavbar />}
+          <div className="flex-grow-1" style={{ paddingTop: isBpmnPage ? '0' : '70px' }}>
              <Component {...pageProps} />
           </div>
-          <Footer />
+          {!isBpmnPage && <Footer />}
        </div>
     </ThemeProvider>
   );

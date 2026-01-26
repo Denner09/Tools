@@ -8,6 +8,9 @@ self.__BUILD_MANIFEST = {
   "/pdf-tools": [
     "static/chunks/pages/pdf-tools.js"
   ],
+  "/text-editor": [
+    "static/chunks/pages/text-editor.js"
+  ],
   "__rewrites": {
     "afterFiles": [],
     "beforeFiles": [],

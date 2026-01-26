@@ -48,57 +48,61 @@ const AppNavbar = () => {
                 <div className="flex items-center gap-6">
                     
                     {/* Estilo do Menu Desktop */}
-                    <div className="hidden md:flex items-center gap-8">
+                    <div className="flex items-center gap-8">
                         {/* Alternar Tema - Switch Elegante */}
                         <ThemeToggle />
                         
-                        <div className="relative group">
-                            <button 
-                                className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider transition-colors py-2"
-                                style={{ color: 'var(--text-muted)' }}
-                            >
-                                Menu
-                                <i className="fas fa-chevron-down text-[10px]"></i>
-                            </button>
-                            
-                            {/* Menu Dropdown */}
-                            <div 
-                                className="absolute right-0 top-full mt-2 w-48 border rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform origin-top-right z-50"
-                                style={{ 
-                                    backgroundColor: 'var(--bg-card)', 
-                                    borderColor: 'var(--border-card)'
-                                }}
-                            >
-                                <Link 
-                                    href="/" 
-                                    className="block px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-white/5 first:rounded-t-xl transition-colors"
-                                    style={{ color: 'var(--text-main)' }}
+                        {isHomePage ? (
+                            <div className="relative group hidden md:block">
+                                <button 
+                                    className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider transition-colors py-2"
+                                    style={{ color: 'var(--text-muted)' }}
                                 >
-                                    Início
-                                </Link>
-                                <Link 
-                                    href="/pdf-tools" 
-                                    className="block px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
-                                    style={{ color: 'var(--text-main)' }}
+                                    Menu
+                                    <i className="fas fa-chevron-down text-[10px]"></i>
+                                </button>
+                                
+                                {/* Menu Dropdown */}
+                                <div 
+                                    className="absolute right-0 top-full mt-2 w-48 border rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform origin-top-right z-50"
+                                    style={{ 
+                                        backgroundColor: 'var(--bg-card)', 
+                                        borderColor: 'var(--border-card)'
+                                    }}
                                 >
-                                    Ferramentas PDF
-                                </Link>
-                                <Link 
-                                    href="/bpmn" 
-                                    className="block px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
-                                    style={{ color: 'var(--text-main)' }}
-                                >
-                                    Modelador BPMN
-                                </Link>
-                                <Link 
-                                    href="/text-editor" 
-                                    className="block px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-white/5 last:rounded-b-xl transition-colors"
-                                    style={{ color: 'var(--text-main)' }}
-                                >
-                                    Editor de Texto
-                                </Link>
+                                    <Link 
+                                        href="/pdf-tools" 
+                                        className="block px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-white/5 first:rounded-t-xl transition-colors"
+                                        style={{ color: 'var(--text-main)' }}
+                                    >
+                                        Ferramentas PDF
+                                    </Link>
+                                    <Link 
+                                        href="/bpmn" 
+                                        className="block px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+                                        style={{ color: 'var(--text-main)' }}
+                                    >
+                                        Modelador BPMN
+                                    </Link>
+                                    <Link 
+                                        href="/text-editor" 
+                                        className="block px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-white/5 last:rounded-b-xl transition-colors"
+                                        style={{ color: 'var(--text-main)' }}
+                                    >
+                                        Editor de Texto
+                                    </Link>
+                                </div>
                             </div>
-                        </div>
+                        ) : (
+                            <Link 
+                                href="/" 
+                                className="flex items-center gap-2 text-sm font-medium hover:text-orange-500 transition-colors px-4 py-2 rounded-lg border hover:border-orange-500/30 no-underline text-decoration-none"
+                                style={{ color: 'var(--text-main)', borderColor: 'var(--border-card)', textDecoration: 'none' }}
+                            >
+                                <i className="fas fa-arrow-left text-xs"></i>
+                                Voltar
+                            </Link>
+                        )}
                     </div>
 
                     {/* Alternar Menu Mobile */}

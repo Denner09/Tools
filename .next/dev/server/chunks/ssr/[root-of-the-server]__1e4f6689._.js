@@ -3566,21 +3566,51 @@ function PDFToolsPage() {
                                             columnNumber: 34
                                         }, this),
                                         extractedText && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                            className: "mt-6",
+                                            className: "mt-6 animate-fade-in",
                                             children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h5", {
-                                                    className: "font-bold mb-2",
-                                                    style: {
-                                                        color: 'var(--text-main)'
-                                                    },
-                                                    children: "Texto Extraído:"
-                                                }, void 0, false, {
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                    className: "flex items-center justify-between mb-2",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h5", {
+                                                            className: "font-bold",
+                                                            style: {
+                                                                color: 'var(--text-main)'
+                                                            },
+                                                            children: "Texto Extraído:"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/pages/pdf-tools.jsx",
+                                                            lineNumber: 1904,
+                                                            columnNumber: 42
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                                            onClick: ()=>{
+                                                                localStorage.setItem('business_tools_editor_content', extractedText);
+                                                                window.location.href = '/text-editor';
+                                                            },
+                                                            className: "text-sm px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded hover:bg-orange-200 transition-colors font-medium flex items-center gap-2",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("i", {
+                                                                    className: "fas fa-edit"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/pages/pdf-tools.jsx",
+                                                                    lineNumber: 1912,
+                                                                    columnNumber: 46
+                                                                }, this),
+                                                                "Editar no Editor de Texto"
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/pages/pdf-tools.jsx",
+                                                            lineNumber: 1905,
+                                                            columnNumber: 42
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1902,
+                                                    lineNumber: 1903,
                                                     columnNumber: 38
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                    className: "border p-4 rounded-lg h-96 overflow-y-auto font-mono text-sm whitespace-pre-wrap",
+                                                    className: "border p-4 rounded-lg h-96 overflow-y-auto font-mono text-sm whitespace-pre-wrap shadow-inner",
                                                     style: {
                                                         backgroundColor: 'var(--bg-page)',
                                                         borderColor: 'var(--border-card)',
@@ -3589,13 +3619,13 @@ function PDFToolsPage() {
                                                     children: extractedText
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                                    lineNumber: 1903,
+                                                    lineNumber: 1916,
                                                     columnNumber: 38
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/pdf-tools.jsx",
-                                            lineNumber: 1901,
+                                            lineNumber: 1902,
                                             columnNumber: 34
                                         }, this)
                                     ]
@@ -3617,12 +3647,12 @@ function PDFToolsPage() {
                                         children: processing ? 'Processando...' : `${tools.find((t)=>t.id === activeTool)?.label}s`
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/pdf-tools.jsx",
-                                        lineNumber: 1916,
+                                        lineNumber: 1929,
                                         columnNumber: 34
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/pdf-tools.jsx",
-                                    lineNumber: 1915,
+                                    lineNumber: 1928,
                                     columnNumber: 30
                                 }, this)
                             ]

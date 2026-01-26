@@ -1897,11 +1897,24 @@ export default function PDFToolsPage() {
                              )}
 
                              {/* Extracted Text Result Box */}
+                             {/* Extracted Text Result Box */}
                              {extractedText && (
-                                 <div className="mt-6">
-                                     <h5 className="font-bold mb-2" style={{ color: 'var(--text-main)' }}>Texto Extraído:</h5>
+                                 <div className="mt-6 animate-fade-in">
+                                     <div className="flex items-center justify-between mb-2">
+                                         <h5 className="font-bold" style={{ color: 'var(--text-main)' }}>Texto Extraído:</h5>
+                                         <button 
+                                            onClick={() => {
+                                                localStorage.setItem('business_tools_editor_content', extractedText);
+                                                window.location.href = '/text-editor';
+                                            }}
+                                            className="text-sm px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded hover:bg-orange-200 transition-colors font-medium flex items-center gap-2"
+                                         >
+                                             <i className="fas fa-edit"></i>
+                                             Editar no Editor de Texto
+                                         </button>
+                                     </div>
                                      <div 
-                                        className="border p-4 rounded-lg h-96 overflow-y-auto font-mono text-sm whitespace-pre-wrap"
+                                        className="border p-4 rounded-lg h-96 overflow-y-auto font-mono text-sm whitespace-pre-wrap shadow-inner"
                                         style={{ backgroundColor: 'var(--bg-page)', borderColor: 'var(--border-card)', color: 'var(--text-main)' }}
                                      >
                                          {extractedText}

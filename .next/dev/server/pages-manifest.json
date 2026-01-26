@@ -3,5 +3,6 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/bpmn": "pages/bpmn.js",
-  "/pdf-tools": "pages/pdf-tools.js"
+  "/pdf-tools": "pages/pdf-tools.js",
+  "/text-editor": "pages/text-editor.js"
 }

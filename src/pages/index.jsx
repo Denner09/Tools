@@ -10,13 +10,13 @@ const Home = () => {
       
       {/* Seção Hero */}
       <div className="pb-12 md:pb-20 relative">
-        <div className="w-full bg-linear-to-r from-[#111111] via-[#1a1a1a] to-[#ea580c] py-10 md:py-20 px-4 text-center shadow-[0_25px_50px_-12px_rgba(234,88,12,0.20)] rounded-b-[3rem] relative overflow-hidden isolate group">
+        <div className="w-full bg-gradient-to-r from-[#111111] via-[#1a1a1a] to-[#ea580c] py-10 md:py-20 px-4 text-center shadow-[0_25px_50px_-12px_rgba(234,88,12,0.20)] rounded-b-[3rem] relative overflow-hidden isolate group">
             
             {/* Efeito Sutil de Textura/Brilho */}
             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-soft-light pointer-events-none"></div>
             <div className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-b from-white/10 to-transparent blur-3xl rounded-full opacity-30 pointer-events-none group-hover:opacity-40 transition-opacity duration-700"></div>
 
-            <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tight mb-8 text-white drop-shadow-lg relative z-10 selection:bg-white/30">
+            <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight mb-8 text-white drop-shadow-lg relative z-10 selection:bg-white/30">
                 Potencialize seu Trabalho
             </h1>
             <p className="text-base md:text-xl text-gray-200 font-bold w-full whitespace-nowrap mx-auto leading-relaxed opacity-90 relative z-10 selection:bg-white/30">

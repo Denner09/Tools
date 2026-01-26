@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Footer from '../components/Footer';
-import AppNavbar from '../components/Navbar';
+
 import FeatureCard from '../components/FeatureCard';
 
 const Home = () => {

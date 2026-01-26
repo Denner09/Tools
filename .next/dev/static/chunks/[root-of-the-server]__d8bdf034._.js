@@ -474,13 +474,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$ind
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jspdf$2f$dist$2f$jspdf$2e$es$2e$min$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/jspdf/dist/jspdf.es.min.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$docx$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/docx/dist/index.mjs [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$file$2d$saver$2f$dist$2f$FileSaver$2e$min$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/file-saver/dist/FileSaver.min.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist$2f$clsx$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/clsx/dist/clsx.mjs [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/router.js [client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
-;
-;
 ;
 ;
 ;
@@ -498,7 +494,6 @@ const TextTools = ()=>{
     });
     const [notification, setNotification] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const textareaRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const showNotification = (msg)=>{
         setNotification(msg);
         setTimeout(()=>setNotification(null), 3000);
@@ -729,7 +724,7 @@ const TextTools = ()=>{
                                     children: "Editor de Texto"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                    lineNumber: 245,
+                                    lineNumber: 243,
                                     columnNumber: 25
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -740,13 +735,13 @@ const TextTools = ()=>{
                                     children: "Ferramentas rápidas para formatação, limpeza e conversão de textos."
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                    lineNumber: 246,
+                                    lineNumber: 244,
                                     columnNumber: 25
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/text-editor.jsx",
-                            lineNumber: 244,
+                            lineNumber: 242,
                             columnNumber: 21
                         }, ("TURBOPACK compile-time value", void 0)),
                         notification && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -756,20 +751,20 @@ const TextTools = ()=>{
                                     className: "fas fa-check-circle mr-2"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                    lineNumber: 252,
+                                    lineNumber: 250,
                                     columnNumber: 29
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 notification
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/text-editor.jsx",
-                            lineNumber: 251,
+                            lineNumber: 249,
                             columnNumber: 25
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/text-editor.jsx",
-                    lineNumber: 243,
+                    lineNumber: 241,
                     columnNumber: 17
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -803,12 +798,12 @@ const TextTools = ()=>{
                                                 className: "fas fa-undo text-sm"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/text-editor.jsx",
-                                                lineNumber: 278,
+                                                lineNumber: 276,
                                                 columnNumber: 33
                                             }, ("TURBOPACK compile-time value", void 0))
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 271,
+                                            lineNumber: 269,
                                             columnNumber: 29
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -825,19 +820,19 @@ const TextTools = ()=>{
                                                 className: "fas fa-redo text-sm"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/text-editor.jsx",
-                                                lineNumber: 287,
+                                                lineNumber: 285,
                                                 columnNumber: 33
                                             }, ("TURBOPACK compile-time value", void 0))
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 280,
+                                            lineNumber: 278,
                                             columnNumber: 29
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "w-px h-6 bg-gray-300 dark:bg-gray-700 mx-2"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 289,
+                                            lineNumber: 287,
                                             columnNumber: 29
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -848,13 +843,13 @@ const TextTools = ()=>{
                                             children: "Ferramentas:"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 290,
+                                            lineNumber: 288,
                                             columnNumber: 30
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                    lineNumber: 270,
+                                    lineNumber: 268,
                                     columnNumber: 25
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -877,14 +872,14 @@ const TextTools = ()=>{
                                                             className: "fas fa-arrow-up text-xs opacity-70"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                                            lineNumber: 304,
+                                                            lineNumber: 302,
                                                             columnNumber: 37
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         "MAIÚSCULAS"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 298,
+                                                    lineNumber: 296,
                                                     columnNumber: 33
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -901,14 +896,14 @@ const TextTools = ()=>{
                                                             className: "fas fa-arrow-down text-xs opacity-70"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                                            lineNumber: 313,
+                                                            lineNumber: 311,
                                                             columnNumber: 37
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         "minúsculas"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 307,
+                                                    lineNumber: 305,
                                                     columnNumber: 33
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -925,14 +920,14 @@ const TextTools = ()=>{
                                                             className: "fas fa-heading text-xs opacity-70"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                                            lineNumber: 322,
+                                                            lineNumber: 320,
                                                             columnNumber: 37
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         "Título"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 316,
+                                                    lineNumber: 314,
                                                     columnNumber: 33
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -949,27 +944,27 @@ const TextTools = ()=>{
                                                             className: "fas fa-align-left text-xs opacity-70"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                                            lineNumber: 331,
+                                                            lineNumber: 329,
                                                             columnNumber: 37
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         "Frase"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 325,
+                                                    lineNumber: 323,
                                                     columnNumber: 33
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 297,
+                                            lineNumber: 295,
                                             columnNumber: 29
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "w-px h-6 bg-gray-300 dark:bg-gray-700 mx-2 hidden xl:block"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 336,
+                                            lineNumber: 334,
                                             columnNumber: 29
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -989,14 +984,14 @@ const TextTools = ()=>{
                                                             className: "fas fa-level-up-alt rotate-90 text-xs opacity-70 text-blue-500"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                                            lineNumber: 346,
+                                                            lineNumber: 344,
                                                             columnNumber: 37
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         "Remover Quebras"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 340,
+                                                    lineNumber: 338,
                                                     columnNumber: 33
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1013,14 +1008,14 @@ const TextTools = ()=>{
                                                             className: "fas fa-compress-arrows-alt text-xs opacity-70 text-blue-500"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                                            lineNumber: 355,
+                                                            lineNumber: 353,
                                                             columnNumber: 37
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         "Remover Espaços"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 349,
+                                                    lineNumber: 347,
                                                     columnNumber: 33
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1037,32 +1032,32 @@ const TextTools = ()=>{
                                                             className: "fas fa-balance-scale text-xs opacity-70 text-orange-500"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                                            lineNumber: 364,
+                                                            lineNumber: 362,
                                                             columnNumber: 37
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         "CNJ"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 358,
+                                                    lineNumber: 356,
                                                     columnNumber: 33
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 339,
+                                            lineNumber: 337,
                                             columnNumber: 29
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                    lineNumber: 294,
+                                    lineNumber: 292,
                                     columnNumber: 25
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/text-editor.jsx",
-                            lineNumber: 267,
+                            lineNumber: 265,
                             columnNumber: 21
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1081,12 +1076,12 @@ const TextTools = ()=>{
                                 spellCheck: "false"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/text-editor.jsx",
-                                lineNumber: 373,
+                                lineNumber: 371,
                                 columnNumber: 25
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/src/pages/text-editor.jsx",
-                            lineNumber: 372,
+                            lineNumber: 370,
                             columnNumber: 21
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1109,14 +1104,14 @@ const TextTools = ()=>{
                                                     children: stats.words
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 390,
+                                                    lineNumber: 388,
                                                     columnNumber: 35
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 " Palavras"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 390,
+                                            lineNumber: 388,
                                             columnNumber: 29
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1126,20 +1121,20 @@ const TextTools = ()=>{
                                                     children: stats.chars
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 391,
+                                                    lineNumber: 389,
                                                     columnNumber: 35
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 " Caracteres"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 391,
+                                            lineNumber: 389,
                                             columnNumber: 29
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                    lineNumber: 389,
+                                    lineNumber: 387,
                                     columnNumber: 25
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1161,21 +1156,21 @@ const TextTools = ()=>{
                                                     className: "far fa-copy text-xs opacity-70"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 400,
+                                                    lineNumber: 398,
                                                     columnNumber: 33
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 "Copiar"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 395,
+                                            lineNumber: 393,
                                             columnNumber: 30
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "h-6 w-px bg-gray-300 dark:bg-gray-700 mx-1"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 404,
+                                            lineNumber: 402,
                                             columnNumber: 30
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1191,14 +1186,14 @@ const TextTools = ()=>{
                                                     className: "far fa-file-alt text-xs opacity-70"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 411,
+                                                    lineNumber: 409,
                                                     columnNumber: 33
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 ".TXT"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 406,
+                                            lineNumber: 404,
                                             columnNumber: 30
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1216,14 +1211,14 @@ const TextTools = ()=>{
                                                     className: "far fa-file-code text-xs opacity-70"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 419,
+                                                    lineNumber: 417,
                                                     columnNumber: 33
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 ".JSON"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 414,
+                                            lineNumber: 412,
                                             columnNumber: 30
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1239,14 +1234,14 @@ const TextTools = ()=>{
                                                     className: "fas fa-file-word text-xs opacity-70 text-blue-600"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 427,
+                                                    lineNumber: 425,
                                                     columnNumber: 33
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 "DOCX"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 422,
+                                            lineNumber: 420,
                                             columnNumber: 30
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1262,51 +1257,47 @@ const TextTools = ()=>{
                                                     className: "fas fa-file-pdf text-xs opacity-70 text-red-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                                    lineNumber: 435,
+                                                    lineNumber: 433,
                                                     columnNumber: 33
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 "PDF"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/text-editor.jsx",
-                                            lineNumber: 430,
+                                            lineNumber: 428,
                                             columnNumber: 30
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/text-editor.jsx",
-                                    lineNumber: 394,
+                                    lineNumber: 392,
                                     columnNumber: 25
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/text-editor.jsx",
-                            lineNumber: 385,
+                            lineNumber: 383,
                             columnNumber: 21
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/text-editor.jsx",
-                    lineNumber: 259,
+                    lineNumber: 257,
                     columnNumber: 17
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true, {
             fileName: "[project]/src/pages/text-editor.jsx",
-            lineNumber: 241,
+            lineNumber: 239,
             columnNumber: 13
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/src/pages/text-editor.jsx",
-        lineNumber: 240,
+        lineNumber: 238,
         columnNumber: 9
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(TextTools, "/iTn23j/av17S0hgerEuYMhvjEs=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"]
-    ];
-});
+_s(TextTools, "H9316QVRqcqTln2BWQGyAJjqWW8=");
 _c = TextTools;
 const __TURBOPACK__default__export__ = TextTools;
 var _c;

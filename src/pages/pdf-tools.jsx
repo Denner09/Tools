@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useState, useCallback, useRef } from 'react';
-import { useDropzone } from 'react-dropzone';
 import { createWorker } from 'tesseract.js';
 import * as Diff from 'diff';
 import clsx from 'clsx';
-// Import only necessary Bootstrap bits or rely on global
-// We will simply structure this to look like the legacy split view if possible, or a clean modern card view.
-// Given "Standardize Layout", the user likely wants the Header + Content area. 
+import PDFToolsSidebar, { tools } from '../components/pdf-tools/PDFToolsSidebar';
+import FileDropzone from '../components/pdf-tools/FileDropzone';
 
 export default function PDFToolsPage() {
     const [activeTool, setActiveTool] = useState('merge');
@@ -112,18 +110,6 @@ export default function PDFToolsPage() {
         dragStart.current = null;
     };
 
-    const tools = [
-        { id: 'merge', icon: 'fa-layer-group', label: 'Juntar PDF', subtitle: 'Combine múltiplos arquivos em um único PDF' },
-        { id: 'split', icon: 'fa-cut', label: 'Dividir PDF', subtitle: 'Extraia páginas ou divida seu arquivo' },
-        { id: 'compress', icon: 'fa-compress-arrows-alt', label: 'Comprimir PDF', subtitle: 'Reduza o tamanho do arquivo mantendo a qualidade' },
-        { id: 'ocr', icon: 'fa-font', label: 'OCR e Texto', subtitle: 'Reconhecimento de texto e comparação' },
-        { id: 'crop', icon: 'fa-crop-alt', label: 'Cortar', subtitle: 'Recorte partes específicas das páginas' },
-        { id: 'rotate', icon: 'fa-sync-alt', label: 'Rotacionar', subtitle: 'Gire páginas ou todo o documento' },
-        { id: 'number', icon: 'fa-list-ol', label: 'Numeração', subtitle: 'Adicione números de página personalizados' },
-        { id: 'convert', icon: 'fa-exchange-alt', label: 'Converter', subtitle: 'Converta PDF para Word, Excel, JPG e mais' },
-        { id: 'repair', icon: 'fa-wrench', label: 'Reparar PDF', subtitle: 'Analise e corrija arquivos corrompidos' },
-    ];
-
     const onDrop = useCallback((acceptedFiles) => {
         if (activeTool === 'split' || activeTool === 'compress' || activeTool === 'crop' || activeTool === 'rotate' || activeTool === 'number' || activeTool === 'convert' || activeTool === 'repair') {
             setFiles([acceptedFiles[0]]);
@@ -159,12 +145,6 @@ export default function PDFToolsPage() {
             setFiles((prev) => [...prev, ...acceptedFiles]);
         }
     }, [activeTool, ocrMode]);
-
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({
-        onDrop,
-        accept: { 'application/pdf': ['.pdf'] },
-        multiple: activeTool === 'merge' || (activeTool === 'ocr' && ocrMode === 'compare')
-    });
 
     const handleCompressClientSide = async () => {
         try {
@@ -1134,45 +1114,11 @@ export default function PDFToolsPage() {
             )}
 
             {/* Barra Lateral Fixa (Desktop) */}
-            <aside 
-                className="hidden md:flex flex-col w-72 border-r fixed top-16 bottom-0 left-0 z-40 overflow-y-auto"
-                style={{ 
-                    backgroundColor: 'var(--bg-card)', 
-                    borderColor: 'var(--border-card)' 
-                }}
-            >
-                <div className="p-6 border-b" style={{ borderColor: 'var(--border-card)' }}>
-                    <div className="text-base font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Ferramentas PDF</div>
-                </div>
-                <nav className="flex-1 p-4 space-y-1">
-                    {tools.map(tool => (
-                        <button
-                            key={tool.id}
-                            onClick={() => { setActiveTool(tool.id); setFiles([]); setDiffResult(null); }}
-                            className={clsx(
-                                "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all w-full text-left group",
-                                activeTool === tool.id 
-                                    ? "bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 shadow-sm ring-1 ring-orange-200 dark:ring-orange-800" 
-                                    : "hover:bg-gray-50 dark:hover:bg-white/5"
-                            )}
-                            style={{ 
-                                color: activeTool === tool.id ? undefined : 'var(--text-muted)'
-                            }}
-                        >
-                            <span className={clsx(
-                                "w-8 h-8 rounded-lg flex items-center justify-center transition-colors",
-                                activeTool === tool.id ? "bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400" : "bg-gray-100/50 dark:bg-white/5 text-gray-400 group-hover:bg-gray-100 dark:group-hover:bg-white/10"
-                            )}>
-                                <i className={`fas ${tool.icon}`}></i>
-                            </span>
-                            {tool.label}
-                        </button>
-                    ))}
-                </nav>
-                <div className="p-4 bg-gray-50 dark:bg-white/5 border-t" style={{ borderColor: 'var(--border-card)' }}>
-                    <p className="text-xs text-center" style={{ color: 'var(--text-muted)' }}>Business Tools v1.0</p>
-                </div>
-            </aside>
+            <PDFToolsSidebar 
+                activeTool={activeTool} 
+                setActiveTool={setActiveTool} 
+                onToolChange={() => { setFiles([]); setDiffResult(null); }} 
+            />
 
             {/* Cabeçalho/Nav Mobile (Visível apenas em telas pequenas) */}
             <div 
@@ -1240,34 +1186,11 @@ export default function PDFToolsPage() {
                              <h4 className="font-semibold mb-4" style={{ color: 'var(--text-muted)' }}>Selecione seus arquivos PDF (Ordem de seleção importa)</h4>
 
                              {/* Área de Drop - Expandida */}
-                             <div 
-                                {...getRootProps()} 
-                                className={clsx(
-                                    "flex-grow flex flex-col items-center justify-center border-2 border-dashed rounded-xl transition-all duration-300 min-h-[400px]",
-                                    isDragActive ? "border-orange-500 bg-orange-50 dark:bg-orange-900/10" : "hover:border-orange-400"
-                                )}
-                                style={{ 
-                                    backgroundColor: isDragActive ? undefined : 'var(--bg-card-hover)',
-                                    borderColor: isDragActive ? undefined : 'var(--border-card)'
-                                }}
-                             >
-                                <input {...getInputProps()} />
-                                <div className="text-center p-10">
-                                    <div className={clsx(
-                                        "w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 transition-all",
-                                        isDragActive ? "bg-white dark:bg-gray-800 text-orange-600 shadow-md" : "bg-gray-400 dark:bg-gray-600 text-white"
-                                    )}>
-                                        <i className="fas fa-cloud-upload-alt text-4xl"></i>
-                                    </div>
-                                    <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-muted)' }}>
-                                        {isDragActive ? "Solte para enviar" : "Clique ou arraste seus arquivos aqui"}
-                                    </h3>
-                                    <p className="font-medium uppercase text-sm tracking-wide" style={{ color: 'var(--text-muted)' }}>
-                                         PDF Suportado
-                                         {activeTool === 'compare' && ' (Necessário 2 arquivos)'}
-                                    </p>
-                                </div>
-                             </div>
+                             <FileDropzone 
+                                onDrop={onDrop} 
+                                activeTool={activeTool} 
+                                ocrMode={ocrMode} 
+                             />
 
                              {/* Lista de Arquivos */}
                              {files.length > 0 && (

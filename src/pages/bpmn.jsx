@@ -5,6 +5,8 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
 import ThemeToggle from '../components/ThemeToggle';
 import { useTheme } from '../context/ThemeContext';
 import CustomPaletteProvider from '../components/bpmn/modules/CustomPaletteProvider';
+import Navbar from '../components/layout/Navbar';
+import { applyBpmnTheme } from '../components/bpmn/BpmnTheme';
 
 const initialDiagram = `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
@@ -50,23 +52,7 @@ const BPMNPage = () => {
             const modeler = modelerRef.current;
 
             // Hook for applying custom CSS classes (Legacy Dark Mode Support)
-            modeler.on('shape.added', (e) => {
-                const element = e.element;
-                const canvas = modeler.get('canvas');
-
-                // 1. DataObject and DataStore (Fix for Dark Mode fills)
-                if (['bpmn:DataObjectReference', 'bpmn:DataStoreReference'].includes(element.type)) {
-                    canvas.addMarker(element, 'dark-fill-fix');
-                }
-
-                // 2. Message Intermediate Throw Event (Specific styling)
-                if (element.type === 'bpmn:IntermediateThrowEvent') {
-                    const bo = element.businessObject;
-                    if (bo.eventDefinitions && bo.eventDefinitions.some(ed => ed.$type === 'bpmn:MessageEventDefinition')) {
-                         canvas.addMarker(element, 'message-event-styled');
-                    }
-                }
-            });
+            applyBpmnTheme(modeler);
 
             // Auto-Save: Detect Changes
             modeler.on('commandStack.changed', () => {
@@ -292,53 +278,23 @@ const BPMNPage = () => {
     return (
         <div className="flex flex-col h-screen overflow-hidden bg-gray-50 dark:bg-[#121212]">
             {/* Custom Navbar for BPMN Page - Matching AppNavbar Layout exactly */}
-            <nav 
-                className="shrink-0 w-full z-50 border-b backdrop-blur-md transition-colors duration-300"
-                style={{ 
-                    backgroundColor: 'var(--bg-card)', 
-                    borderColor: 'var(--border-card)',
-                    height: '80px'
-                }}
-            >
-                <div className="w-full px-6 h-20 flex items-center justify-between">
-                    
-                    {/* Left: Logo */}
-                    <a href="/" className="flex items-center gap-3 group text-decoration-none focus:outline-none shrink-0">
-                        <div className="relative">
-                            <div className="absolute inset-0 bg-orange-500 blur-lg opacity-20 rounded-full group-hover:opacity-40 transition-opacity"></div>
-                             {/* Import logo from assets if possible, or use Next Image with imported object */}
-                             <img 
-                                src={require('../assets/logo.png').default.src} 
-                                alt="Business Tools" 
-                                className="h-8 w-auto relative z-10" 
-                            />
-                        </div>
-                        <span className="font-bold text-xl tracking-tight transition-colors" style={{ color: 'var(--text-main)' }}>
-                            Business <span className="text-orange-500">tools</span>
-                        </span>
-                    </a>
-
-                    {/* Center: File Renaming */}
-                    <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 items-center justify-center">
-                         <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-[#333] hover:border-gray-200 dark:hover:border-gray-600 transition-all group">
-                            <i className="fas fa-pen text-gray-400 text-xs group-hover:text-orange-500 transition-colors"></i>
-                            <input 
-                                type="text" 
-                                value={filename}
-                                onChange={(e) => setFilename(e.target.value)}
-                                className="bg-transparent border-none outline-none text-center font-medium text-gray-700 dark:text-gray-200 placeholder-gray-400 w-48 focus:w-64 transition-all"
-                                placeholder="Nome do arquivo"
-                            />
-                             <span className="text-gray-400 text-sm font-medium select-none">.bpmn</span>
-                        </div>
+            {/* Custom Navbar using Layout Component */}
+            <Navbar 
+                centerContent={
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-[#333] hover:border-gray-200 dark:hover:border-gray-600 transition-all group">
+                        <i className="fas fa-pen text-gray-400 text-xs group-hover:text-orange-500 transition-colors"></i>
+                        <input 
+                            type="text" 
+                            value={filename}
+                            onChange={(e) => setFilename(e.target.value)}
+                            className="bg-transparent border-none outline-none text-center font-medium text-gray-700 dark:text-gray-200 placeholder-gray-400 w-48 focus:w-64 transition-all"
+                            placeholder="Nome do arquivo"
+                        />
+                        <span className="text-gray-400 text-sm font-medium select-none">.bpmn</span>
                     </div>
-
-                    {/* Right: Actions (Theme Toggle + Menu) */}
-                    <div className="flex items-center gap-6 shrink-0">
-                        
-                        {/* Theme Toggle Element */}
-                        <ThemeToggle />
-
+                }
+                rightContent={
+                    <>
                         {/* Menu Dropdown */}
                         <div className="relative" ref={dropdownRef}>
                             <button 
@@ -377,7 +333,7 @@ const BPMNPage = () => {
                                         </button>
                                         
                                         <button onClick={() => { setDropdownOpen(false); fileInputRef.current.click(); }} className="w-full text-left px-4 py-3 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/10 text-gray-700 dark:text-gray-200 text-sm flex items-center gap-3 transition-colors group">
-                                             <div className="w-8 h-8 rounded-full icon-bg-blue flex items-center justify-center text-blue-500 group-hover:scale-110 transition-transform">
+                                                <div className="w-8 h-8 rounded-full icon-bg-blue flex items-center justify-center text-blue-500 group-hover:scale-110 transition-transform">
                                                 <i className="fas fa-folder-open"></i>
                                             </div>
                                             <div>
@@ -408,12 +364,12 @@ const BPMNPage = () => {
                         </div>
                         
                         <input type="file" ref={fileInputRef} accept=".bpmn,.xml" onChange={handleFileLoad} className="hidden" />
-                    </div>
-                </div>
-            </nav>
+                    </>
+                }
+            />
 
             {/* Modeler Container */}
-            <div className="flex-grow relative w-full h-full overflow-hidden">
+            <div className="flex-grow relative w-full h-full overflow-hidden" style={{ marginTop: '80px' }}>
                  <div ref={containerRef} className="w-full h-full canvas-container"></div>
             </div>
 

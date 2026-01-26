@@ -4,8 +4,8 @@ import '../index.css';
 import '../styles/main.scss'; 
 import Head from 'next/head';
 import { ThemeProvider } from '../context/ThemeContext';
-import AppNavbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import AppNavbar from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer';
 
 import { useRouter } from 'next/router';
 
@@ -18,11 +18,14 @@ function MyApp({ Component, pageProps }) {
        <Head>
          <meta name="viewport" content="width=device-width, initial-scale=1" />
          <title>Business Tools</title>
+         <link rel="preconnect" href="https://fonts.googleapis.com" />
+         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
        </Head>
        
        <div className="d-flex flex-column min-vh-100">
           {!isBpmnPage && <AppNavbar />}
-          <div className="flex-grow-1" style={{ paddingTop: isBpmnPage ? '0' : '70px' }}>
+          <div className="flex-grow-1" style={{ paddingTop: isBpmnPage ? '0' : '80px' }}>
              <Component {...pageProps} />
           </div>
           {!isBpmnPage && <Footer />}

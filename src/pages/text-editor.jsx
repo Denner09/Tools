@@ -4,8 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { jsPDF } from 'jspdf';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
 import { saveAs } from 'file-saver';
-import clsx from 'clsx';
-import { useRouter } from 'next/router';
+
 
 const TextTools = () => {
     const [text, setText] = useState('');
@@ -14,7 +13,6 @@ const TextTools = () => {
     const [stats, setStats] = useState({ words: 0, chars: 0 });
     const [notification, setNotification] = useState(null);
     const textareaRef = useRef(null);
-    const router = useRouter();
 
     const showNotification = (msg) => {
         setNotification(msg);

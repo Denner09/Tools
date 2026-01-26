@@ -6,10 +6,10 @@
   "homepage": "https://Denner09.github.io/Tools",
   "scripts": {
     "dev": "next dev --webpack",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "next build && gh-pages -d out -t"
+    "deploy": "npm run build && gh-pages -d out -t"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.1.0",

@@ -1,0 +1,1 @@
+self.__NEXT_FONT_MANIFEST='{"pages":{"/_app":[],"/bpmn":[]},"app":{},"appUsingSizeAdjust":false,"pagesUsingSizeAdjust":true}';

@@ -1,0 +1,11 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/bpmn": "pages/bpmn.html",
+  "/": "pages/index.html",
+  "/text-editor": "pages/text-editor.html",
+  "/pdf-tools": "pages/pdf-tools.html",
+  "/api/process-pdf": "pages/api/process-pdf.js",
+  "/_document": "pages/_document.js",
+  "/404": "pages/404.html"
+}

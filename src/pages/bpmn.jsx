@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import BpmnModelerLib from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
@@ -311,7 +312,7 @@ const BPMNPage = () => {
                                     className="absolute right-0 top-full mt-2 w-64 bg-menu-light bg-menu-dark rounded-xl shadow-2xl z-50 overflow-hidden animate-fade-in-up origin-top-right"
                                 >
                                     <div className="p-2">
-                                        <a href="/" style={{ textDecoration: 'none' }} className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 text-gray-700 dark:text-gray-200 text-sm flex items-center gap-3 transition-colors group mb-1 !no-underline">
+                                        <Link href="/" className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 text-gray-700 dark:text-gray-200 text-sm flex items-center gap-3 transition-colors group mb-1 !no-underline text-decoration-none">
                                             <div className="w-8 h-8 rounded-full icon-bg-back flex items-center justify-center group-hover:scale-110 transition-transform">
                                                 <i className="fas fa-arrow-left"></i>
                                             </div>
@@ -319,7 +320,7 @@ const BPMNPage = () => {
                                                 <div className="font-semibold text-gray-900 dark:text-gray-100">Voltar</div>
                                                 <div className="text-xs text-gray-500 dark:text-gray-400">Menu principal</div>
                                             </div>
-                                        </a>
+                                        </Link>
                                         <div className="h-px bg-gray-100 dark:bg-[#333] my-2"></div>
 
                                         <button onClick={() => handleAction(createNewDiagram)} className="w-full text-left px-4 py-3 rounded-lg hover:bg-orange-50 dark:hover:bg-orange-900/10 text-gray-700 dark:text-gray-200 text-sm flex items-center gap-3 transition-colors group">

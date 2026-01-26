@@ -4,48 +4,46 @@
   ],
   "devFiles": [],
   "lowPriorityFiles": [
-    "static/WXI0Hs-Q97qqQSI_583ge/_buildManifest.js",
-    "static/WXI0Hs-Q97qqQSI_583ge/_ssgManifest.js"
+    "static/ouds0baHrTUV4n5jYD2sA/_buildManifest.js",
+    "static/ouds0baHrTUV4n5jYD2sA/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "rootMainFilesTree": {},
   "pages": {
     "/": [
-      "static/chunks/webpack-291caa0c8b416617.js",
+      "static/chunks/webpack-a278a9116f2c8499.js",
       "static/chunks/framework-75892d61b920805f.js",
       "static/chunks/main-2164add0956443cc.js",
       "static/chunks/pages/index-f7c078f65822ef0f.js"
     ],
     "/_app": [
-      "static/chunks/webpack-291caa0c8b416617.js",
+      "static/chunks/webpack-a278a9116f2c8499.js",
       "static/chunks/framework-75892d61b920805f.js",
       "static/chunks/main-2164add0956443cc.js",
-      "static/css/870c01ff0afc2af7.css",
-      "static/chunks/pages/_app-5280c69e16815c28.js"
+      "static/chunks/pages/_app-001ad7a81074cfb9.js"
     ],
     "/_error": [
-      "static/chunks/webpack-291caa0c8b416617.js",
+      "static/chunks/webpack-a278a9116f2c8499.js",
       "static/chunks/framework-75892d61b920805f.js",
       "static/chunks/main-2164add0956443cc.js",
       "static/chunks/pages/_error-4097d58bc1c02e02.js"
     ],
     "/bpmn": [
-      "static/chunks/webpack-291caa0c8b416617.js",
+      "static/chunks/webpack-a278a9116f2c8499.js",
       "static/chunks/framework-75892d61b920805f.js",
       "static/chunks/main-2164add0956443cc.js",
       "static/chunks/b3f9bb70-6d2bca26c1f1fed5.js",
-      "static/css/d73a40e8dd2b8392.css",
-      "static/chunks/pages/bpmn-da141bd9c366ec69.js"
+      "static/chunks/pages/bpmn-a262aca1d9c9519a.js"
     ],
     "/pdf-tools": [
-      "static/chunks/webpack-291caa0c8b416617.js",
+      "static/chunks/webpack-a278a9116f2c8499.js",
       "static/chunks/framework-75892d61b920805f.js",
       "static/chunks/main-2164add0956443cc.js",
       "static/chunks/192-1eac0a80a70683f2.js",
-      "static/chunks/pages/pdf-tools-4667b593abaebeee.js"
+      "static/chunks/pages/pdf-tools-3b24fa3a34dbcb01.js"
     ],
     "/text-editor": [
-      "static/chunks/webpack-291caa0c8b416617.js",
+      "static/chunks/webpack-a278a9116f2c8499.js",
       "static/chunks/framework-75892d61b920805f.js",
       "static/chunks/main-2164add0956443cc.js",
       "static/chunks/128f6bf3-e8f702d047c3e095.js",

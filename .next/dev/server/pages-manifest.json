@@ -1,10 +1,9 @@
 {
-  "/": "pages/index.js",
   "/_app": "pages/_app.js",
-  "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/api/process-pdf": "pages/api/process-pdf.js",
+  "/_document": "pages/_document.js",
+  "/": "pages/index.js",
+  "/text-editor": "pages/text-editor.js",
   "/bpmn": "pages/bpmn.js",
-  "/pdf-tools": "pages/pdf-tools.js",
-  "/text-editor": "pages/text-editor.js"
+  "/pdf-tools": "pages/pdf-tools.js"
 }

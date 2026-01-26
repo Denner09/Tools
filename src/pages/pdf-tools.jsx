@@ -4,10 +4,12 @@ import React, { useState, useCallback, useRef } from 'react';
 import { createWorker } from 'tesseract.js';
 import * as Diff from 'diff';
 import clsx from 'clsx';
+import { useRouter } from 'next/router';
 import PDFToolsSidebar, { tools } from '../components/pdf-tools/PDFToolsSidebar';
 import FileDropzone from '../components/pdf-tools/FileDropzone';
 
 export default function PDFToolsPage() {
+    const router = useRouter();
     const [activeTool, setActiveTool] = useState('merge');
     const [files, setFiles] = useState([]);
     const [processing, setProcessing] = useState(false);
@@ -1828,7 +1830,7 @@ export default function PDFToolsPage() {
                                          <button 
                                             onClick={() => {
                                                 localStorage.setItem('business_tools_editor_content', extractedText);
-                                                window.location.href = '/text-editor';
+                                                router.push('/text-editor');
                                             }}
                                             className="text-sm px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded hover:bg-orange-200 transition-colors font-medium flex items-center gap-2"
                                          >

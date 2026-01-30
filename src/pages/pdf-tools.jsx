@@ -318,18 +318,29 @@ export default function PDFToolsPage() {
 
             async function saveBatch(indices, idx) {
                  const newPdf = await PDFDocument.create();
-                 
-                 // Batch Copy: Efficient & Clean
-                 // We copy ALL pages for this part in ONE operation.
-                 // This ensures shared resources are copied only once per part,
-                 // avoiding the OOM crash of 1-by-1 copying and the bloat of subtractive splitting.
                  const copiedPages = await newPdf.copyPages(sourcePdf, indices);
                  
                  for (const page of copiedPages) {
                      newPdf.addPage(page);
                  }
                  
-                 const pdfBytes = await newPdf.save();
+                 let pdfBytes = await newPdf.save();
+
+                 // Optimization Check (For handleSplitAndDownload)
+                 // If the part is > 40% of standard size but has < 40% of pages, it's bloated.
+                 // We use compressedBlob here because handleSplitAndDownload works on it.
+                 if (pdfBytes.byteLength > totalSize * 0.4 && indices.length < totalPages * 0.4) {
+                      try {
+                          // Note: optimizePdfPart expects a Blob/File. compressedBlob is a Blob.
+                          const optBytes = await optimizePdfPart(compressedBlob, indices);
+                          if (optBytes.byteLength < pdfBytes.byteLength) {
+                              pdfBytes = optBytes;
+                          }
+                      } catch (e) {
+                          console.warn("Optimization failed for chunk " + idx, e);
+                      }
+                 }
+                 
                  zip.file(`parte_${idx}.pdf`, pdfBytes);
                  
                  // Visual progress
@@ -352,6 +363,116 @@ export default function PDFToolsPage() {
         }
     };
 
+    // Helper: Optimize specific pages by rasterization (Reduces size for bloated PDFs)
+    const optimizePdfPart = async (file, pageIndices) => {
+        const pdfJS = await import('pdfjs-dist/build/pdf.min.mjs');
+        pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs`;
+
+        const arrayBuffer = await file.arrayBuffer();
+        const pdf = await pdfJS.getDocument(arrayBuffer).promise;
+        const { PDFDocument } = await import('pdf-lib');
+        const newPdf = await PDFDocument.create();
+
+        for (const idx of pageIndices) {
+            const pageNum = idx + 1; // pdfjs is 1-based
+            try {
+                const page = await pdf.getPage(pageNum);
+                // Reduce scale slightly to ensure size reduction logic works
+                // Scale 1.25 offers good balance between quality and size
+                const viewport = page.getViewport({ scale: 1.25 });
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                await page.render({ canvasContext: context, viewport }).promise;
+                
+                // Compress quality 0.7
+                const imgData = canvas.toDataURL('image/jpeg', 0.7);
+                const imgBytes = await fetch(imgData).then(r => r.arrayBuffer());
+                
+                const jpgImage = await newPdf.embedJpg(imgBytes);
+                const newPage = newPdf.addPage([viewport.width, viewport.height]);
+                newPage.drawImage(jpgImage, {
+                    x: 0,
+                    y: 0,
+                    width: viewport.width,
+                    height: viewport.height,
+                });
+            } catch (e) {
+                console.warn(`Skipping page ${pageNum} during optimization`, e);
+            }
+        }
+        return await newPdf.save();
+    };
+
+    const handleSplitByRangeClient = async () => {
+        if (!files.length) return;
+        setProcessing(true);
+        setOcrProgress(0);
+
+        try {
+            const { PDFDocument } = await import('pdf-lib');
+            const file = files[0];
+            const arrayBuffer = await file.arrayBuffer();
+            const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+            const totalPages = pdfDoc.getPageCount();
+
+            // Parse Ranges "1-5, 8"
+            const indices = new Set();
+            const parts = splitRanges.split(',').map(p => p.trim());
+            for (const part of parts) {
+                if (!part) continue;
+                if (part.includes('-')) {
+                    const [start, end] = part.split('-').map(n => parseInt(n));
+                    if (!isNaN(start) && !isNaN(end)) {
+                        for (let i = start; i <= end; i++) indices.add(i - 1);
+                    }
+                } else {
+                    const page = parseInt(part);
+                    if (!isNaN(page)) indices.add(page - 1);
+                }
+            }
+            
+            const sortedIndices = Array.from(indices).filter(i => i >= 0 && i < totalPages).sort((a,b) => a-b);
+            
+            if (sortedIndices.length === 0) throw new Error("Nenhuma página válida selecionada.");
+
+            // Create Standard PDF
+            const newPdf = await PDFDocument.create();
+            const copiedPages = await newPdf.copyPages(pdfDoc, sortedIndices);
+            copiedPages.forEach(p => newPdf.addPage(p));
+            let pdfBytes = await newPdf.save();
+            
+            // Check Size & Optimize if bloated
+            const currentSizeMB = pdfBytes.byteLength / 1024 / 1024;
+            const originalSizeMB = arrayBuffer.byteLength / 1024 / 1024;
+            
+            // Heuristic: If split file is > 10MB OR if size didn't reduce proportionally
+            if ((currentSizeMB > 10 && sortedIndices.length < 50) || (currentSizeMB > originalSizeMB * 0.8 && sortedIndices.length < totalPages * 0.5)) {
+                 console.log("Bloat detected, optimizing...");
+                 try {
+                     setOcrProgress(50); // visual feedback
+                     const optimizedBytes = await optimizePdfPart(file, sortedIndices);
+                     if (optimizedBytes.byteLength < pdfBytes.byteLength) {
+                         pdfBytes = optimizedBytes;
+                     }
+                 } catch (optErr) {
+                     console.warn("Optimization failed", optErr);
+                 }
+            }
+            
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            downloadBlob(blob, `split_paginas_${file.name}`);
+            setFiles([]);
+
+        } catch (e) {
+            console.error(e);
+            alert("Erro ao dividir: " + e.message);
+        } finally {
+            setProcessing(false);
+        }
+    };
+
     const handleSplitBySize = async () => {
         if (!files[0] || !customTargetMB) return;
         setProcessing(true);
@@ -360,55 +481,143 @@ export default function PDFToolsPage() {
         try {
             const JSZip = (await import('jszip')).default;
             const { PDFDocument } = await import('pdf-lib');
+            const pdfJS = await import('pdfjs-dist/build/pdf.min.mjs');
+            pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs`;
+
             const zip = new JSZip();
+            const file = files[0];
+            const arrayBuffer = await file.arrayBuffer();
             
-            const arrayBuffer = await files[0].arrayBuffer();
+            // Load for PDF-Lib (Structure) and PDF.js (Rendering)
             const sourcePdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+            const sourcePdfJS = await pdfJS.getDocument(arrayBuffer).promise;
+            
             const totalPages = sourcePdf.getPageCount();
             const totalSize = arrayBuffer.byteLength;
-            const avgPageSize = totalSize / totalPages;
-            const targetBytes = parseFloat(customTargetMB) * 1024 * 1024; 
+            const targetBytes = parseFloat(customTargetMB) * 1024 * 1024;
+            
+            // 1. Analyze "Bloat"
+            const testDoc = await PDFDocument.create();
+            const [page1] = await testDoc.copyPages(sourcePdf, [0]);
+            testDoc.addPage(page1);
+            const testBytes = await testDoc.save();
+            const page1Size = testBytes.byteLength;
+            const isBloated = (page1Size > totalSize * 0.5) || (page1Size > 5 * 1024 * 1024);
+            
+            console.log(`Deep Analysis: Total ${totalSize}, Page1 ${page1Size}, Bloated? ${isBloated}`);
 
-            let currentPartIndices = [];
-            let currentEstimatedSize = 0;
-            let partIndex = 1;
-            let processedPages = 0;
+            let chunks = [];
+            
+            if (isBloated) {
+                // DYNAMIC RASTERIZATION STRATEGY
+                // Accumulate pages one by one until target size is reached
+                
+                let currentChunkPdf = await PDFDocument.create();
+                let currentChunkSize = 0; // Estimated based on JPG sizes
+                let currentChunkPageCount = 0;
+                let chunkIndex = 1;
 
-            for (let i = 0; i < totalPages; i++) {
-                if (currentEstimatedSize + avgPageSize > targetBytes && currentPartIndices.length > 0) {
-                    await saveBatch(currentPartIndices, partIndex);
-                    currentPartIndices = [];
-                    currentEstimatedSize = 0;
-                    partIndex++;
+                for (let i = 0; i < totalPages; i++) {
+                    setOcrProgress(Math.round((i / totalPages) * 100));
+                    
+                    try {
+                        // Render Page
+                        const page = await sourcePdfJS.getPage(i + 1);
+                        const viewport = page.getViewport({ scale: 1.25 });
+                        const canvas = document.createElement('canvas');
+                        const context = canvas.getContext('2d');
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+                        await page.render({ canvasContext: context, viewport }).promise;
+                        
+                        // Compress
+                        const imgData = canvas.toDataURL('image/jpeg', 0.7);
+                        // Very rough estimate: DataURL length * 0.75 ~= bytes. 
+                        // Or accurate: fetch.
+                        const res = await fetch(imgData);
+                        const imgBytes = await res.arrayBuffer();
+                        const imgSize = imgBytes.byteLength;
+                        
+                        // Check Estimate (Add 5KB overhead for PDF structure per page)
+                        const estimatedAddition = imgSize + 5 * 1024;
+                        
+                        if (currentChunkSize + estimatedAddition > targetBytes && currentChunkPageCount > 0) {
+                            // Save Chunk
+                            const pdfBytes = await currentChunkPdf.save();
+                            zip.file(`parte_${chunkIndex}.pdf`, pdfBytes);
+                            
+                            // Reset
+                            chunkIndex++;
+                            currentChunkPdf = await PDFDocument.create();
+                            currentChunkSize = 0;
+                            currentChunkPageCount = 0;
+                        }
+                        
+                        // Add to current
+                        const jpgImage = await currentChunkPdf.embedJpg(imgBytes);
+                        const newPage = currentChunkPdf.addPage([viewport.width, viewport.height]);
+                        newPage.drawImage(jpgImage, {
+                            x: 0,
+                            y: 0,
+                            width: viewport.width,
+                            height: viewport.height,
+                        });
+                        
+                        currentChunkSize += estimatedAddition;
+                        currentChunkPageCount++;
+                        
+                    } catch (err) {
+                        console.error(`Error processing page ${i} for split`, err);
+                    }
                 }
                 
-                currentPartIndices.push(i);
-                currentEstimatedSize += avgPageSize;
-                processedPages++;
-                
-                setOcrProgress(Math.round((processedPages / totalPages) * 90));
-            }
+                // Save last chunk
+                if (currentChunkPageCount > 0) {
+                     const pdfBytes = await currentChunkPdf.save();
+                     zip.file(`parte_${chunkIndex}.pdf`, pdfBytes);
+                }
 
-            if (currentPartIndices.length > 0) {
-                 await saveBatch(currentPartIndices, partIndex);
-            }
+            } else {
+                // STANDARD STRATEGY (Non-Bloated)
+                // (Optimized verified greedy approach)
+                let startIndex = 0;
+                let chunkIndex = 1;
+                while (startIndex < totalPages) {
+                    let collected = [];
+                    let currentEstSize = 0;
+                    const avgPage = totalSize / totalPages;
 
-            async function saveBatch(indices, idx) {
-                 const newPdf = await PDFDocument.create();
-                 const copiedPages = await newPdf.copyPages(sourcePdf, indices);
-                 
-                 for (const page of copiedPages) {
-                     newPdf.addPage(page);
-                 }
-                 
-                 const pdfBytes = await newPdf.save();
-                 zip.file(`parte_${idx}.pdf`, pdfBytes);
+                    for (let i = startIndex; i < totalPages; i++) {
+                         collected.push(i);
+                         currentEstSize += avgPage;
+                         if (currentEstSize > targetBytes * 1.5) break; 
+                    }
+                    
+                    let validChunk = false;
+                    while (!validChunk && collected.length > 0) {
+                         const tempDoc = await PDFDocument.create();
+                         const pgs = await tempDoc.copyPages(sourcePdf, collected);
+                         pgs.forEach(p => tempDoc.addPage(p));
+                         const bytes = await tempDoc.save();
+                         
+                         if (bytes.byteLength <= targetBytes || collected.length === 1) {
+                             zip.file(`parte_${chunkIndex}.pdf`, bytes);
+                             chunkIndex++;
+                             validChunk = true;
+                             startIndex += collected.length;
+                         } else {
+                             collected.pop();
+                         }
+                    }
+                    if (collected.length === 0) startIndex++; 
+                    setOcrProgress(Math.round((startIndex / totalPages) * 100));
+                }
             }
 
             setOcrProgress(100);
             const content = await zip.generateAsync({ type: "blob" });
             downloadBlob(content, `split_por_tamanho_${files[0].name}.zip`);
-            alert("Arquivo dividido por tamanho e baixado com sucesso!");
+            alert("Processo concluído!");
             setFiles([]);
 
         } catch (e) {
@@ -1102,8 +1311,9 @@ export default function PDFToolsPage() {
              return;
         }
 
-        if (activeTool === 'split' && splitMode === 'size') {
-            await handleSplitBySize();
+        if (activeTool === 'split') {
+            if (splitMode === 'size') await handleSplitBySize();
+            else await handleSplitByRangeClient();
             return;
         }
 
@@ -1119,9 +1329,8 @@ export default function PDFToolsPage() {
         try {
             const formData = new FormData();
             formData.append('action', activeTool);
-            if (activeTool === 'split') {
-                formData.append('ranges', splitRanges);
-            }
+            // splitRanges logic removed explicitly as split is now client-side
+
             
             files.forEach((file) => {
                 formData.append('file', file);

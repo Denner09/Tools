@@ -15,6 +15,7 @@ export default function PDFToolsPage() {
     const [processing, setProcessing] = useState(false);
     const [splitRanges, setSplitRanges] = useState('');
     const [diffResult, setDiffResult] = useState(null);
+
     const [ocrProgress, setOcrProgress] = useState(0);
     const [compressionLevel, setCompressionLevel] = useState('normal');
     const [customTargetMB, setCustomTargetMB] = useState('');
@@ -153,10 +154,10 @@ export default function PDFToolsPage() {
             setProcessing(true);
             
             // Import PDF.js
-            const pdfJS = await import('pdfjs-dist/build/pdf');
+            const pdfJS = await import('pdfjs-dist/build/pdf.min.mjs');
             
             // Set worker properly
-            pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@5.4.530/build/pdf.worker.min.mjs`;
+            pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs`;
 
             const file = files[0];
             const arrayBuffer = await file.arrayBuffer();
@@ -173,15 +174,32 @@ export default function PDFToolsPage() {
             let level = compressionLevel;
             if (level === 'custom') level = 'normal'; // Base para custom é normal
 
+            // Ajuste de parâmetros focado em LEGIBILIDADE
+            // Scale mais alto = Menos pixelado (texto nítido)
+            // Quality menor = Arquivo menor (compensar o scale alto)
+            
+            // Ajuste de parâmetros REFINADO
+            // Scale 1.5 gerou arquivos gigantes (dobrou o tamanho). Vamos reduzir.
+            // Scale 1.0 é o ideal para leitura. Quality define a limpeza do traço.
+            
+            // Ajuste de parâmetros - ESTRATÉGIA "NIITIDEZ"
+            // Mantemos a escala mais alta (para o texto não borrar/pixelar)
+            // Mas reduzimos a qualidade do JPEG (para o arquivo diminuir)
+            // Texto nítido com leve ruído é melhor que texto limpo mas borrado.
+            
             if (level === 'normal') {
+                // Escala 1.0 (Tamanho real) - Qualidade 0.5 (Média)
+                // Deve ficar legível e tentar reduzir o tamanho.
                 scale = 1.0; 
-                quality = 0.6; 
+                quality = 0.5; 
             } else if (level === 'high') {
-                scale = 0.7;
-                quality = 0.5;
-            } else if (level === 'extreme') {
-                scale = 0.5;
+                // Escala 0.8 (Leve redução) - Qualidade 0.4
+                // Deve reduzir bem o tamanho.
+                scale = 0.8;
                 quality = 0.4;
+            } else if (level === 'extreme') {
+                scale = 0.6;
+                quality = 0.3;
             }
 
             for (let i = 1; i <= totalPages; i++) {
@@ -229,7 +247,13 @@ export default function PDFToolsPage() {
             downloadBlob(blob, `comprimido_${compressionLevel}_${file.name}`);
             
             const originalSize = file.size / 1024 / 1024;
-            alert(`Compressão Concluída!\n\nOriginal: ${originalSize.toFixed(2)} MB\nNovo: ${newSizeMB.toFixed(2)} MB\nRedução: ${(100 - (newSizeMB/originalSize*100)).toFixed(1)}%`);
+            const reduction = (100 - (newSizeMB/originalSize*100)).toFixed(1);
+            
+            if (newSizeMB > originalSize) {
+                alert(`Atenção: O arquivo ficou maior (${reduction}%)!\n\nIsso acontece porque converter texto em imagem gasta mais espaço se o PDF original já for otimizado. Tente o nível 'Extremo'.\n\nOriginal: ${originalSize.toFixed(2)} MB\nNovo: ${newSizeMB.toFixed(2)} MB`);
+            } else {
+                alert(`Compressão Concluída!\n\nOriginal: ${originalSize.toFixed(2)} MB\nNovo: ${newSizeMB.toFixed(2)} MB\nRedução: ${reduction}%`);
+            }
             
             setFiles([]);
         } catch (e) {
@@ -266,52 +290,51 @@ export default function PDFToolsPage() {
             const zip = new JSZip();
             
             const arrayBuffer = await compressedBlob.arrayBuffer();
-            const sourcePdf = await PDFDocument.load(arrayBuffer);
+            const sourcePdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
             const totalPages = sourcePdf.getPageCount();
-            // Margem de segurança de 20% para garantir que metadados não estourem o limite
-            const targetBytes = parseFloat(customTargetMB) * 1024 * 1024 * 0.80;
+            const totalSize = arrayBuffer.byteLength;
+            const avgPageSize = totalSize / totalPages;
+            const targetBytes = parseFloat(customTargetMB) * 1024 * 1024; 
 
-            let currentPdf = await PDFDocument.create();
-            let currentPart = 1;
-            let currentSize = 0;
-            let pagesInCurrent = 0;
+            // Robust "Average Estimation" Strategy
+            let currentPartIndices = [];
+            let currentEstimatedSize = 0;
+            let partIndex = 1;
 
             for (let i = 0; i < totalPages; i++) {
-                setOcrProgress(Math.round((i / totalPages) * 100));
-                
-                const [copiedPage] = await currentPdf.copyPages(sourcePdf, [i]);
-                currentPdf.addPage(copiedPage);
-                pagesInCurrent++;
-
-                const pdfBytes = await currentPdf.save();
-                
-                if (pdfBytes.byteLength > targetBytes) {
-                    if (pagesInCurrent > 1) {
-                         currentPdf.removePage(pagesInCurrent - 1);
-                         const partBytes = await currentPdf.save();
-                         zip.file(`parte_${currentPart}.pdf`, partBytes);
-                         currentPart++;
-
-                         currentPdf = await PDFDocument.create();
-                         const [retryPage] = await currentPdf.copyPages(sourcePdf, [i]);
-                         currentPdf.addPage(retryPage);
-                         pagesInCurrent = 1;
-                    } else {
-                         // Se UMA única página já é maior que o alvo (mesmo com margem),
-                         // tentamos salvar ela sozinha. Se for maior que o target REAL (sem margem),
-                         // não há o que fazer a não ser entregar ela assim.
-                         const partBytes = await currentPdf.save();
-                         zip.file(`parte_${currentPart}.pdf`, partBytes);
-                         currentPart++;
-                         currentPdf = await PDFDocument.create();
-                         pagesInCurrent = 0;
-                    }
+                if (currentEstimatedSize + avgPageSize > targetBytes && currentPartIndices.length > 0) {
+                     await saveBatch(currentPartIndices, partIndex);
+                     currentPartIndices = [];
+                     currentEstimatedSize = 0;
+                     partIndex++;
                 }
+                currentPartIndices.push(i);
+                currentEstimatedSize += avgPageSize;
             }
 
-            if (pagesInCurrent > 0) {
-                 const partBytes = await currentPdf.save();
-                 zip.file(`parte_${currentPart}.pdf`, partBytes);
+            if (currentPartIndices.length > 0) {
+                 await saveBatch(currentPartIndices, partIndex);
+            }
+
+            async function saveBatch(indices, idx) {
+                 const newPdf = await PDFDocument.create();
+                 
+                 // Batch Copy: Efficient & Clean
+                 // We copy ALL pages for this part in ONE operation.
+                 // This ensures shared resources are copied only once per part,
+                 // avoiding the OOM crash of 1-by-1 copying and the bloat of subtractive splitting.
+                 const copiedPages = await newPdf.copyPages(sourcePdf, indices);
+                 
+                 for (const page of copiedPages) {
+                     newPdf.addPage(page);
+                 }
+                 
+                 const pdfBytes = await newPdf.save();
+                 zip.file(`parte_${idx}.pdf`, pdfBytes);
+                 
+                 // Visual progress
+                 const progress = Math.round((idx / (totalPages / (indices.length || 1))) * 100); 
+                 setOcrProgress(Math.min(99, progress)); 
             }
 
             const content = await zip.generateAsync({ type: "blob" });
@@ -340,51 +363,49 @@ export default function PDFToolsPage() {
             const zip = new JSZip();
             
             const arrayBuffer = await files[0].arrayBuffer();
-            const sourcePdf = await PDFDocument.load(arrayBuffer);
+            const sourcePdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
             const totalPages = sourcePdf.getPageCount();
-            // Margem de 20%
-            const targetBytes = parseFloat(customTargetMB) * 1024 * 1024 * 0.80;
+            const totalSize = arrayBuffer.byteLength;
+            const avgPageSize = totalSize / totalPages;
+            const targetBytes = parseFloat(customTargetMB) * 1024 * 1024; 
 
-            let currentPdf = await PDFDocument.create();
-            let currentPart = 1;
-            let currentSize = 0;
-            let pagesInCurrent = 0;
+            let currentPartIndices = [];
+            let currentEstimatedSize = 0;
+            let partIndex = 1;
+            let processedPages = 0;
 
             for (let i = 0; i < totalPages; i++) {
-                setOcrProgress(Math.round((i / totalPages) * 100));
-                
-                const [copiedPage] = await currentPdf.copyPages(sourcePdf, [i]);
-                currentPdf.addPage(copiedPage);
-                pagesInCurrent++;
-
-                const pdfBytes = await currentPdf.save();
-                
-                if (pdfBytes.byteLength > targetBytes) {
-                    if (pagesInCurrent > 1) {
-                         currentPdf.removePage(pagesInCurrent - 1);
-                         const partBytes = await currentPdf.save();
-                         zip.file(`parte_${currentPart}.pdf`, partBytes);
-                         currentPart++;
-
-                         currentPdf = await PDFDocument.create();
-                         const [retryPage] = await currentPdf.copyPages(sourcePdf, [i]);
-                         currentPdf.addPage(retryPage);
-                         pagesInCurrent = 1;
-                    } else {
-                         const partBytes = await currentPdf.save();
-                         zip.file(`parte_${currentPart}.pdf`, partBytes);
-                         currentPart++;
-                         currentPdf = await PDFDocument.create();
-                         pagesInCurrent = 0;
-                    }
+                if (currentEstimatedSize + avgPageSize > targetBytes && currentPartIndices.length > 0) {
+                    await saveBatch(currentPartIndices, partIndex);
+                    currentPartIndices = [];
+                    currentEstimatedSize = 0;
+                    partIndex++;
                 }
+                
+                currentPartIndices.push(i);
+                currentEstimatedSize += avgPageSize;
+                processedPages++;
+                
+                setOcrProgress(Math.round((processedPages / totalPages) * 90));
             }
 
-            if (pagesInCurrent > 0) {
-                 const partBytes = await currentPdf.save();
-                 zip.file(`parte_${currentPart}.pdf`, partBytes);
+            if (currentPartIndices.length > 0) {
+                 await saveBatch(currentPartIndices, partIndex);
             }
 
+            async function saveBatch(indices, idx) {
+                 const newPdf = await PDFDocument.create();
+                 const copiedPages = await newPdf.copyPages(sourcePdf, indices);
+                 
+                 for (const page of copiedPages) {
+                     newPdf.addPage(page);
+                 }
+                 
+                 const pdfBytes = await newPdf.save();
+                 zip.file(`parte_${idx}.pdf`, pdfBytes);
+            }
+
+            setOcrProgress(100);
             const content = await zip.generateAsync({ type: "blob" });
             downloadBlob(content, `split_por_tamanho_${files[0].name}.zip`);
             alert("Arquivo dividido por tamanho e baixado com sucesso!");
@@ -405,8 +426,8 @@ export default function PDFToolsPage() {
         
         try {
             setProcessing(true);
-            const pdfJS = await import('pdfjs-dist/build/pdf');
-            pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@5.4.530/build/pdf.worker.min.mjs`;
+            const pdfJS = await import('pdfjs-dist/build/pdf.min.mjs');
+            pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs`;
              
             const buffer = await files[0].arrayBuffer();
             const pdf = await pdfJS.getDocument(buffer).promise;
@@ -515,8 +536,8 @@ export default function PDFToolsPage() {
         
         try {
             setProcessing(true);
-            const pdfJS = await import('pdfjs-dist/build/pdf');
-            pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@5.4.530/build/pdf.worker.min.mjs`;
+            const pdfJS = await import('pdfjs-dist/build/pdf.min.mjs');
+            pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs`;
              
             const buffer = await files[0].arrayBuffer();
             const pdf = await pdfJS.getDocument(buffer).promise;
@@ -596,8 +617,8 @@ export default function PDFToolsPage() {
         
         try {
             // We use pdfjs to render the base page
-            const pdfJS = await import('pdfjs-dist/build/pdf');
-            pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@5.4.530/build/pdf.worker.min.mjs`;
+            const pdfJS = await import('pdfjs-dist/build/pdf.min.mjs');
+            pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs`;
              
             const buffer = await files[0].arrayBuffer();
             const pdf = await pdfJS.getDocument(buffer).promise;
@@ -735,8 +756,8 @@ export default function PDFToolsPage() {
         
         try {
             // Setup PDFJS for rasterization (JPG, PNG) or SVG extraction
-            const pdfJS = await import('pdfjs-dist/build/pdf');
-            pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@5.4.530/build/pdf.worker.min.mjs`;
+            const pdfJS = await import('pdfjs-dist/build/pdf.min.mjs');
+            pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs`;
              
             const buffer = await files[0].arrayBuffer();
             const pdf = await pdfJS.getDocument(buffer).promise;
@@ -782,36 +803,64 @@ export default function PDFToolsPage() {
                 downloadBlob(content, `convertido_${convertFormat}.zip`);
 
             } else {
-                // Word, Excel, PowerPoint
-                // Client-side conversion for these is extremely limited/impossible without complex libraries or server.
-                // We will implement a basic "Text Extraction to format" or alert the user about limitation.
-                // For a robust agentic solution, we might usually use a serverless API or a heavy WASM library.
-                // Given "No external APIs" constraint usually implies local logic.
+            if (convertFormat === 'word') {
+                // Use 'docx' library for genuine Word files
+                const { Document, Packer, Paragraph, ImageRun, PageBreak } = await import('docx');
                 
-                // Hacky Solution: Extract text and simple layout, put in HTML, and save as .doc/.xls
-                // This is "Fake" conversion but works for basic text. 
-                // However, user requested "Convert". 
-                // Let's implement the Image->Format hack or just Text->Format.
+                const children = [];
                 
-                alert("Aviso: Conversão para Office (Word, Excel, PPT) via navegador é experimental e pode não preservar a formatação exata. Imagens serão extraídas.");
+                for (let i = 1; i <= pdf.numPages; i++) {
+                     setOcrProgress(Math.round((i / pdf.numPages) * 100));
+                     const page = await pdf.getPage(i);
+                     const viewport = page.getViewport({ scale: 1.5 });
+                     
+                     const canvas = document.createElement('canvas');
+                     const context = canvas.getContext('2d');
+                     canvas.width = viewport.width;
+                     canvas.height = viewport.height;
+                     
+                     await page.render({ canvasContext: context, viewport }).promise;
+                     const imgData = canvas.toDataURL('image/jpeg', 0.8);
+                     const imgBuffer = await fetch(imgData).then(r => r.arrayBuffer());
+                     
+                     children.push(
+                         new Paragraph({
+                             children: [
+                                 new ImageRun({
+                                     data: imgBuffer,
+                                     transformation: {
+                                         width: viewport.width,
+                                         height: viewport.height,
+                                     },
+                                 }),
+                             ],
+                         })
+                     );
+                     
+                     // Add page break after each page except the last one (optional, but good for one-image-per-page)
+                     if (i < pdf.numPages) {
+                         children.push(new Paragraph({ children: [new PageBreak()] }));
+                     }
+                }
                 
-                // For this demo, let's just do a simple text dump or placeholder.
-                // OR better: Convert pages to Images and embed in the Office file (Scan-like PDF to Word).
-                // This ensures visual fidelity.
+                const doc = new Document({
+                    sections: [{
+                        properties: {},
+                        children: children,
+                    }],
+                });
                 
-                const { Document, Packer, Paragraph, ImageRun } = await import('docx'); // pdf-to-docx is heavy.
-                // Since we don't have docx/exceljs/pptxgenjs installed in package.json (likely), we might need to rely on what's available or generic HTML methods.
-                // Let's check package.json... We don't have them.
-                // We will use the HTML-to-Office trick. Render PDF pages as Images, put in HTML, download as .doc.
+                const blob = await Packer.toBlob(doc);
+                downloadBlob(blob, `convertido_${files[0].name}.docx`);
                 
-                // Actually, simple Image Extraction -> Zip is better if we can't do real doc generation.
-                // Let's stick to Images for now for Office formats as "Scan Pages".
-                
-                const JSZip = (await import('jszip')).default;
-                const zip = new JSZip();
-                
+            } else {
+                // Fallback for Excel/PowerPoint (HTML Hack)
                 // We will basically save images and tell user to insert them, OR 
                 // we can try to generate a basic HTML file that Word opens.
+                
+                alert("Aviso: Conversão para Excel/PPT via navegador é experimental. Imagens serão extraídas em um arquivo compatível.");
+                
+                const JSZip = (await import('jszip')).default;
                 
                 let htmlContent = `<html><body>`;
                 
@@ -831,12 +880,10 @@ export default function PDFToolsPage() {
                 
                 htmlContent += `</body></html>`;
                 
-                const mimeType = convertFormat === 'word' ? 'application/msword' : 
-                                 convertFormat === 'excel' ? 'application/vnd.ms-excel' : 
+                const mimeType = convertFormat === 'excel' ? 'application/vnd.ms-excel' : 
                                  'application/vnd.ms-powerpoint';
                                  
-                const extension = convertFormat === 'word' ? 'doc' : 
-                                  convertFormat === 'excel' ? 'xls' : 
+                const extension = convertFormat === 'excel' ? 'xls' : 
                                   'ppt';
 
                 const blob = new Blob(['\ufeff', htmlContent], {
@@ -845,6 +892,7 @@ export default function PDFToolsPage() {
                 
                 downloadBlob(blob, `documento_convertido.${extension}`);
             }
+        }
 
             setProcessing(false);
             setOcrProgress(0);
@@ -874,11 +922,45 @@ export default function PDFToolsPage() {
                 // Try standard load (ignores some garbage)
                 pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
             } catch (loadErr) {
-                 console.warn("Load failed, trying fallback...", loadErr);
-                 // Fallback: If pdf-lib fails, maybe pdf.js can read it?
-                 // If so, we render to images and rebuild. (Last resort repair)
-                 // For now let's report failure if pdf-lib can't parse headers.
-                 throw new Error("O arquivo está muito corrompido e não pôde ser lido.");
+                 console.warn("Load failed, trying fallback with PDF.js...", loadErr);
+                 try {
+                     // Fallback: Use PDF.js to render pages and reconstruct
+                     const pdfJS = await import('pdfjs-dist/build/pdf.min.mjs');
+                     pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs`;
+                     
+                     const pdf = await pdfJS.getDocument(arrayBuffer).promise;
+                     const newPdf = await PDFDocument.create();
+                     
+                     for (let i = 1; i <= pdf.numPages; i++) {
+                         setOcrProgress(Math.round((i / pdf.numPages) * 100));
+                         const page = await pdf.getPage(i);
+                         const viewport = page.getViewport({ scale: 1.5 }); // Good quality for repair
+                         
+                         const canvas = document.createElement('canvas');
+                         const context = canvas.getContext('2d');
+                         canvas.width = viewport.width;
+                         canvas.height = viewport.height;
+                         
+                         await page.render({ canvasContext: context, viewport }).promise;
+                         const imgData = canvas.toDataURL('image/jpeg', 0.8);
+                         const imgBytes = await fetch(imgData).then(r => r.arrayBuffer());
+                         
+                         const jpgImage = await newPdf.embedJpg(imgBytes);
+                         const newPage = newPdf.addPage([viewport.width, viewport.height]);
+                         newPage.drawImage(jpgImage, {
+                             x: 0,
+                             y: 0,
+                             width: viewport.width,
+                             height: viewport.height,
+                         });
+                     }
+                     
+                     pdfDoc = newPdf; // Assign to main variable to save later
+                     
+                 } catch (fallbackErr) {
+                     console.error("Fallback also failed", fallbackErr);
+                     throw new Error("O arquivo está muito corrompido e não pôde ser lido nem recuperado visualmente.");
+                 }
             }
 
             // If loaded, we "repair" by saving it fresh, which reconstructs the XRef table and file structure.
@@ -920,7 +1002,7 @@ export default function PDFToolsPage() {
             };
 
             const pdfJS = await import('pdfjs-dist/build/pdf');
-            pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@5.4.530/build/pdf.worker.min.mjs`;
+            pdfJS.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs`;
 
             if (ocrMode === 'extract') {
                  const file = files[0];
@@ -978,7 +1060,7 @@ export default function PDFToolsPage() {
             else if (ocrMode === 'compare') {
                  if (files.length < 2) throw new Error("Precisa de 2 arquivos");
                  
-                 const getText = async (file) => {
+                 const getText = async (file, startProg, endProg) => {
                      const ab = await file.arrayBuffer();
                      const pdf = await pdfJS.getDocument(ab).promise;
                      let txt = '';
@@ -986,14 +1068,15 @@ export default function PDFToolsPage() {
                          const img = await getPageImage(pdf, i);
                          const { data } = await worker.recognize(img);
                          txt += data.text + '\n';
+                         const currentProg = startProg + ((i / pdf.numPages) * (endProg - startProg));
+                         setOcrProgress(Math.round(currentProg));
                      }
                      return txt;
                  };
 
                  setOcrProgress(10);
-                 const text1 = await getText(files[0]);
-                 setOcrProgress(50);
-                 const text2 = await getText(files[1]);
+                 const text1 = await getText(files[0], 10, 50);
+                 const text2 = await getText(files[1], 50, 90);
                  setOcrProgress(90);
 
                  const diff = Diff.diffLines(text1, text2);
@@ -1798,11 +1881,11 @@ export default function PDFToolsPage() {
                                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 overflow-hidden">
                                          <div 
                                              className="bg-orange-500 h-full transition-all duration-300 striped-progress" 
-                                             style={{ width: `${(activeTool === 'ocr' || activeTool === 'compress') ? ocrProgress : 100}%` }}
+                                             style={{ width: `${(activeTool === 'ocr' || activeTool === 'compress' || activeTool === 'split') ? ocrProgress : 100}%` }}
                                          ></div>
                                      </div>
                                      <p className="text-center text-sm mt-2" style={{ color: 'var(--text-muted)' }}>
-                                         Processando... { (activeTool === 'ocr' || activeTool === 'compress') ? `${ocrProgress}%` : '' }
+                                         Processando... { (activeTool === 'ocr' || activeTool === 'compress' || activeTool === 'split') ? `${ocrProgress}%` : '' }
                                      </p>
                                  </div>
                              )}

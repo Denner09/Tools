@@ -10,5 +10,35 @@
     "files": [
       "static/chunks/_pages-dir-browser_node_modules_next_dist_pages__error_js.js"
     ]
+  },
+  "pages\\pdf-tools.jsx -> docx": {
+    "id": "pages\\pdf-tools.jsx -> docx",
+    "files": [
+      "static/chunks/_pages-dir-browser_node_modules_docx_dist_index_mjs.js"
+    ]
+  },
+  "pages\\pdf-tools.jsx -> jszip": {
+    "id": "pages\\pdf-tools.jsx -> jszip",
+    "files": [
+      "static/chunks/_pages-dir-browser_node_modules_jszip_dist_jszip_min_js.js"
+    ]
+  },
+  "pages\\pdf-tools.jsx -> pdf-lib": {
+    "id": "pages\\pdf-tools.jsx -> pdf-lib",
+    "files": [
+      "static/chunks/_pages-dir-browser_node_modules_pdf-lib_es_index_js.js"
+    ]
+  },
+  "pages\\pdf-tools.jsx -> pdfjs-dist/build/pdf": {
+    "id": "pages\\pdf-tools.jsx -> pdfjs-dist/build/pdf",
+    "files": [
+      "static/chunks/_pages-dir-browser_node_modules_pdfjs-dist_build_pdf_mjs.js"
+    ]
+  },
+  "pages\\pdf-tools.jsx -> pdfjs-dist/build/pdf.min.mjs": {
+    "id": "pages\\pdf-tools.jsx -> pdfjs-dist/build/pdf.min.mjs",
+    "files": [
+      "static/chunks/_pages-dir-browser_node_modules_pdfjs-dist_build_pdf_min_mjs.js"
+    ]
   }
 }

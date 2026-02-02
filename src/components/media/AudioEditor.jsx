@@ -208,7 +208,7 @@ export default function AudioEditor() {
   };
 
   return (
-    <div className="bg-[var(--bg-card)] text-[var(--text-main)] rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-800 transition-colors duration-300">
+    <div className="bg-[var(--bg-card)] text-[var(--text-main)] h-full w-full p-6 overflow-y-auto transition-colors duration-300">
       
       {/* Toolbar */}
       <div className="flex flex-wrap gap-4 mb-6 items-center justify-between">

@@ -17,6 +17,12 @@
       "static/chunks/_pages-dir-browser_src_components_media_AudioEditor_jsx.js"
     ]
   },
+  "pages\\media-editor.jsx -> ../components/media/ImageEditor": {
+    "id": "pages\\media-editor.jsx -> ../components/media/ImageEditor",
+    "files": [
+      "static/chunks/_pages-dir-browser_src_components_media_ImageEditor_jsx.js"
+    ]
+  },
   "pages\\media-editor.jsx -> ../components/media/VideoEditor": {
     "id": "pages\\media-editor.jsx -> ../components/media/VideoEditor",
     "files": [

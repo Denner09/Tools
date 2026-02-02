@@ -350,7 +350,7 @@ export default function VideoEditor() {
     };
 
     return (
-        <div className="flex flex-col h-[85vh] bg-[var(--bg-card)] text-[var(--text-main)] rounded-xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-800 font-sans">
+        <div className="flex flex-col h-full bg-[var(--bg-card)] text-[var(--text-main)] overflow-hidden font-sans transition-colors">
              <input type="file" ref={fileInputRef} className="hidden" multiple onChange={handleFileUpload} />
 
              {/* Top Preview Section */}

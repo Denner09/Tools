@@ -19,6 +19,13 @@ const nextConfig = {
   webpack: (config) => {
     config.resolve.alias.canvas = false;
     config.resolve.alias.encoding = false;
+    
+    // Silence critical dependency warning from pdfjs-dist
+    config.ignoreWarnings = [
+        ...(config.ignoreWarnings || []),
+        { module: /pdfjs-dist/ }
+    ];
+
     return config;
   },
 };

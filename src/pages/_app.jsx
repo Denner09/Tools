@@ -37,6 +37,17 @@ const MediaNavbarControls = () => {
               <i className="fas fa-video mr-2"></i>
               Vídeo
             </button>
+            <button
+              onClick={() => setActiveTab('image')}
+              className={`px-4 py-2 rounded-lg font-bold text-sm transition-all duration-300 ${
+                activeTab === 'image'
+                  ? 'bg-white dark:bg-gray-700 text-orange-600 shadow-sm'
+                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+              }`}
+            >
+              <i className="fas fa-image mr-2"></i>
+              Imagem
+            </button>
         </div>
     );
 };

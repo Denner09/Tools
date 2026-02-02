@@ -35,10 +35,22 @@ const Navbar = ({ centerContent, rightContent, hideMenu = false }) => {
                             className="h-8 w-auto relative z-10" 
                         />
                     </div>
-                    <span className="font-bold text-xl tracking-tight transition-colors" style={{ color: 'var(--text-main)' }}>
+                    <span className="font-bold text-xl tracking-tight transition-colors hidden sm:block" style={{ color: 'var(--text-main)' }}>
                         Business <span className="text-orange-500">tools</span>
                     </span>
                 </Link>
+
+                {/* Media Editor Breadcrumb */}
+                {router.pathname === '/media-editor' && (
+                    <div className="flex items-center gap-3 ml-6 border-l pl-6 border-gray-200 dark:border-gray-700 h-8">
+                         <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center text-white shadow-sm">
+                            <i className="fas fa-photo-video text-xs"></i>
+                        </div>
+                        <span className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 hidden lg:block">
+                            Editor de Mídia
+                        </span>
+                    </div>
+                )}
 
                 {/* Center Content (for BPMN or other tools) */}
                 {centerContent && (

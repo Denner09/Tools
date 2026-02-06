@@ -83,7 +83,7 @@ function MyApp({ Component, pageProps }) {
             <div className="flex-grow-1" style={{ paddingTop: isBpmnPage ? '0' : '80px' }}>
               <Component {...pageProps} />
             </div>
-            {!isBpmnPage && <Footer />}
+            {!isBpmnPage && !isMediaPage && <Footer />}
         </div>
        </MediaProvider>
     </ThemeProvider>

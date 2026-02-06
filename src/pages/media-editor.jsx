@@ -12,7 +12,7 @@ export default function MediaEditor() {
   const { activeTab } = useMedia();
 
   return (
-    <div className="min-h-screen font-sans transition-colors duration-300" style={{ backgroundColor: 'var(--bg-page)', color: 'var(--text-main)' }}>
+    <div className="h-full font-sans transition-colors duration-300" style={{ backgroundColor: 'var(--bg-page)', color: 'var(--text-main)' }}>
       <Head>
         <title>Editor de Mídia | Business Tools</title>
         <meta name="description" content="Edite áudio, vídeo e imagens online." />

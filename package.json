@@ -15,7 +15,7 @@
     "@excalidraw/excalidraw": "^0.18.0",
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
-    "@fortawesome/fontawesome-free": "^7.1.0",
+    "@fortawesome/fontawesome-free": "^6.5.1",
     "autoprefixer": "^10.4.23",
     "bootstrap": "^5.3.8",
     "bpmn-js": "^18.10.1",

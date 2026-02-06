@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import "@excalidraw/excalidraw/index.css";
 import '../index.css'; 
 import '../styles/main.scss'; 
 import Head from 'next/head';
@@ -83,7 +84,7 @@ function MyApp({ Component, pageProps }) {
             <div className="flex-grow-1" style={{ paddingTop: isBpmnPage ? '0' : '80px' }}>
               <Component {...pageProps} />
             </div>
-            {!isBpmnPage && !isMediaPage && <Footer />}
+            {!isBpmnPage && !isMediaPage && router.pathname !== '/whiteboard' && <Footer />}
         </div>
        </MediaProvider>
     </ThemeProvider>

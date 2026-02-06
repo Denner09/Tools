@@ -49,15 +49,18 @@ export default function JusIA() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-64px)] bg-[#f5f5f7] dark:bg-[#121212] overflow-hidden">
+    <div className="flex bg-[#f5f5f7] dark:bg-[#0a0a0a] overflow-hidden" style={{ height: 'calc(100vh - 80px)', backgroundColor: 'var(--bg-page)' }}>
       <Head>
         <title>JUS IA - Assistente Jurídico</title>
       </Head>
 
       {/* Sidebar Tools */}
-      <div className="w-80 bg-white dark:bg-[#1e1e1e] border-r border-gray-200 dark:border-gray-800 flex-col hidden md:flex">
-        <div className="p-4 border-b border-gray-200 dark:border-gray-800">
-           <h2 className="font-bold text-lg dark:text-gray-100 flex items-center gap-2">
+      <div 
+        className="w-80 border-r flex-col hidden md:flex transition-colors"
+        style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}
+      >
+        <div className="p-4 border-b" style={{ borderColor: 'var(--border-card)' }}>
+           <h2 className="font-bold text-lg flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
              <i className="fas fa-balance-scale text-blue-600"></i> Ferramentas
            </h2>
         </div>
@@ -82,9 +85,12 @@ export default function JusIA() {
       {/* Chat Area */}
       <div className="flex-1 flex flex-col min-w-0">
           {/* Header */}
-          <div className="h-14 border-b border-gray-200 dark:border-gray-800 flex items-center px-6 bg-white dark:bg-[#1e1e1e] justify-between">
+          <div 
+            className="h-14 border-b flex items-center px-6 justify-between transition-colors"
+            style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}
+          >
               <div>
-                  <h1 className="font-bold text-gray-800 dark:text-white">JUS IA</h1>
+                  <h1 className="font-bold" style={{ color: 'var(--text-main)' }}>JUS IA</h1>
                   <p className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span> Online (Local)
                   </p>
@@ -96,11 +102,18 @@ export default function JusIA() {
           <div className="flex-1 overflow-y-auto p-4 space-y-6">
               {messages.map(msg => (
                   <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-[80%] rounded-2xl p-4 shadow-sm whitespace-pre-wrap ${
+                      <div 
+                        className={`max-w-[80%] rounded-2xl p-4 shadow-sm whitespace-pre-wrap transition-colors ${
                           msg.role === 'user' 
                           ? 'bg-blue-600 text-white rounded-br-none' 
-                          : 'bg-white dark:bg-[#252525] text-gray-800 dark:text-gray-200 border border-gray-100 dark:border-gray-700 rounded-bl-none'
-                      }`}>
+                          : 'border rounded-bl-none'
+                        }`}
+                        style={msg.role === 'assistant' ? { 
+                            backgroundColor: 'var(--bg-card)', 
+                            color: 'var(--text-main)', 
+                            borderColor: 'var(--border-card)' 
+                        } : {}}
+                      >
                           {msg.role === 'assistant' && (
                               <div className="flex items-center gap-2 mb-2 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wide">
                                   <i className="fas fa-robot"></i> Jus IA
@@ -114,11 +127,18 @@ export default function JusIA() {
           </div>
 
           {/* Input */}
-          <div className="p-4 bg-white dark:bg-[#1e1e1e] border-t border-gray-200 dark:border-gray-800">
-              <div className="flex items-end gap-2 max-w-4xl mx-auto border border-gray-300 dark:border-gray-600 rounded-xl p-2 bg-gray-50 dark:bg-[#252525] focus-within:ring-2 focus-within:ring-blue-500 transition-all">
+          <div 
+            className="p-4 border-t transition-colors"
+            style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-card)' }}
+          >
+              <div 
+                className="flex items-end gap-2 max-w-4xl mx-auto border rounded-xl p-2 transition-all focus-within:ring-2 focus-within:ring-blue-500"
+                style={{ backgroundColor: 'var(--bg-page)', borderColor: 'var(--border-card)' }}
+              >
                   <textarea 
-                      className="flex-1 bg-transparent border-none outline-none text-gray-800 dark:text-gray-100 resize-none max-h-32 min-h-[44px] py-2.5 px-2"
+                      className="flex-1 bg-transparent border-none outline-none resize-none max-h-32 min-h-[44px] py-2.5 px-2"
                       placeholder="Digite sua dúvida jurídica ou peça um modelo..."
+                      style={{ color: 'var(--text-main)' }}
                       rows={1}
                       value={input}
                       onChange={e => setInput(e.target.value)}
@@ -137,7 +157,7 @@ export default function JusIA() {
                       <i className="fas fa-paper-plane"></i>
                   </button>
               </div>
-              <p className="text-center text-[10px] text-gray-400 mt-2">
+              <p className="text-center text-[10px] mt-2" style={{ color: 'var(--text-muted)' }}>
                   A JUS IA pode cometer erros. Verifique sempre as informações legais. Versão Offline v1.0.
               </p>
           </div>
@@ -147,13 +167,29 @@ export default function JusIA() {
 }
 
 const ToolCard = ({ icon, title, desc, onClick }) => (
-    <div onClick={onClick} className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#252525] cursor-pointer transition-colors group">
+    <div 
+        onClick={onClick} 
+        className="flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors group"
+        style={{ 
+            borderColor: 'var(--border-card)',
+            // Hover effect is handled by css-in-js or tailwind better, but for simplicity here we keep basic tailwind for hover
+        }}
+    >
+        {/* We need a wrapper div for hover style since inline styles override classes often */}
+        {/* Actually, let's use tailwind classes for hover that match the variables conceptually */}
+        <style jsx>{`
+            .tool-card:hover {
+                background-color: var(--bg-card-hover);
+            }
+        `}</style>
+        <div className="tool-card absolute inset-0 rounded-lg pointer-events-none"></div>
+        
         <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
             <i className={`fas fa-${icon}`}></i>
         </div>
         <div>
-            <h3 className="font-semibold text-sm text-gray-800 dark:text-gray-200">{title}</h3>
-            <p className="text-xs text-gray-500">{desc}</p>
+            <h3 className="font-semibold text-sm" style={{ color: 'var(--text-main)' }}>{title}</h3>
+            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{desc}</p>
         </div>
     </div>
 );

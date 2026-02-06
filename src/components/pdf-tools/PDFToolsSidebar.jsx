@@ -11,6 +11,7 @@ const tools = [
     { id: 'number', icon: 'fa-list-ol', label: 'Numeração', subtitle: 'Adicione números de página personalizados' },
     { id: 'convert', icon: 'fa-exchange-alt', label: 'Converter', subtitle: 'Converta PDF para Word, Excel, JPG e mais' },
     { id: 'repair', icon: 'fa-wrench', label: 'Reparar PDF', subtitle: 'Analise e corrija arquivos corrompidos' },
+    { id: 'hash', icon: 'fa-fingerprint', label: 'Obter Hash', subtitle: 'Calcule o hash SHA256 de segurança do arquivo' },
 ];
 
 const PDFToolsSidebar = ({ activeTool, setActiveTool, onToolChange }) => {

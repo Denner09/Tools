@@ -47,6 +47,7 @@ export default function PDFToolsPage() {
 
     // Convert States
     const [convertFormat, setConvertFormat] = useState('word'); // 'word', 'excel', 'powerpoint', 'jpg', 'png', 'svg'
+    const [hashResult, setHashResult] = useState('');
 
     // Crop Refs
     const dragStart = useRef(null);
@@ -114,8 +115,9 @@ export default function PDFToolsPage() {
     };
 
     const onDrop = useCallback((acceptedFiles) => {
-        if (activeTool === 'split' || activeTool === 'compress' || activeTool === 'crop' || activeTool === 'rotate' || activeTool === 'number' || activeTool === 'convert' || activeTool === 'repair') {
+        if (activeTool === 'split' || activeTool === 'compress' || activeTool === 'crop' || activeTool === 'rotate' || activeTool === 'number' || activeTool === 'convert' || activeTool === 'repair' || activeTool === 'hash') {
             setFiles([acceptedFiles[0]]);
+            setHashResult('');
             // Reset crop state on new file
             if (activeTool === 'crop') {
                 setCropPage(1);
@@ -1187,6 +1189,23 @@ export default function PDFToolsPage() {
         }
     };
 
+    const handleCalculateHash = async () => {
+        if (!files.length) return;
+        setProcessing(true);
+        try {
+            const arrayBuffer = await files[0].arrayBuffer();
+            const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            setHashResult(hashHex);
+        } catch (e) {
+            console.error(e);
+            alert("Erro ao calcular hash: " + e.message);
+        } finally {
+            setProcessing(false);
+        }
+    };
+
     const handleOCR = async () => {
         if (!files.length) return;
         setProcessing(true);
@@ -1319,6 +1338,11 @@ export default function PDFToolsPage() {
 
         if (activeTool === 'ocr') {
             await handleOCR();
+            return;
+        }
+
+        if (activeTool === 'hash') {
+            await handleCalculateHash();
             return;
         }
 
@@ -2096,6 +2120,41 @@ export default function PDFToolsPage() {
                                      <p className="text-center text-sm mt-2" style={{ color: 'var(--text-muted)' }}>
                                          Processando... { (activeTool === 'ocr' || activeTool === 'compress' || activeTool === 'split') ? `${ocrProgress}%` : '' }
                                      </p>
+                                 </div>
+                             )}
+
+                             {/* Hash Result Box */}
+                             {activeTool === 'hash' && hashResult && (
+                                 <div className="mt-6 flex flex-col gap-4 animate-fade-in">
+                                     <div className="p-6 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg">
+                                         <h4 className="font-bold text-emerald-800 dark:text-emerald-300 mb-2">
+                                             <i className="fas fa-fingerprint mr-2"></i>
+                                             Hash SHA-256 Calculado
+                                         </h4>
+                                         <p className="text-emerald-700 dark:text-emerald-200 text-sm mb-4">
+                                             Este código é único para este arquivo. Qualquer alteração, por menor que seja, mudará completamente este hash.
+                                         </p>
+                                         
+                                         <div className="flex items-center gap-2">
+                                             <div 
+                                                className="flex-1 p-4 rounded border font-mono text-sm break-all select-all transition-colors"
+                                                style={{ 
+                                                    backgroundColor: 'var(--bg-card)', 
+                                                    borderColor: 'var(--border-card)',
+                                                    color: 'var(--text-main)'
+                                                }}
+                                             >
+                                                 {hashResult}
+                                             </div>
+                                             <button
+                                                 onClick={() => navigator.clipboard.writeText(hashResult)}
+                                                 className="p-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded shadow-sm transition-colors"
+                                                 title="Copiar para área de transferência"
+                                             >
+                                                 <i className="fas fa-copy"></i>
+                                             </button>
+                                         </div>
+                                     </div>
                                  </div>
                              )}
 

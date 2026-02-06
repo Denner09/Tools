@@ -1,9 +1,0 @@
-{
-  "/_error": "pages/_error.js",
-  "/": "pages/index.js",
-  "/_app": "pages/_app.js",
-  "/pdf-tools": "pages/pdf-tools.js",
-  "/bpmn": "pages/bpmn.js",
-  "/text-editor": "pages/text-editor.js",
-  "/_document": "pages/_document.js"
-}

@@ -12,6 +12,7 @@
     "deploy": "npm run build && gh-pages -d out -t"
   },
   "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.0",
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
     "@fortawesome/fontawesome-free": "^7.1.0",

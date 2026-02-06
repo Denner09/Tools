@@ -1,7 +1,9 @@
 {
   "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/media-editor": "pages/media-editor.js",
-  "/": "pages/index.js"
+  "/_error": "pages/_error.js",
+  "/whiteboard": "pages/whiteboard.js",
+  "/": "pages/index.js",
+  "/jus-ia": "pages/jus-ia.js",
+  "/media-editor": "pages/media-editor.js"
 }

@@ -61,6 +61,22 @@ const Home = () => {
                 buttonText="Abrir"
             />
 
+            <FeatureCard 
+                href="/jus-ia"
+                icon="fas fa-balance-scale"
+                title="Assistente Jurídico"
+                description="IA Jurídica Offline: Chat, modelos de petições e ferramentas de análise sem login."
+                buttonText="Acessar"
+            />
+
+            <FeatureCard 
+                href="/whiteboard"
+                icon="fas fa-chalkboard"
+                title="Quadro Branco"
+                description="Desenhe fluxogramas e esboços livremente com a tecnologia Excalidraw."
+                buttonText="Desenhar"
+            />
+
         </div>
       </div>
     </div>

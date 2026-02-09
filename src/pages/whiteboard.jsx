@@ -80,10 +80,41 @@ export default function Whiteboard() {
       <Head>
         <title>Quadro Branco (Excalidraw)</title>
       </Head>
-      {/* Hide Excalidraw Help Button (Footer Right) */}
       <style jsx global>{`
+        /* Hide Excalidraw Help Button */
         .excalidraw .layer-ui__wrapper__footer-right {
            display: none !important;
+        }
+
+        /* Elevate the entire UI layer of Excalidraw */
+        .excalidraw .layer-ui__wrapper {
+            z-index: 50 !important; /* Match Navbar z-index */
+        }
+
+        /* 
+           CRITICAL FIX: Bootstrap Conflict Resolution
+           Bootstrap's .dropdown-menu class has 'display: none'.
+           Excalidraw uses the same class name for its menu but expects it to be visible when rendered.
+           We must override Bootstrap's style specifically for Excalidraw.
+        */
+        .excalidraw .dropdown-menu {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: absolute !important;
+            /* Ensure it has a background and isn't transparent */
+            background-color: var(--bg-card) !important;
+            border: 1px solid var(--border-card) !important;
+            box-shadow: var(--shadow-card) !important;
+        }
+        
+        .excalidraw .dropdown-menu-container {
+             z-index: 100 !important;
+        }
+
+        /* Ensure the menu button is clickable */
+        .excalidraw .dropdown-menu-button {
+            pointer-events: all !important;
         }
       `}</style>
       

@@ -329,43 +329,43 @@ export default function ImageEditor() {
     }, []);
 
     return (
-        <div className={`${isFullScreen ? 'fixed inset-0 z-[100] h-screen w-screen' : 'flex flex-col h-full w-full'} bg-[#1e1e1e] text-gray-200 overflow-hidden font-sans transition-all duration-300 relative`} onClick={() => setActiveMenu(null)}>
+        <div className={`${isFullScreen ? 'fixed inset-0 z-[100] h-screen w-screen' : 'flex flex-col h-full w-full'} bg-gray-50 dark:bg-[#1e1e1e] text-gray-800 dark:text-gray-200 overflow-hidden font-sans transition-all duration-300 relative`} onClick={() => setActiveMenu(null)}>
             
-            <div className="h-10 bg-[#2d2d2d] border-b border-gray-700 flex items-center px-4 justify-between shrink-0 relative z-50">
-                <div className="flex items-center gap-4 text-xs font-medium text-gray-400">
+            <div className="h-10 bg-white dark:!bg-[#2d2d2d] border-b border-gray-200 dark:!border-gray-700 flex items-center px-4 justify-between shrink-0 relative z-50 transition-colors">
+                <div className="flex items-center gap-4 text-xs font-medium text-gray-600 dark:text-gray-400">
                     <div className="relative">
                         <span 
-                            className={`hover:text-white cursor-pointer px-2 py-1 rounded ${activeMenu === 'file' ? 'bg-gray-700 text-white' : ''}`}
+                            className={`hover:text-blue-600 dark:hover:text-white cursor-pointer px-2 py-1 rounded ${activeMenu === 'file' ? 'bg-gray-200 dark:bg-gray-700 text-blue-600 dark:text-white' : ''}`}
                             onClick={(e) => { e.stopPropagation(); setActiveMenu(activeMenu === 'file' ? null : 'file'); }}
                         >
                             Arquivo <i className="fas fa-chevron-down ml-1 text-[10px]"></i>
                         </span>
                         
                         {activeMenu === 'file' && (
-                            <div className="absolute top-full left-0 mt-1 w-48 bg-[#2d2d2d] border border-gray-600 rounded shadow-xl py-1 text-gray-200 flex flex-col">
+                            <div className="absolute top-full left-0 mt-1 w-48 bg-white dark:!bg-[#2d2d2d] border border-gray-200 dark:!border-gray-600 rounded shadow-xl py-1 text-gray-700 dark:!text-gray-200 flex flex-col">
                                 <button 
-                                    className="text-left px-4 py-2 hover:bg-blue-600 hover:text-white flex items-center justify-between group"
+                                    className="text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white flex items-center justify-between group transition-colors"
                                     onClick={() => { setNewProjModal({}); setActiveMenu(null); }}
                                 >
                                     <span><i className="fas fa-file w-5 mr-2"></i> Novo</span>
                                 </button>
                                 <button 
-                                    className="text-left px-4 py-2 hover:bg-blue-600 hover:text-white flex items-center justify-between"
+                                    className="text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white flex items-center justify-between transition-colors"
                                     onClick={() => { fileInputRef.current.click(); setActiveMenu(null); }}
                                 >
                                     <span><i className="fas fa-folder-open w-5 mr-2"></i> Abrir</span>
                                 </button>
-                                <div className="h-px bg-gray-700 my-1"></div>
+                                <div className="h-px bg-gray-200 dark:bg-gray-700 my-1"></div>
                                 <button 
-                                    className="text-left px-4 py-2 hover:bg-blue-600 hover:text-white disabled:opacity-50"
+                                    className="text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white disabled:opacity-50 transition-colors"
                                     disabled={!activeProject}
                                     onClick={() => { setSaveModal({ projectId: activeProjectId }); setActiveMenu(null); }}
                                 >
                                     <i className="fas fa-save w-5 mr-2"></i> Salvar como...
                                 </button>
-                                <div className="h-px bg-gray-700 my-1"></div>
+                                <div className="h-px bg-gray-200 dark:bg-gray-700 my-1"></div>
                                 <button 
-                                    className="text-left px-4 py-2 hover:bg-red-600 hover:text-white"
+                                    className="text-left px-4 py-2 hover:bg-red-50 dark:hover:bg-red-600 hover:text-red-600 dark:hover:text-white transition-colors"
                                     onClick={() => closeAll()}
                                 >
                                     <i className="fas fa-times-circle w-5 mr-2"></i> Fechar Tudo
@@ -376,53 +376,53 @@ export default function ImageEditor() {
 
                     <div className="relative">
                         <span 
-                            className={`hover:text-white cursor-pointer px-2 py-1 rounded ${activeMenu === 'edit' ? 'bg-gray-700 text-white' : ''}`}
+                            className={`hover:text-blue-600 dark:hover:text-white cursor-pointer px-2 py-1 rounded ${activeMenu === 'edit' ? 'bg-gray-200 dark:bg-gray-700 text-blue-600 dark:text-white' : ''}`}
                             onClick={(e) => { e.stopPropagation(); setActiveMenu(activeMenu === 'edit' ? null : 'edit'); }}
                         >
                             Editar <i className="fas fa-chevron-down ml-1 text-[10px]"></i>
                         </span>
 
                         {activeMenu === 'edit' && (
-                            <div className="absolute top-full left-0 mt-1 w-56 bg-[#2d2d2d] border border-gray-600 rounded shadow-xl py-1 text-gray-200 flex flex-col z-[60]">
-                                <button className="text-left px-4 py-2 hover:bg-blue-600 hover:text-white flex justify-between items-center group"
+                            <div className="absolute top-full left-0 mt-1 w-56 bg-white dark:!bg-[#2d2d2d] border border-gray-200 dark:!border-gray-600 rounded shadow-xl py-1 text-gray-700 dark:!text-gray-200 flex flex-col z-[60]">
+                                <button className="text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white flex justify-between items-center group transition-colors"
                                     onClick={() => { if(activeProject) undo(activeProject.id); setActiveMenu(null); }}
                                     disabled={!activeProject}
                                 >
-                                    <span>Desfazer</span> <span className="text-xs text-gray-500 group-hover:text-gray-200">Ctrl+Z</span>
+                                    <span>Desfazer</span> <span className="text-xs text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-gray-200">Ctrl+Z</span>
                                 </button>
-                                <button className="text-left px-4 py-2 hover:bg-blue-600 hover:text-white flex justify-between items-center group"
+                                <button className="text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white flex justify-between items-center group transition-colors"
                                     onClick={() => { if(activeProject) redo(activeProject.id); setActiveMenu(null); }}
                                     disabled={!activeProject}
                                 >
-                                    <span>Refazer</span> <span className="text-xs text-gray-500 group-hover:text-gray-200">Ctrl+Y</span>
+                                    <span>Refazer</span> <span className="text-xs text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-gray-200">Ctrl+Y</span>
                                 </button>
-                                <div className="h-px bg-gray-700 my-1"></div>
-                                <button className="text-left px-4 py-2 hover:bg-blue-600 hover:text-white flex justify-between items-center group"
+                                <div className="h-px bg-gray-200 dark:bg-gray-700 my-1"></div>
+                                <button className="text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white flex justify-between items-center group transition-colors"
                                     onClick={() => { 
                                          if(activeProject) window.dispatchEvent(new CustomEvent('CLIPBOARD_ACTION', { detail: { action: 'cut', projectId: activeProject.id } })); 
                                          setActiveMenu(null); 
                                     }}
                                     disabled={!activeProject}
                                 >
-                                    <span>Recortar</span> <span className="text-xs text-gray-500 group-hover:text-gray-200">Ctrl+X</span>
+                                    <span>Recortar</span> <span className="text-xs text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-gray-200">Ctrl+X</span>
                                 </button>
-                                <button className="text-left px-4 py-2 hover:bg-blue-600 hover:text-white flex justify-between items-center group"
+                                <button className="text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white flex justify-between items-center group transition-colors"
                                     onClick={() => { 
                                          if(activeProject) window.dispatchEvent(new CustomEvent('CLIPBOARD_ACTION', { detail: { action: 'copy', projectId: activeProject.id } })); 
                                          setActiveMenu(null); 
                                     }}
                                     disabled={!activeProject}
                                 >
-                                    <span>Copiar</span> <span className="text-xs text-gray-500 group-hover:text-gray-200">Ctrl+C</span>
+                                    <span>Copiar</span> <span className="text-xs text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-gray-200">Ctrl+C</span>
                                 </button>
-                                <button className="text-left px-4 py-2 hover:bg-blue-600 hover:text-white flex justify-between items-center group"
+                                <button className="text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white flex justify-between items-center group transition-colors"
                                     onClick={() => { 
                                          if(activeProject) window.dispatchEvent(new CustomEvent('CLIPBOARD_ACTION', { detail: { action: 'paste', projectId: activeProject.id } })); 
                                          setActiveMenu(null); 
                                     }}
                                     disabled={!activeProject}
                                 >
-                                    <span>Colar</span> <span className="text-xs text-gray-500 group-hover:text-gray-200">Ctrl+V</span>
+                                    <span>Colar</span> <span className="text-xs text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-gray-200">Ctrl+V</span>
                                 </button>
                             </div>
                         )}
@@ -430,7 +430,7 @@ export default function ImageEditor() {
                 </div>
                 
                 <div className="flex items-center gap-2">
-                     <button className="text-xs bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded text-white" onClick={() => setIsFullScreen(!isFullScreen)}>
+                     <button className="text-xs bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-3 py-1 rounded text-gray-700 dark:text-white transition-colors" onClick={() => setIsFullScreen(!isFullScreen)}>
                         <i className={`fas fa-${isFullScreen ? 'compress' : 'expand'} mr-1`}></i>
                         {isFullScreen ? 'Sair' : 'Tela Cheia'}
                      </button>
@@ -439,7 +439,7 @@ export default function ImageEditor() {
             
             <input type="file" ref={fileInputRef} hidden multiple accept="image/*" onChange={handleFileOpen} />
 
-            <div className="bg-[#252525] flex items-center px-2 pt-2 gap-1 overflow-x-auto border-b border-gray-700 shrink-0 h-10 scrollbar-hide">
+            <div className="bg-gray-100 dark:bg-[#252525] flex items-center px-2 pt-2 gap-1 overflow-x-auto border-b border-gray-200 dark:border-gray-700 shrink-0 h-10 scrollbar-hide">
                 {projects.map(p => (
                     <div 
                         key={p.id}
@@ -447,10 +447,10 @@ export default function ImageEditor() {
                         onDragOver={(e) => e.preventDefault()}
                         onDrop={(e) => handleLayerDropOnTab(e, p.id)}
                         className={`
-                            group flex items-center gap-2 px-3 py-1.5 rounded-t-lg text-xs cursor-pointer select-none min-w-[120px] max-w-[200px] border-t border-x border-transparent relative
+                            group flex items-center gap-2 px-3 py-1.5 rounded-t-lg text-xs cursor-pointer select-none min-w-[120px] max-w-[200px] border-t border-x border-transparent relative transition-colors
                             ${activeProjectId === p.id 
-                                ? 'bg-[#1e1e1e] border-gray-700 text-white font-medium border-b-[#1e1e1e] -mb-px z-10' 
-                                : 'bg-[#333] text-gray-400 hover:bg-[#3d3d3d] hover:text-gray-200'}
+                                ? 'bg-white dark:bg-[#1e1e1e] border-gray-200 dark:border-gray-700 text-blue-600 dark:text-white font-medium border-b-white dark:border-b-[#1e1e1e] -mb-px z-10 shadow-sm' 
+                                : 'bg-gray-200 dark:bg-[#333] text-gray-500 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-[#3d3d3d] hover:text-gray-700 dark:hover:text-gray-200'}
                         `}
                     >
                         <i className="fas fa-image text-blue-500"></i>
@@ -471,7 +471,7 @@ export default function ImageEditor() {
 
             <div className="flex flex-1 overflow-hidden relative">
                 
-                <div className="w-12 bg-[#252525] border-r border-gray-700 flex flex-col items-center py-4 gap-4 z-20 shrink-0">
+                <div className="w-12 bg-gray-100 dark:bg-[#252525] border-r border-gray-200 dark:border-gray-700 flex flex-col items-center py-4 gap-4 z-20 shrink-0 shadow-inner">
                     <ToolButton icon="crop-alt" active={activeTool === TOOLS.MARQUEE} onClick={() => setActiveTool(TOOLS.MARQUEE)} title="Seleção (M)" />
                     <ToolButton icon="arrows-alt" active={activeTool === TOOLS.MOVE} onClick={() => setActiveTool(TOOLS.MOVE)} title="Mover Camada (V)" />
                     <ToolButton icon="expand-arrows-alt" active={activeTool === TOOLS.RESIZE} onClick={() => setActiveTool(TOOLS.RESIZE)} title="Redimensionar" />
@@ -480,12 +480,12 @@ export default function ImageEditor() {
                     <ToolButton icon="magic" active={activeTool === TOOLS.FILTERS} onClick={() => setActiveTool(TOOLS.FILTERS)} title="Filtros/Efeitos" />
                     <div className="flex-1"></div>
                     <div className="relative group">
-                         <div className="w-8 h-8 rounded-full border-2 border-white cursor-pointer overflow-hidden" style={{ backgroundColor: brushColor }}></div>
+                         <div className="w-8 h-8 rounded-full border-2 border-white dark:border-gray-600 cursor-pointer overflow-hidden shadow-md" style={{ backgroundColor: brushColor }}></div>
                          <input type="color" className="absolute inset-0 opacity-0 cursor-pointer w-full h-full" value={brushColor} onChange={(e) => setBrushColor(e.target.value)} title="Cor do Pincel" />
                     </div>
                 </div>
 
-                <div className="flex-1 bg-[#121212] overflow-hidden relative">
+                <div className="flex-1 bg-gray-200 dark:bg-[#121212] overflow-hidden relative">
                     {projects.map(p => (
                         <ProjectWorkspace 
                             key={p.id} 
@@ -538,14 +538,14 @@ export default function ImageEditor() {
                     ))}
                     
                     {projects.length === 0 && (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-500">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
                              <div className="mb-6 opacity-20"><i className="fas fa-layer-group text-6xl"></i></div>
                              <p className="mb-4 text-xs uppercase tracking-widest opacity-50">Comece algo criativo</p>
                              <div className="flex gap-4">
                                  <button onClick={() => setNewProjModal({})} className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg shadow-xl text-sm font-medium transition-transform active:scale-95 flex items-center">
                                      <i className="fas fa-plus mr-2"></i> Novo Arquivo
                                  </button>
-                                 <button onClick={() => fileInputRef.current.click()} className="px-6 py-3 bg-[#333] hover:bg-[#444] text-white rounded-lg shadow-xl text-sm font-medium transition-transform active:scale-95 flex items-center">
+                                 <button onClick={() => fileInputRef.current.click()} className="px-6 py-3 bg-gray-600 hover:bg-gray-500 dark:bg-[#333] dark:hover:bg-[#444] text-white rounded-lg shadow-xl text-sm font-medium transition-transform active:scale-95 flex items-center">
                                      <i className="fas fa-folder-open mr-2"></i> Abrir Imagem
                                  </button>
                              </div>
@@ -629,12 +629,12 @@ export default function ImageEditor() {
 
             {contextMenu && (
                 <div 
-                    className="fixed z-[300] bg-[#2d2d2d] border border-gray-600 rounded shadow-xl py-1 w-48 text-gray-200 text-sm"
+                    className="fixed z-[300] bg-white dark:!bg-[#2d2d2d] border border-gray-200 dark:!border-gray-600 rounded shadow-xl py-1 w-48 text-gray-700 dark:!text-gray-200 text-sm"
                     style={{ top: contextMenu.y, left: contextMenu.x }}
                     onClick={(e) => e.stopPropagation()}
                 >
-                    <div className="px-3 py-2 border-b border-gray-700 font-bold bg-[#333]">{contextMenu.title || 'Opções'}</div>
-                     <button className="w-full text-left px-4 py-2 hover:bg-blue-600 hover:text-white" onClick={() => {
+                    <div className="px-3 py-2 border-b border-gray-200 dark:!border-gray-700 font-bold bg-gray-100 dark:!bg-[#333]">{contextMenu.title || 'Opções'}</div>
+                     <button className="w-full text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white transition-colors" onClick={() => {
                         // Keep manual resize modal as an option
                          const l = projects.find(p=>p.id===contextMenu.projectId)?.layers.find(la=>la.id===contextMenu.layerId);
                          if(l) {
@@ -649,27 +649,27 @@ export default function ImageEditor() {
                      }}>
                          <i className="fas fa-compress-arrows-alt mr-2"></i> Redimensionar (Manual)
                      </button>
-                     <div className="h-px bg-gray-700 my-1"></div>
-                     <button className="w-full text-left px-4 py-2 hover:bg-blue-600 hover:text-white" onClick={() => {
+                     <div className="h-px bg-gray-200 dark:bg-gray-700 my-1"></div>
+                     <button className="w-full text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white transition-colors" onClick={() => {
                         window.dispatchEvent(new CustomEvent('CLIPBOARD_ACTION', { detail: { action: 'copy', projectId: contextMenu.projectId } }));
                         setContextMenu(null);
                      }}>
                          <i className="fas fa-copy mr-2"></i> Copiar
                      </button>
-                     <button className="w-full text-left px-4 py-2 hover:bg-blue-600 hover:text-white" onClick={() => {
+                     <button className="w-full text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white transition-colors" onClick={() => {
                         window.dispatchEvent(new CustomEvent('CLIPBOARD_ACTION', { detail: { action: 'cut', projectId: contextMenu.projectId } }));
                         setContextMenu(null);
                      }}>
                          <i className="fas fa-cut mr-2"></i> Recortar
                      </button>
-                     <button className="w-full text-left px-4 py-2 hover:bg-blue-600 hover:text-white" onClick={() => {
+                     <button className="w-full text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white transition-colors" onClick={() => {
                         window.dispatchEvent(new CustomEvent('CLIPBOARD_ACTION', { detail: { action: 'paste', projectId: contextMenu.projectId } }));
                         setContextMenu(null);
                      }}>
                          <i className="fas fa-paste mr-2"></i> Colar
                      </button>
-                     <div className="h-px bg-gray-700 my-1"></div>
-                    <button className="w-full text-left px-4 py-2 hover:bg-blue-600 hover:text-white" onClick={() => setContextMenu(null)}>
+                     <div className="h-px bg-gray-200 dark:bg-gray-700 my-1"></div>
+                    <button className="w-full text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white transition-colors" onClick={() => setContextMenu(null)}>
                         Cancelar
                     </button>
                 </div>
@@ -1186,7 +1186,7 @@ function ProjectWorkspace({ project, isActive, toolsState, onUpdate, onSnapshot 
 
     return (
         <div 
-            className={`absolute inset-0 overflow-auto flex items-center justify-center p-8 bg-[#121212] ${isActive ? 'z-10' : 'z-0 invisible pointer-events-none'}`}
+            className={`absolute inset-0 overflow-auto flex items-center justify-center p-8 bg-gray-300 dark:bg-[#121212] ${isActive ? 'z-10' : 'z-0 invisible pointer-events-none'}`}
             ref={containerRef}
         >
             <div 
@@ -1312,11 +1312,11 @@ const ColorPickerUI = ({ brushColor, setBrushColor }) => {
             {/* Swatch & Hex */}
             <div className="flex gap-3 mb-2">
                 <div 
-                    className="w-12 h-12 rounded border border-gray-600 shadow-inner" 
+                    className="w-12 h-12 rounded border border-gray-300 dark:border-gray-600 shadow-inner" 
                     style={{backgroundColor: brushColor}}
                 ></div>
                 <div className="flex-1 flex flex-col gap-1 justify-center">
-                    <div className="flex bg-[#1e1e1e] border border-gray-600 rounded p-1 items-center">
+                    <div className="flex bg-white dark:bg-[#1e1e1e] border border-gray-300 dark:border-gray-600 rounded p-1 items-center">
                          <span className="text-gray-500 text-xs px-1">#</span>
                          <input 
                             type="text" 
@@ -1328,13 +1328,13 @@ const ColorPickerUI = ({ brushColor, setBrushColor }) => {
                                     setBrushColor('#' + val);
                                 }
                             }}
-                            className="bg-transparent w-full text-xs text-white outline-none font-mono uppercase"
+                            className="bg-transparent w-full text-xs text-gray-800 dark:text-white outline-none font-mono uppercase"
                          />
                     </div>
                     {/* Mode Switcher */}
                     <div className="flex gap-1">
-                        <button onClick={()=>setMode('RGB')} className={`flex-1 text-[10px] rounded py-0.5 ${mode==='RGB'?'bg-gray-600 text-white':'text-gray-500 hover:bg-gray-700'}`}>RGB</button>
-                        <button onClick={()=>setMode('PALETTE')} className={`flex-1 text-[10px] rounded py-0.5 ${mode==='PALETTE'?'bg-gray-600 text-white':'text-gray-500 hover:bg-gray-700'}`}>Paleta</button>
+                        <button onClick={()=>setMode('RGB')} className={`flex-1 text-[10px] rounded py-0.5 ${mode==='RGB'?'bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white':'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>RGB</button>
+                        <button onClick={()=>setMode('PALETTE')} className={`flex-1 text-[10px] rounded py-0.5 ${mode==='PALETTE'?'bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white':'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>Paleta</button>
                     </div>
                 </div>
             </div>
@@ -1364,7 +1364,7 @@ const ColorPickerUI = ({ brushColor, setBrushColor }) => {
                                 min="0" max="255" 
                                 value={rgb[c]}
                                 onChange={(e)=>updateRGB(c, e.target.value)}
-                                className="w-8 bg-[#1e1e1e] border-none text-right text-xs text-gray-300 outline-none p-0 no-spinner"
+                                className="w-8 bg-white dark:bg-[#1e1e1e] border-none text-right text-xs text-gray-800 dark:text-gray-300 outline-none p-0 no-spinner"
                              />
                         </div>
                     ))}
@@ -1458,12 +1458,12 @@ function PropertiesPanel({ project, toolsState, setBrushSize, setBrushColor, onU
     };
 
     return (
-        <div className="w-72 bg-[#252525] border-l border-gray-700 flex flex-col shrink-0 z-20">
-            <div className="border-b border-gray-700 p-4">
+        <div className="w-72 bg-white dark:bg-[#252525] border-l border-gray-200 dark:border-gray-700 flex flex-col shrink-0 z-20 transition-colors">
+            <div className="border-b border-gray-200 dark:border-gray-700 p-4">
                 <div className="flex justify-between items-center mb-3">
-                     <span className="text-[10px] text-gray-400 font-bold uppercase">Cor</span>
+                     <span className="text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase">Cor</span>
                      <div className="flex gap-2">
-                        <button className="text-[10px] uppercase font-bold text-gray-400 hover:text-white" onClick={() => {
+                        <button className="text-[10px] uppercase font-bold text-gray-400 hover:text-gray-600 dark:hover:text-white" onClick={() => {
                             const newMode = (toolsState.colorMode === 'RGB') ? 'HEX' : 'RGB';
                             // We don't have local state for mode in ImageEditor parent?
                             // Let's adapt. We can use a local state here since it is UI only?
@@ -1478,7 +1478,7 @@ function PropertiesPanel({ project, toolsState, setBrushSize, setBrushColor, onU
 
             </div>
             
-            <div className="flex-1 overflow-y-auto p-4 border-b border-gray-700 max-h-60">
+            <div className="flex-1 overflow-y-auto p-4 border-b border-gray-200 dark:border-gray-700 max-h-60">
                  <div className="mb-4">
                      <label className="text-[10px] text-gray-500 font-bold uppercase block mb-1">Zoom {zoom}%</label>
                      <input type="range" min="10" max="200" value={zoom} onChange={e=>onUpdateProject({zoom: Number(e.target.value)})} className="w-full h-1 bg-gray-600 rounded-lg cursor-pointer accent-blue-500" />
@@ -1490,16 +1490,16 @@ function PropertiesPanel({ project, toolsState, setBrushSize, setBrushColor, onU
                      </div>
                  )}
                  <div className="gap-2 grid grid-cols-2">
-                     <button onClick={()=>onUpdateProject({filter: ''})} className={`text-xs border rounded p-1 ${filter===''?'bg-blue-900 border-blue-500 text-white':'border-gray-600 text-gray-400'}`}>Normal</button>
+                     <button onClick={()=>onUpdateProject({filter: ''})} className={`text-xs border rounded p-1 ${filter===''?'bg-blue-100 dark:bg-blue-900 border-blue-500 text-blue-800 dark:text-white':'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'}`}>Normal</button>
                     {FILTERS.map(f => (
-                        f.class && <button key={f.name} onClick={()=>onUpdateProject({filter: f.class})} className={`text-xs border rounded p-1 ${filter===f.class?'bg-blue-900 border-blue-500 text-white':'border-gray-600 text-gray-400'}`}>{f.name}</button>
+                        f.class && <button key={f.name} onClick={()=>onUpdateProject({filter: f.class})} className={`text-xs border rounded p-1 ${filter===f.class?'bg-blue-100 dark:bg-blue-900 border-blue-500 text-blue-800 dark:text-white':'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'}`}>{f.name}</button>
                     ))}
                  </div>
             </div>
 
-            <div className="flex-1 flex flex-col min-h-0 bg-[#1e1e1e]">
-                <div className="p-3 bg-[#2d2d2d] border-b border-gray-700 flex justify-between items-center">
-                    <span className="text-[10px] font-bold text-gray-400 uppercase">Camadas</span>
+            <div className="flex-1 flex flex-col min-h-0 bg-white dark:bg-[#1e1e1e]">
+                <div className="p-3 bg-gray-50 dark:bg-[#2d2d2d] border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                    <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase">Camadas</span>
                     <button onClick={addLayer} className="text-xs bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-500">+ Nova</button>
                 </div>
                 <div className="flex-1 overflow-y-auto p-1 space-y-1">
@@ -1509,9 +1509,9 @@ function PropertiesPanel({ project, toolsState, setBrushSize, setBrushColor, onU
                             draggable={!layer.locked}
                             onDragStart={(e) => handleDragStart(e, layer)}
                             onClick={()=>onUpdateProject({activeLayerId: layer.id})} 
-                            className={`flex items-center gap-2 p-2 rounded cursor-pointer border ${activeLayerId===layer.id?'bg-blue-900/30 border-blue-500 text-white':'border-transparent hover:bg-gray-700 text-gray-400'} ${layer.locked ? 'opacity-70' : ''}`}
+                            className={`flex items-center gap-2 p-2 rounded cursor-pointer border ${activeLayerId===layer.id?'bg-blue-50 dark:bg-blue-900/30 border-blue-500 text-blue-900 dark:text-white':'border-transparent hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400'} ${layer.locked ? 'opacity-70' : ''}`}
                         >
-                            <button onClick={(e) => { e.stopPropagation(); toggleLock(e, layer.id); }} className={`w-5 hover:text-white ${layer.locked ? 'text-red-400' : 'text-gray-600'}`}>
+                            <button onClick={(e) => { e.stopPropagation(); toggleLock(e, layer.id); }} className={`w-5 hover:text-black dark:hover:text-white ${layer.locked ? 'text-red-500' : 'text-gray-400 dark:text-gray-600'}`}>
                                 <i className={`fas fa-${layer.locked ? 'lock' : 'unlock'}`}></i>
                             </button>
                             <button onClick={(e) => { e.stopPropagation(); toggleLayer(layer.id); }} className="w-5"><i className={`fas fa-${layer.visible?'eye':'eye-slash'}`}></i></button>
@@ -1584,7 +1584,7 @@ function SaveModal({ project, onClose }) {
 }
 
 const ToolButton = ({ icon, active, onClick, title }) => (
-    <button className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${active?'bg-blue-600 text-white shadow-lg shadow-blue-900/50':'text-gray-400 hover:bg-gray-700 hover:text-white'}`} onClick={onClick} title={title}>
+    <button className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${active?'bg-blue-600 text-white shadow-lg shadow-blue-500/50':'text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-800 dark:hover:text-white'}`} onClick={onClick} title={title}>
         <i className={`fas fa-${icon} text-lg`}></i>
     </button>
 );

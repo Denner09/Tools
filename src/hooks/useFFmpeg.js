@@ -18,7 +18,7 @@ export function useFFmpeg() {
         ffmpegRef.current = new FFmpeg();
     }
     
-    const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
+    const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.10/dist/umd';
     const ffmpeg = ffmpegRef.current;
     
     ffmpeg.on('log', ({ message }) => {
@@ -27,9 +27,12 @@ export function useFFmpeg() {
     });
 
     try {
+        const coreBlobURL = await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript');
+        const wasmBlobURL = await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm');
+
         await ffmpeg.load({
-            coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-            wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+            coreURL: coreBlobURL,
+            wasmURL: wasmBlobURL,
         });
         setLoaded(true);
     } catch (e) {

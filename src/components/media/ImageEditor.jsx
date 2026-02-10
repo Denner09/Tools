@@ -69,236 +69,141 @@ const CANVAS_PRESETS = [
 
 const FONT_FAMILIES = ['Arial', 'Helvetica', 'Times New Roman', 'Courier New', 'Georgia', 'Verdana', 'Comic Sans MS', 'Impact', 'Trebuchet MS', 'Arial Black'];
 
-// Text Properties Panel Component
+// Text Properties Panel Component - Compact & Icon-based
 function TextPropertiesPanel({ layer, onUpdate, isOpen, onClose }) {
     if (!layer || layer.type !== 'text') return null;
     
     return (
         <div 
-            className={`fixed right-0 top-0 h-full w-80 bg-white dark:bg-[#2d2d2d] border-l border-gray-300 dark:border-gray-700 shadow-2xl z-[150] transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
-            style={{ marginTop: '40px' }} // Account for top bar
+            className={`fixed left-14 top-40 w-64 bg-white dark:!bg-[#1e1e1e] border border-gray-300 dark:border-gray-700 shadow-2xl z-[150] rounded-lg transition-opacity duration-200 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         >
-            <div className="h-full flex flex-col">
-                {/* Header */}
-                <div className="flex items-center justify-between p-4 border-b border-gray-300 dark:border-gray-700">
-                    <h3 className="font-bold text-gray-900 dark:text-white">Propriedades de Texto</h3>
-                    <button 
-                        onClick={onClose}
-                        className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                    >
-                        <i className="fas fa-times"></i>
-                    </button>
+            <div className="flex items-center justify-between p-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#252525] rounded-t-lg">
+                <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase"><i className="fas fa-font mr-1"></i> Texto</span>
+                <button onClick={onClose} className="text-gray-400 hover:text-red-500"><i className="fas fa-times"></i></button>
+            </div>
+            
+            <div className="p-3 space-y-3 max-h-[70vh] overflow-y-auto custom-scrollbar">
+                {/* Text Content */}
+                <div className="relative group">
+                    <textarea 
+                        value={layer.text}
+                        onChange={(e) => onUpdate({ text: e.target.value })}
+                        className="w-full bg-gray-50 dark:bg-[#121212] border border-gray-300 dark:border-gray-600 rounded p-2 text-xs text-gray-900 dark:text-white outline-none focus:border-blue-500 resize-none"
+                        rows={3}
+                        placeholder="Digite seu texto..."
+                    />
                 </div>
                 
-                {/* Content */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                    {/* Text Input */}
-                    <div>
-                        <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">TEXTO</label>
-                        <textarea 
-                            value={layer.text}
-                            onChange={(e) => onUpdate({ text: e.target.value })}
-                            className="w-full bg-gray-50 dark:bg-[#1e1e1e] border border-gray-300 dark:border-gray-600 rounded p-2 text-gray-900 dark:text-white outline-none focus:border-blue-500 resize-none"
-                            rows={4}
-                        />
+                {/* Font & Size */}
+                <div className="flex gap-2">
+                    <div className="flex-1 min-w-0">
+                         <div className="flex items-center gap-1 mb-1">
+                             <i className="fas fa-font text-[10px] text-gray-400"></i>
+                             <select 
+                                value={layer.fontFamily}
+                                onChange={(e) => onUpdate({ fontFamily: e.target.value })}
+                                className="w-full bg-transparent text-[10px] text-gray-900 dark:text-white outline-none border-b border-gray-300 dark:border-gray-600 focus:border-blue-500 py-0.5"
+                            >
+                                {FONT_FAMILIES.map(font => (
+                                    <option key={font} value={font}>{font}</option>
+                                ))}
+                            </select>
+                         </div>
                     </div>
-                    
-                    {/* Font Family */}
-                    <div>
-                        <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">FONTE</label>
-                        <select 
-                            value={layer.fontFamily}
-                            onChange={(e) => onUpdate({ fontFamily: e.target.value })}
-                            className="w-full bg-gray-50 dark:bg-[#1e1e1e] border border-gray-300 dark:border-gray-600 rounded p-2 text-gray-900 dark:text-white outline-none focus:border-blue-500"
-                        >
-                            {FONT_FAMILIES.map(font => (
-                                <option key={font} value={font}>{font}</option>
-                            ))}
-                        </select>
-                    </div>
-                    
-                    {/* Font Size */}
-                    <div>
-                        <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">TAMANHO: {layer.fontSize}px</label>
+                    <div className="w-16 shrink-0 relative">
+                        <i className="fas fa-text-height text-[10px] text-gray-400 absolute left-0 top-1"></i>
                         <input 
-                            type="range"
-                            min="8"
-                            max="200"
+                            type="number"
                             value={layer.fontSize}
                             onChange={(e) => onUpdate({ fontSize: Number(e.target.value) })}
-                            className="w-full"
-                        />
-                    </div>
-                    
-                    {/* Color */}
-                    <div>
-                        <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">COR</label>
-                        <div className="flex gap-2">
-                            <input 
-                                type="color"
-                                value={layer.color}
-                                onChange={(e) => onUpdate({ color: e.target.value })}
-                                className="w-12 h-10 rounded cursor-pointer"
-                            />
-                            <input 
-                                type="text"
-                                value={layer.color}
-                                onChange={(e) => onUpdate({ color: e.target.value })}
-                                className="flex-1 bg-gray-50 dark:bg-[#1e1e1e] border border-gray-300 dark:border-gray-600 rounded px-2 text-gray-900 dark:text-white outline-none focus:border-blue-500"
-                            />
-                        </div>
-                    </div>
-                    
-                    {/* Style Toggles */}
-                    <div>
-                        <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2">ESTILO</label>
-                        <div className="flex gap-2">
-                            <button 
-                                onClick={() => onUpdate({ bold: !layer.bold })}
-                                className={`flex-1 py-2 rounded border ${layer.bold ? 'bg-blue-600 text-white border-blue-600' : 'bg-gray-100 dark:bg-[#333] text-gray-900 dark:text-gray-200 border-gray-300 dark:border-gray-600'}`}
-                            >
-                                <i className="fas fa-bold"></i>
-                            </button>
-                            <button 
-                                onClick={() => onUpdate({ italic: !layer.italic })}
-                                className={`flex-1 py-2 rounded border ${layer.italic ? 'bg-blue-600 text-white border-blue-600' : 'bg-gray-100 dark:bg-[#333] text-gray-900 dark:text-gray-200 border-gray-300 dark:border-gray-600'}`}
-                            >
-                                <i className="fas fa-italic"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    {/* Text Transform */}
-                    <div>
-                        <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2">TRANSFORMAÇÃO</label>
-                        <div className="grid grid-cols-2 gap-2">
-                            <button 
-                                onClick={() => onUpdate({ textTransform: 'none' })}
-                                className={`py-2 rounded border text-xs ${layer.textTransform === 'none' ? 'bg-blue-600 text-white border-blue-600' : 'bg-gray-100 dark:bg-[#333] text-gray-900 dark:text-gray-200 border-gray-300 dark:border-gray-600'}`}
-                            >
-                                Normal
-                            </button>
-                            <button 
-                                onClick={() => onUpdate({ textTransform: 'uppercase' })}
-                                className={`py-2 rounded border text-xs ${layer.textTransform === 'uppercase' ? 'bg-blue-600 text-white border-blue-600' : 'bg-gray-100 dark:bg-[#333] text-gray-900 dark:text-gray-200 border-gray-300 dark:border-gray-600'}`}
-                            >
-                                MAIÚSCULAS
-                            </button>
-                            <button 
-                                onClick={() => onUpdate({ textTransform: 'lowercase' })}
-                                className={`py-2 rounded border text-xs ${layer.textTransform === 'lowercase' ? 'bg-blue-600 text-white border-blue-600' : 'bg-gray-100 dark:bg-[#333] text-gray-900 dark:text-gray-200 border-gray-300 dark:border-gray-600'}`}
-                            >
-                                minúsculas
-                            </button>
-                            <button 
-                                onClick={() => onUpdate({ textTransform: 'capitalize' })}
-                                className={`py-2 rounded border text-xs ${layer.textTransform === 'capitalize' ? 'bg-blue-600 text-white border-blue-600' : 'bg-gray-100 dark:bg-[#333] text-gray-900 dark:text-gray-200 border-gray-300 dark:border-gray-600'}`}
-                            >
-                                Capitalizar
-                            </button>
-                        </div>
-                    </div>
-                    
-                    {/* Letter Spacing */}
-                    <div>
-                        <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">ESPAÇAMENTO DE LETRAS: {layer.letterSpacing}px</label>
-                        <input 
-                            type="range"
-                            min="-5"
-                            max="20"
-                            value={layer.letterSpacing}
-                            onChange={(e) => onUpdate({ letterSpacing: Number(e.target.value) })}
-                            className="w-full"
-                        />
-                    </div>
-                    
-                    {/* Line Height */}
-                    <div>
-                        <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">ALTURA DA LINHA: {layer.lineHeight}</label>
-                        <input 
-                            type="range"
-                            min="0.5"
-                            max="3"
-                            step="0.1"
-                            value={layer.lineHeight}
-                            onChange={(e) => onUpdate({ lineHeight: Number(e.target.value) })}
-                            className="w-full"
-                        />
-                    </div>
-                    
-                    {/* Text Shadow */}
-                    <div>
-                        <div className="flex items-center justify-between mb-2">
-                            <label className="text-xs font-bold text-gray-700 dark:text-gray-300">SOMBRA</label>
-                            <button 
-                                onClick={() => onUpdate({ textShadow: { ...layer.textShadow, enabled: !layer.textShadow.enabled } })}
-                                className={`px-3 py-1 rounded text-xs ${layer.textShadow.enabled ? 'bg-blue-600 text-white' : 'bg-gray-100 dark:bg-[#333] text-gray-900 dark:text-gray-200'}`}
-                            >
-                                {layer.textShadow.enabled ? 'Ativado' : 'Desativado'}
-                            </button>
-                        </div>
-                        
-                        {layer.textShadow.enabled && (
-                            <div className="space-y-2 pl-2 border-l-2 border-gray-300 dark:border-gray-600">
-                                <div>
-                                    <label className="block text-[10px] text-gray-600 dark:text-gray-400 mb-1">Offset X: {layer.textShadow.offsetX}px</label>
-                                    <input 
-                                        type="range"
-                                        min="-20"
-                                        max="20"
-                                        value={layer.textShadow.offsetX}
-                                        onChange={(e) => onUpdate({ textShadow: { ...layer.textShadow, offsetX: Number(e.target.value) } })}
-                                        className="w-full"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-[10px] text-gray-600 dark:text-gray-400 mb-1">Offset Y: {layer.textShadow.offsetY}px</label>
-                                    <input 
-                                        type="range"
-                                        min="-20"
-                                        max="20"
-                                        value={layer.textShadow.offsetY}
-                                        onChange={(e) => onUpdate({ textShadow: { ...layer.textShadow, offsetY: Number(e.target.value) } })}
-                                        className="w-full"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-[10px] text-gray-600 dark:text-gray-400 mb-1">Desfoque: {layer.textShadow.blur}px</label>
-                                    <input 
-                                        type="range"
-                                        min="0"
-                                        max="20"
-                                        value={layer.textShadow.blur}
-                                        onChange={(e) => onUpdate({ textShadow: { ...layer.textShadow, blur: Number(e.target.value) } })}
-                                        className="w-full"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-[10px] text-gray-600 dark:text-gray-400 mb-1">Cor</label>
-                                    <input 
-                                        type="color"
-                                        value={layer.textShadow.color}
-                                        onChange={(e) => onUpdate({ textShadow: { ...layer.textShadow, color: e.target.value } })}
-                                        className="w-full h-8 rounded cursor-pointer"
-                                    />
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                    
-                    {/* Rotation */}
-                    <div>
-                        <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">ROTAÇÃO: {layer.rotation}°</label>
-                        <input 
-                            type="range"
-                            min="0"
-                            max="360"
-                            value={layer.rotation || 0}
-                            onChange={(e) => onUpdate({ rotation: Number(e.target.value) })}
-                            className="w-full"
+                            className="w-full bg-transparent pl-4 text-[10px] text-right text-gray-900 dark:text-white outline-none border-b border-gray-300 dark:border-gray-600 focus:border-blue-500 py-0.5"
                         />
                     </div>
                 </div>
+
+                {/* Color & Styles */}
+                <div className="flex items-center gap-2">
+                    <div className="relative group cursor-pointer w-8 h-8 rounded border border-gray-300 dark:border-gray-600 overflow-hidden shrink-0">
+                        <input 
+                            type="color"
+                            value={layer.color}
+                            onChange={(e) => onUpdate({ color: e.target.value })}
+                            className="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
+                        />
+                        <div className="absolute inset-0 w-full h-full" style={{backgroundColor: layer.color}}></div>
+                    </div>
+                    
+                    <div className="flex bg-gray-100 dark:bg-[#252525] rounded p-1 flex-1 justify-center gap-1">
+                        <button onClick={() => onUpdate({ bold: !layer.bold })} className={`w-6 h-6 rounded flex items-center justify-center text-xs ${layer.bold ? 'bg-blue-600 text-white' : 'text-gray-500'}`}><i className="fas fa-bold"></i></button>
+                        <button onClick={() => onUpdate({ italic: !layer.italic })} className={`w-6 h-6 rounded flex items-center justify-center text-xs ${layer.italic ? 'bg-blue-600 text-white' : 'text-gray-500'}`}><i className="fas fa-italic"></i></button>
+                    </div>
+                </div>
+
+                {/* Transforms */}
+                <div className="flex bg-gray-100 dark:bg-[#252525] rounded p-1 justify-between">
+                     <button onClick={() => onUpdate({ textTransform: 'none' })} className={`w-6 h-6 rounded flex items-center justify-center text-[10px] ${layer.textTransform === 'none' ? 'bg-blue-600 text-white' : 'text-gray-500'}`}>Tt</button>
+                     <button onClick={() => onUpdate({ textTransform: 'uppercase' })} className={`w-6 h-6 rounded flex items-center justify-center text-[10px] ${layer.textTransform === 'uppercase' ? 'bg-blue-600 text-white' : 'text-gray-500'}`}>TT</button>
+                     <button onClick={() => onUpdate({ textTransform: 'lowercase' })} className={`w-6 h-6 rounded flex items-center justify-center text-[10px] ${layer.textTransform === 'lowercase' ? 'bg-blue-600 text-white' : 'text-gray-500'}`}>tt</button>
+                     <button onClick={() => onUpdate({ textTransform: 'capitalize' })} className={`w-6 h-6 rounded flex items-center justify-center text-[10px] ${layer.textTransform === 'capitalize' ? 'bg-blue-600 text-white' : 'text-gray-500'}`}>Ab</button>
+                </div>
+
+                {/* Spacing Sliders */}
+                <div className="space-y-2">
+                    <div className="flex items-center gap-2" title="Espaçamento entre letras">
+                        <i className="fas fa-text-width text-gray-400 text-xs w-4"></i>
+                        <input 
+                            type="range" min="-5" max="20" value={layer.letterSpacing} 
+                            onChange={(e) => onUpdate({ letterSpacing: Number(e.target.value) })}
+                            className="flex-1 h-1 bg-gray-600 rounded-lg cursor-pointer accent-blue-500" 
+                        />
+                    </div>
+                    <div className="flex items-center gap-2" title="Altura da linha">
+                        <i className="fas fa-arrows-alt-v text-gray-400 text-xs w-4"></i>
+                        <input 
+                            type="range" min="0.5" max="3" step="0.1" value={layer.lineHeight} 
+                            onChange={(e) => onUpdate({ lineHeight: Number(e.target.value) })}
+                            className="flex-1 h-1 bg-gray-600 rounded-lg cursor-pointer accent-blue-500" 
+                        />
+                    </div>
+                     <div className="flex items-center gap-2" title="Rotação">
+                        <i className="fas fa-sync-alt text-gray-400 text-xs w-4"></i>
+                        <input 
+                            type="range" min="0" max="360" value={layer.rotation} 
+                            onChange={(e) => onUpdate({ rotation: Number(e.target.value) })}
+                            className="flex-1 h-1 bg-gray-600 rounded-lg cursor-pointer accent-blue-500" 
+                        />
+                    </div>
+                </div>
+
+                {/* Shadow Toggle */}
+                 <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
+                     <div className="flex items-center justify-between cursor-pointer" onClick={() => onUpdate({ textShadow: { ...layer.textShadow, enabled: !layer.textShadow.enabled } })}>
+                         <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase"><i className="fas fa-cloud-moon mr-1"></i> Sombra</span>
+                         <div className={`w-8 h-4 rounded-full p-0.5 transition-colors ${layer.textShadow.enabled ? 'bg-blue-600' : 'bg-gray-400'}`}>
+                             <div className={`w-3 h-3 bg-white rounded-full transition-transform ${layer.textShadow.enabled ? 'translate-x-4' : 'translate-x-0'}`}></div>
+                         </div>
+                     </div>
+                     
+                     {layer.textShadow.enabled && (
+                         <div className="mt-2 grid grid-cols-2 gap-2">
+                             <div className="col-span-2 flex items-center gap-2">
+                                <label className="text-[9px] text-gray-400 w-4">Blur</label>
+                                <input type="range" min="0" max="20" value={layer.textShadow.blur} onChange={(e) => onUpdate({ textShadow: { ...layer.textShadow, blur: Number(e.target.value) } })} className="flex-1 h-1 bg-gray-600 rounded-lg accent-blue-500" />
+                             </div>
+                             <div className="flex items-center gap-1">
+                                <label className="text-[9px] text-gray-400">X</label>
+                                <input type="number" value={layer.textShadow.offsetX} onChange={(e) => onUpdate({ textShadow: { ...layer.textShadow, offsetX: Number(e.target.value) } })} className="w-full bg-[#121212] text-white text-[10px] border border-gray-600 rounded px-1" />
+                             </div>
+                             <div className="flex items-center gap-1">
+                                <label className="text-[9px] text-gray-400">Y</label>
+                                <input type="number" value={layer.textShadow.offsetY} onChange={(e) => onUpdate({ textShadow: { ...layer.textShadow, offsetY: Number(e.target.value) } })} className="w-full bg-[#121212] text-white text-[10px] border border-gray-600 rounded px-1" />
+                             </div>
+                             <div className="col-span-2">
+                                <input type="color" value={layer.textShadow.color} onChange={(e) => onUpdate({ textShadow: { ...layer.textShadow, color: e.target.value } })} className="w-full h-4 rounded cursor-pointer" />
+                             </div>
+                         </div>
+                     )}
+                 </div>
             </div>
         </div>
     );
@@ -316,6 +221,7 @@ export default function ImageEditor() {
     const [brushType, setBrushType] = useState('round');
     const [tolerance, setTolerance] = useState(32);
     const [isFullScreen, setIsFullScreen] = useState(false);
+    const [showRulers, setShowRulers] = useState(false);
     const [contextMenu, setContextMenu] = useState(null); // {x, y, layerId, projectId}
     const [resizeModal, setResizeModal] = useState(null); // {layerId, currentW, currentH}
     
@@ -940,6 +846,18 @@ export default function ImageEditor() {
                                 >
                                     <span>Girar Canvas</span>
                                 </button>
+                                <div className="h-px bg-gray-200 dark:bg-gray-700 my-1"></div>
+                                <button className="text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-blue-600 hover:text-blue-600 dark:hover:text-white flex justify-between items-center group transition-colors"
+                                    onClick={() => {
+                                        setShowRulers(!showRulers);
+                                        setActiveMenu(null);
+                                    }}
+                                >
+                                    <span>Régua</span>
+                                    <span className="text-xs text-blue-600 dark:text-blue-400">
+                                        {showRulers ? <i className="fas fa-check"></i> : ''}
+                                    </span>
+                                </button>
                             </div>
                         )}
                     </div>
@@ -1051,6 +969,7 @@ export default function ImageEditor() {
                             key={p.id} 
                             project={p}
                             isActive={activeProjectId === p.id}
+                            showRulers={showRulers}
                             toolsState={{ activeTool, brushSize, brushColor, brushType, tolerance }}
                             onUpdate={(updates, saveHistory = false) => {
                                 // If saveHistory is true, we push the state to history
@@ -1129,7 +1048,7 @@ export default function ImageEditor() {
 
             {newProjModal && (
                 <div className="fixed inset-0 z-[200] bg-black/80 flex items-center justify-center p-4">
-                    <div className="bg-white dark:bg-[#2d2d2d] w-full max-w-md rounded-xl shadow-2xl border border-gray-300 dark:border-gray-700 p-6">
+                    <div className="bg-white dark:!bg-[#2d2d2d] w-full max-w-md rounded-xl shadow-2xl border border-gray-300 dark:border-gray-700 p-6">
                         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Novo Projeto</h3>
                         <div className="space-y-4">
                             <div>
@@ -1182,6 +1101,42 @@ export default function ImageEditor() {
                     </div>
                 </div>
             )}
+
+            {/* Text Properties Panel */}
+            {(() => {
+                const project = projects.find(p => p.id === activeProjectId);
+                const activeLayer = project?.layers.find(l => l.id === project.activeLayerId);
+                const isTextTool = activeTool === TOOLS.TEXT;
+                const isTextLayer = activeLayer?.type === 'text';
+                
+                // Show panel if Text Tool is active AND we have a text layer selected OR just if text layer is selected?
+                // Usually if Text Tool is active, we might be creating new text. 
+                // But properties apply to selected text.
+                // Let's show it if a text layer is active.
+                
+                if (activeLayer && isTextLayer) {
+                     return (
+                        <TextPropertiesPanel 
+                            layer={activeLayer}
+                            isOpen={true}
+                            onClose={() => {
+                                // Maybe deselect layer or switch tool?
+                                // For now, just let it stay open or user can switch layer.
+                                // Actually, 'onClose' in current implementation hides the panel. 
+                                // But here we conditionally render. 
+                                // We can pass a dummy close or handle it by deselecting.
+                                updateProjectState(activeProjectId, { activeLayerId: null });
+                            }}
+                            onUpdate={(updates) => {
+                                updateProjectState(activeProjectId, {
+                                    layers: project.layers.map(l => l.id === activeLayer.id ? { ...l, ...updates } : l)
+                                });
+                            }}
+                        />
+                     );
+                }
+                return null;
+            })()}
 
             {saveModal && (
                  <SaveModal 
@@ -1298,12 +1253,14 @@ export default function ImageEditor() {
     );
 }
 
-function ProjectWorkspace({ project, isActive, toolsState, onUpdate, onSnapshot, setBrushColor }) {
+function ProjectWorkspace({ project, isActive, toolsState, onUpdate, onSnapshot, setBrushColor, showRulers }) {
     const { activeTool, brushSize, brushColor, brushType, tolerance } = toolsState;
     const containerRef = useRef(null);
     const layerRefs = useRef({});
     const [isDrawing, setIsDrawing] = useState(false);
     const [lastPos, setLastPos] = useState(null);
+    const [textCreationBox, setTextCreationBox] = useState(null);
+    const [editingLayerId, setEditingLayerId] = useState(null);
 
     // Snapshot helper
     const takeSnapshot = useCallback(() => {
@@ -1882,16 +1839,15 @@ function ProjectWorkspace({ project, isActive, toolsState, onUpdate, onSnapshot,
 
     const handleMouseDown = (e) => {
         if (e.button === 2) return; // Ignore right-click
-        if (!isActive || !project.activeLayerId) return;
+        if (!isActive) return;
+        
+        // Allow Text Tool to work without active layer (creates new)
+        if (activeTool !== TOOLS.TEXT && !project.activeLayerId) return;
+
         const layer = project.layers.find(l => l.id === project.activeLayerId);
-        if(!layer?.visible) return;
-
-        if (layer.locked) {
-            alert("Camada bloqueada!");
-            return;
-        }
-
-        if (layer.locked) {
+        
+        // Locked check (skip for creation tools if they don't depend on active layer)
+        if (layer && layer.locked && activeTool !== TOOLS.TEXT && activeTool !== TOOLS.EYEDROPPER) {
             alert("Camada bloqueada!");
             return;
         }
@@ -1967,49 +1923,40 @@ function ProjectWorkspace({ project, isActive, toolsState, onUpdate, onSnapshot,
         } else if (activeTool === TOOLS.TEXT) {
             const pos = getCoords(e);
             
-            // Create new text layer
-            const newTextLayerId = 'text-' + Date.now() + Math.random();
-            const newTextLayer = {
-                id: newTextLayerId,
-                type: 'text',
-                name: 'Texto',
-                visible: true,
-                locked: false,
-                opacity: 1,
-                x: pos.x,
-                y: pos.y,
-                rotation: 0,
-                text: 'Digite aqui',
-                fontSize: 32,
-                fontFamily: 'Arial',
-                color: brushColor,
-                bold: false,
-                italic: false,
-                textTransform: 'none',
-                letterSpacing: 0,
-                lineHeight: 1.2,
-                textAlign: 'left',
-                textShadow: {
-                    enabled: false,
-                    offsetX: 2,
-                    offsetY: 2,
-                    blur: 4,
-                    color: '#000000'
-                }
-            };
-            
-            // Add layer to project
-            onUpdate({
-                layers: [...project.layers, newTextLayer],
-                activeLayerId: newTextLayerId
+            // Check if clicked on existing text layer
+            // Simple hit test: check bounding box of text layers
+            // Default order (Top to Bottom) is correct for finding the first (topmost) hit
+            const clickedLayer = project.layers.find(l => {
+                if (l.type !== 'text' || !l.visible || l.locked) return false;
+                // Simple rect check (ignoring rotation for hit test for now, or assume 0 rot)
+                const lx = l.x;
+                const ly = l.y;
+                // Approximate width/height if not stored? 
+                // Text layers usually don't have explicit w/h unless defined?
+                // We'll use a heuristic or stored w/h if available.
+                // For now, let's assume if user clicks NEAR it.
+                // Better: Just Start Creation Mode. 
+                // Double click handles edit usually?
+                // User Request: "User chooses an area... can type".
+                return false;
             });
+
+            if (clickedLayer) {
+                // Edit existing
+                setEditingLayerId(clickedLayer.id);
+                onUpdate({ activeLayerId: clickedLayer.id });
+                // Also open panel
+                window.dispatchEvent(new CustomEvent('OPEN_TEXT_PANEL', { 
+                    detail: { layerId: clickedLayer.id, projectId: project.id } 
+                }));
+            } else {
+                // Return to pure creation mode
+                setTextCreationBox({ x: pos.x, y: pos.y, w: 0, h: 0 });
+                setLastPos(pos);
+                setIsDrawing(true);
+            }
             
-            // Open text edit panel
-            window.dispatchEvent(new CustomEvent('OPEN_TEXT_PANEL', { 
-                detail: { layerId: newTextLayerId, projectId: project.id } 
-            }));
-            
-            takeSnapshot();
+            // Note: We do NOT create layer here anymore. We do it on MouseUp.
         } else if (activeTool === TOOLS.EYEDROPPER) {
              const pos = getCoords(e);
              const cvs = layerRefs.current[project.activeLayerId];
@@ -2081,6 +2028,47 @@ function ProjectWorkspace({ project, isActive, toolsState, onUpdate, onSnapshot,
             if (activeTool === TOOLS.MARQUEE) {
                 takeSnapshot();
             }
+            // Text finished dragging
+            if (activeTool === TOOLS.TEXT && textCreationBox) {
+                 const newTextLayerId = 'text-' + Date.now() + Math.random();
+                 
+                 // Default size if simple click
+                 let box = textCreationBox;
+                 if (box.w < 10 || box.h < 10) {
+                     box = { ...box, w: 200, h: 50 };
+                 }
+
+                 const newTextLayer = {
+                    id: newTextLayerId,
+                    type: 'text',
+                    name: 'Texto',
+                    visible: true,
+                    locked: false,
+                    opacity: 1,
+                    x: box.x,
+                    y: box.y,
+                    rotation: 0,
+                    text: '', // Start empty
+                    fontSize: 32,
+                    fontFamily: 'Arial',
+                    color: brushColor,
+                    bold: false,
+                    italic: false,
+                    textTransform: 'none',
+                    letterSpacing: 0,
+                    lineHeight: 1.2,
+                    textAlign: 'left',
+                    textShadow: { enabled: false, offsetX: 2, offsetY: 2, blur: 4, color: '#000000' }
+                };
+                
+                onUpdate({
+                    layers: [newTextLayer, ...project.layers],
+                    activeLayerId: newTextLayerId // Select it
+                });
+                
+                setTextCreationBox(null);
+                setEditingLayerId(newTextLayerId); // Enter Edit Mode
+            }
         }
     };
 
@@ -2119,6 +2107,18 @@ function ProjectWorkspace({ project, isActive, toolsState, onUpdate, onSnapshot,
                      w: Math.abs(w),
                      h: Math.abs(h)
                  }
+             });
+             return;
+        }
+
+        if (activeTool === TOOLS.TEXT && isDrawing && lastPos) {
+             const w = pos.x - lastPos.x;
+             const h = pos.y - lastPos.y;
+             setTextCreationBox({
+                 x: w < 0 ? pos.x : lastPos.x,
+                 y: h < 0 ? pos.y : lastPos.y,
+                 w: Math.abs(w),
+                 h: Math.abs(h)
              });
              return;
         }
@@ -2263,6 +2263,35 @@ function ProjectWorkspace({ project, isActive, toolsState, onUpdate, onSnapshot,
                 onMouseMove={handleMouseMove}
                 onContextMenu={onContextMenu}
             >
+                {showRulers && (
+                    <>
+                        {/* Horizontal Ruler (Top) */}
+                        <div className="absolute top-0 left-0 right-0 h-5 bg-white/80 dark:bg-black/50 border-b border-gray-400 z-[90] pointer-events-none flex overflow-hidden">
+                             {Array.from({ length: Math.ceil(project.dims.w / 100) }).map((_, i) => (
+                                 <div key={i} className="flex-shrink-0 relative h-full" style={{width: 100}}>
+                                     <span className="absolute top-0 left-1 text-[8px] font-mono text-black dark:text-white">{i * 100}</span>
+                                     <div className="absolute bottom-0 left-0 w-px h-2 bg-gray-500"></div>
+                                     {[1,2,3,4,5,6,7,8,9].map(t => (
+                                         <div key={t} className="absolute bottom-0 w-px bg-gray-400" style={{ left: t*10, height: t===5?5:2 }}></div>
+                                     ))}
+                                 </div>
+                             ))}
+                        </div>
+                        {/* Vertical Ruler (Left) */}
+                         <div className="absolute top-0 left-0 bottom-0 w-5 bg-white/80 dark:bg-black/50 border-r border-gray-400 z-[90] pointer-events-none flex flex-col overflow-hidden">
+                             {Array.from({ length: Math.ceil(project.dims.h / 100) }).map((_, i) => (
+                                 <div key={i} className="flex-shrink-0 relative w-full" style={{height: 100}}>
+                                     <span className="absolute top-1 right-0.5 text-[8px] font-mono text-black dark:text-white rotate-90 origin-top-right">{i * 100}</span>
+                                     <div className="absolute top-0 right-0 h-px w-2 bg-gray-500"></div>
+                                     {[1,2,3,4,5,6,7,8,9].map(t => (
+                                         <div key={t} className="absolute right-0 h-px bg-gray-400" style={{ top: t*10, width: t===5?5:2 }}></div>
+                                     ))}
+                                 </div>
+                             ))}
+                         </div>
+                    </>
+                )}
+
                 <div className="absolute inset-0 pointer-events-none" style={{
                     backgroundImage: 'conic-gradient(#e5e7eb 90deg, #ffffff 90deg 180deg, #e5e7eb 180deg 270deg, #ffffff 270deg)',
                     backgroundSize: '20px 20px'
@@ -2309,6 +2338,9 @@ function ProjectWorkspace({ project, isActive, toolsState, onUpdate, onSnapshot,
                     if (layer.type === 'text') {
                         if (!layer.visible) return null;
                         
+                        // Hide if currently editing (we show the textarea instead)
+                        if (editingLayerId === layer.id) return null;
+
                         const textStyle = {
                             position: 'absolute',
                             left: layer.x,

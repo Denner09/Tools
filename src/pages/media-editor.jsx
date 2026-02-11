@@ -1,4 +1,5 @@
 
+/* MediaEditor.jsx - Invalidate Cache */
 import React from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -33,11 +34,13 @@ export default function MediaEditor() {
                     <VideoEditor />
                 </div>
             )}
+            {/* Editor de Imagem - Em desenvolvimento
             {activeTab === 'image' && (
                 <div key="image-tab" className="h-full">
                     <ImageEditor />
                 </div>
             )}
+            */}
         </div>
       </main>
     </div>

@@ -38,6 +38,7 @@ const MediaNavbarControls = () => {
               <i className="fas fa-video mr-2"></i>
               Vídeo
             </button>
+            {/* Aba Imagem - Em desenvolvimento para versão futura
             <button
               onClick={() => setActiveTab('image')}
               className={`px-4 py-2 rounded-lg font-bold text-sm transition-all duration-300 ${
@@ -49,6 +50,7 @@ const MediaNavbarControls = () => {
               <i className="fas fa-image mr-2"></i>
               Imagem
             </button>
+            */}
         </div>
     );
 };

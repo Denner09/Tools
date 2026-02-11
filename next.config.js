@@ -9,11 +9,24 @@ const withPWA = withPWAInit({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   output: 'export',
   basePath: '/Tools',
   images: {
     unoptimized: true,
+  },
+  transpilePackages: ['pdfjs-dist'],
+  webpack: (config) => {
+    config.resolve.alias.canvas = false;
+    config.resolve.alias.encoding = false;
+    
+    // Silence critical dependency warning from pdfjs-dist
+    config.ignoreWarnings = [
+        ...(config.ignoreWarnings || []),
+        { module: /pdfjs-dist/ }
+    ];
+
+    return config;
   },
 };
 

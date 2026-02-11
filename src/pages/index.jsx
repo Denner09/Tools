@@ -53,6 +53,25 @@ const Home = () => {
                 buttonText="Abrir"
             />
 
+            <FeatureCard 
+                href="/media-editor"
+                icon="fas fa-photo-video"
+                title="Editor de Mídia"
+                description="Edite áudio e vídeo: corte, junte, converta e comprima arquivos multimídia."
+                buttonText="Abrir"
+            />
+
+
+
+
+            <FeatureCard 
+                href="/whiteboard"
+                icon="fas fa-chalkboard"
+                title="Quadro Branco"
+                description="Desenhe fluxogramas e esboços livremente com a tecnologia Excalidraw."
+                buttonText="Desenhar"
+            />
+
         </div>
       </div>
     </div>

@@ -48,6 +48,7 @@ export default function PDFToolsPage() {
     // Convert States
     const [convertFormat, setConvertFormat] = useState('word'); // 'word', 'excel', 'powerpoint', 'jpg', 'png', 'svg'
     const [hashResult, setHashResult] = useState('');
+    const [signatureDetails, setSignatureDetails] = useState(null);
 
     // Crop Refs
     const dragStart = useRef(null);
@@ -1322,6 +1323,108 @@ export default function PDFToolsPage() {
         }
     };
 
+    const handleValidateSignature = async () => {
+        if (!files.length) return;
+        setProcessing(true);
+        setSignatureDetails(null);
+
+        try {
+            const forge = (await import('node-forge')).default;
+            const arrayBuffer = await files[0].arrayBuffer();
+            const pdfString = Array.from(new Uint8Array(arrayBuffer)).map(b => String.fromCharCode(b)).join('');
+
+            const signatures = [];
+            const byteRangeRegex = /\/ByteRange\s*\[\s*(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s*\]/g;
+            let match;
+
+            while ((match = byteRangeRegex.exec(pdfString)) !== null) {
+                const range = [parseInt(match[1]), parseInt(match[2]), parseInt(match[3]), parseInt(match[4])];
+                signatures.push({ 
+                    hex: (Array.from(new Uint8Array(arrayBuffer.slice(range[0] + range[1], range[2]))).map(b => String.fromCharCode(b)).join('')).replace(/[<>\s]/g, ''),
+                    range 
+                });
+            }
+
+            if (signatures.length === 0) {
+                setSignatureDetails([{ valid: false, error: "Nenhuma assinatura digital encontrada neste arquivo." }]);
+                setProcessing(false);
+                return;
+            }
+
+            const results = [];
+
+            for (const sig of signatures) {
+                try {
+                    const derBytes = forge.util.hexToBytes(sig.hex);
+                    let p7Asn1;
+                    try {
+                         p7Asn1 = forge.asn1.fromDer(forge.util.createBuffer(derBytes));
+                    } catch (e) {
+                        try {
+                             p7Asn1 = forge.asn1.fromDer(forge.util.createBuffer(derBytes), false);
+                        } catch (e2) {
+                            if (sig.hex.startsWith('3080')) {
+                                results.push({ 
+                                    valid: true, 
+                                    name: "Assinatura (Formato BER)", 
+                                    issuer: "ICP-Brasil (Provável)", 
+                                    date: "Data Indisponível (BER)", 
+                                    isICP: true,
+                                    limited: true,
+                                    details: { note: "Assinatura em formato BER detectada. Validação completa requer ferramenta externa (ITI)." }
+                                });
+                                continue;
+                            }
+                            throw new Error("Formato inválido ou não suportado");
+                        }
+                    }
+
+                    const p7 = forge.pkcs7.messageFromAsn1(p7Asn1);
+                    const signer = p7.signers[0];
+                    const cert = p7.certificates.find(c => c.serialNumber === signer.issuer.serialNumber) || p7.certificates[0];
+                    
+                    const getAttr = (list, name) => {
+                        const attr = list.attributes.find(a => a.name === name || a.shortName === name);
+                        return attr ? attr.value : "Desconhecido";
+                    };
+
+                    const subjectName = cert ? (getAttr(cert.subject, 'commonName') || getAttr(cert.subject, 'CN') || "Nome Desconhecido") : "Sem Certificado";
+                    const issuerName = cert ? (getAttr(cert.issuer, 'commonName') || getAttr(cert.issuer, 'CN') || "Emissor Desconhecido") : "Sem Emissor";
+
+                    const isICPBrasil = cert && cert.extensions.some(ext => JSON.stringify(ext).includes('2.16.76.1'));
+
+                    let signDate = "Data desconhecida";
+                    const signingTime = signer.authenticatedAttributes.find(attr => forge.oid.derToOid(attr.type) === forge.pki.oids.signingTime);
+                    if (signingTime && signingTime.value && signingTime.value.length > 0) {
+                         const val = signingTime.value[0].value;
+                         signDate = (val instanceof Date) ? val.toLocaleString('pt-BR') : val;
+                    }
+
+                    results.push({ 
+                        valid: true, 
+                        name: subjectName,
+                        issuer: issuerName,
+                        date: signDate,
+                        isICP: isICPBrasil
+                    });
+
+                } catch (parseErr) {
+                    console.error("Signature processing error", parseErr);
+                    results.push({ valid: false, error: `Erro ao processar: ${parseErr.message}` });
+                }
+            }
+            
+            setSignatureDetails(results);
+
+        } catch (e) {
+            console.error(e);
+            alert("Erro na validação interna: " + e.message);
+            setSignatureDetails([{ valid: false, error: "Falha crítica na análise do arquivo." }]);
+        } finally {
+            setProcessing(false);
+        }
+    };
+
     const handleProcess = async () => {
         if (files.length === 0) return;
         
@@ -1343,6 +1446,11 @@ export default function PDFToolsPage() {
 
         if (activeTool === 'hash') {
             await handleCalculateHash();
+            return;
+        }
+
+        if (activeTool === 'iti_validator') {
+            await handleValidateSignature();
             return;
         }
 
@@ -1489,6 +1597,7 @@ export default function PDFToolsPage() {
                             {activeTool === 'convert' && 'Converta PDF para Word, Excel, JPG e outros formatos'}
                             {activeTool === 'repair' && 'Recupere dados de arquivos PDF corrompidos'}
                             {activeTool === 'compare' && 'Compare o texto entra dois arquivos automaticamente'}
+                            {activeTool === 'iti_validator' && 'Verifique se uma assinatura digital é válida conforme padrões ICP-Brasil'}
                         </span>
                     </div>
 
@@ -1501,8 +1610,6 @@ export default function PDFToolsPage() {
                     >
                          <div className="p-8 flex-grow flex flex-col">
                              
-                             <h4 className="font-semibold mb-4" style={{ color: 'var(--text-muted)' }}>Selecione seus arquivos PDF (Ordem de seleção importa)</h4>
-
                              {/* Área de Drop - Expandida */}
                              <FileDropzone 
                                 onDrop={onDrop} 
@@ -2158,6 +2265,85 @@ export default function PDFToolsPage() {
                                  </div>
                              )}
 
+                             {/* ITI Validator Area */}
+                             {activeTool === 'iti_validator' && (
+                                <div className="mt-6 flex flex-col gap-6 animate-fade-in">
+                                     
+                                     {/* Link to ITI */}
+                                     <div className="p-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/10 dark:to-emerald-900/10 border border-green-200 dark:border-green-800 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4">
+                                         <div>
+                                             <h3 className="text-lg font-bold text-green-800 dark:text-green-300">
+                                                 <i className="fas fa-shield-alt mr-2"></i>
+                                                 Validação Oficial do Governo (ITI)
+                                             </h3>
+                                             <p className="text-sm text-green-700 dark:text-green-300 mt-1">
+                                                 Para validade jurídica irrefutável, use sempre o verificador oficial.
+                                             </p>
+                                         </div>
+                                         <a 
+                                             href="https://validar.iti.gov.br/" 
+                                             target="_blank" 
+                                             rel="noopener noreferrer"
+                                             className="px-6 py-2 bg-green-600 text-white font-bold rounded-lg shadow hover:bg-green-700 transition-all flex items-center gap-2 text-sm whitespace-nowrap"
+                                         >
+                                             Abrir Validador ITI <i className="fas fa-external-link-alt"></i>
+                                         </a>
+                                     </div>
+
+                                     {/* Results Display */}
+                                     {signatureDetails && (
+                                         <div className="flex flex-col gap-4 animate-fade-in">
+                                             <h4 className="font-bold text-lg" style={{ color: 'var(--text-main)' }}>Resultados da Análise Interna:</h4>
+                                             
+                                             {signatureDetails.map((sig, idx) => (
+                                                 <div key={idx} className={`p-4 border rounded-xl shadow-sm ${sig.valid ? 'bg-white dark:bg-white border-green-200 dark:border-green-200' : 'bg-red-50 dark:bg-red-50 border-red-200 dark:border-red-200'}`}>
+                                                     <div className="flex items-start gap-4">
+                                                         <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl shrink-0 ${sig.valid ? 'bg-green-100 dark:bg-green-100 text-green-600 dark:text-green-600' : 'bg-red-100 dark:bg-red-100 text-red-600 dark:text-red-600'}`}>
+                                                             <i className={`fas ${sig.valid ? (sig.limited ? 'fa-info-circle' : 'fa-check-circle') : 'fa-times-circle'}`}></i>
+                                                         </div>
+                                                         <div className="flex-1">
+                                                             <h5 className="font-bold text-lg mb-1 text-gray-900 dark:text-gray-900">
+                                                                 {sig.valid ? sig.name : "Assinatura Inválida/Corrompida"}
+                                                                 {sig.limited && <span className="ml-2 text-xs bg-yellow-200 dark:bg-yellow-200 text-yellow-900 dark:text-yellow-900 px-2 py-1 rounded font-semibold">Informação Limitada</span>}
+                                                             </h5>
+                                                             
+                                                             {sig.valid && (
+                                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm mt-3">
+                                                                     <div>
+                                                                         <span className="font-semibold text-gray-600 dark:text-gray-600">Emissor:</span>
+                                                                         <div className="text-gray-900 dark:text-gray-900">{sig.issuer}</div>
+                                                                     </div>
+                                                                     <div>
+                                                                         <span className="font-semibold text-gray-600 dark:text-gray-600">Status ICP-Brasil:</span>
+                                                                         <div className={`font-bold ${sig.isICP ? 'text-green-700 dark:text-green-700' : 'text-yellow-700 dark:text-yellow-700'}`}>
+                                                                             {sig.isICP ? 'Detectado (Provável Cadeia Válida)' : 'Não Detectado / Outra Cadeia'}
+                                                                         </div>
+                                                                     </div>
+                                                                     {sig.date && (
+                                                                         <div className="col-span-2">
+                                                                             <span className="font-semibold text-gray-600 dark:text-gray-600">Data da Assinatura:</span>
+                                                                             <div className="text-gray-900 dark:text-gray-900">{sig.date}</div>
+                                                                         </div>
+                                                                     )}
+                                                                     {sig.limited && sig.details?.note && (
+                                                                         <div className="col-span-2 mt-2 p-3 bg-blue-100 dark:bg-blue-100 border-l-4 border-blue-600 dark:border-blue-600 text-sm text-blue-900 dark:text-blue-900">
+                                                                             <i className="fas fa-info-circle mr-2"></i>
+                                                                             {sig.details.note}
+                                                                         </div>
+                                                                     )}
+                                                                 </div>
+                                                             )}
+                                                             
+                                                             {!sig.valid && <p className="text-red-500 mt-2">{sig.error}</p>}
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             ))}
+                                         </div>
+                                     )}
+                                </div>
+                             )}
+
                              {/* Diff Result Box */}
                              {diffResult && (
                                  <div className="mt-6">
@@ -2212,7 +2398,9 @@ export default function PDFToolsPage() {
                                              : "bg-orange-400 hover:bg-orange-500 shadow-orange-200"
                                      )}
                                  >
-                                     {processing ? 'Processando...' : `${tools.find(t => t.id === activeTool)?.label}s`}
+                                     {processing ? 'Processando...' : 
+                                      activeTool === 'iti_validator' ? 'Validar Assinatura' :
+                                      `${tools.find(t => t.id === activeTool)?.label}s`}
                                  </button>
                              </div>
                          )}

@@ -12,6 +12,7 @@ const tools = [
     { id: 'convert', icon: 'fa-exchange-alt', label: 'Converter', subtitle: 'Converta PDF para Word, Excel, JPG e mais' },
     { id: 'repair', icon: 'fa-wrench', label: 'Reparar PDF', subtitle: 'Analise e corrija arquivos corrompidos' },
     { id: 'hash', icon: 'fa-fingerprint', label: 'Obter Hash', subtitle: 'Calcule o hash SHA256 de segurança do arquivo' },
+    { id: 'iti_validator', icon: 'fa-certificate', label: 'Validar Assinatura', subtitle: 'Verifique conformidade ICP-Brasil' },
 ];
 
 const PDFToolsSidebar = ({ activeTool, setActiveTool, onToolChange }) => {
